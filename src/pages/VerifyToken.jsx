@@ -16,7 +16,7 @@ export const VerifyToken = () => {
                   <a href="./index.html">
                     <img src={logo} alt="" height="60px" width="60px" />
                   </a>
-                  <h2>Login Form</h2>
+                  <h2>Token Verification</h2>
                 </div>
                 <form action="" className="col-12" id="verifyToken">
                   <div className="row container">
@@ -63,7 +63,7 @@ export const VerifyToken = () => {
                       </p>
                       <button
                         type="submit"
-                        className="btn col-sm-7 m-auto my-3 border border-dar"
+                        className="btn col-sm-7 m-auto my-3 border border-dark"
                       >
                         Change Password
                       </button>
