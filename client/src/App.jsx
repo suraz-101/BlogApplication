@@ -27,7 +27,7 @@ const App = () => {
         <Route path="/" element={<AppLayout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
-          <Route path="/blogs">
+          <Route path="/blogsList">
             <Route index element={<BlogsList />} />
             <Route path=":id" element={<Blog />} />
           </Route>
@@ -36,7 +36,7 @@ const App = () => {
 
         {/* admin  */}
         <Route path="/admin" element={<AdminLayout />}>
-          <Route path="blogs">
+          <Route path="/admin/blogs">
             <Route index element={<Blogs />} />
             <Route path=":id" element={<BlogDetail />} />
           </Route>

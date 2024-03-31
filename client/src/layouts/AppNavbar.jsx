@@ -53,9 +53,9 @@ export const AppNavbar = () => {
               </li>
 
               <li className="nav-item">
-                <a className="nav-link" href="./blogs.html">
+                <Link to="/blogsList" className="nav-link ">
                   Blogs
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link px-4 button " to="/login">

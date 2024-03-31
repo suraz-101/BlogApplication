@@ -49,17 +49,14 @@ export const Login = () => {
                     backgroundColor: "white",
                   }}
                 >
-                  <a
-                    href="./index.html"
-                    className="text-decoration-none text-dark"
-                  >
+                  <Link to="/" className="text-decoration-none text-dark">
                     <i className="fa fa-close"></i>
-                  </a>
+                  </Link>
                 </div>
                 <div className="title col-12 p-2 text-center">
-                  <a href="./index.html">
+                  <Link to="/">
                     <img src={logoIcon} alt="" height="60px" width="60px" />
-                  </a>
+                  </Link>
                   <h2>Login Form</h2>
                 </div>
                 <form

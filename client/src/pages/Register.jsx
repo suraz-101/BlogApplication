@@ -1,9 +1,12 @@
 import logoIcon from "../assets/icons/android-chrome-192x192.png";
 import "../assets/css/style.css";
+import { Notify } from "../conponenets/Notify";
 
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export const Register = () => {
+  const [error, setError] = useState("");
   return (
     <div>
       <div
@@ -30,9 +33,9 @@ export const Register = () => {
                   </a>
                 </div>
                 <div className="title col-12 p-2 text-center">
-                  <a href="./index.html">
+                  <Link to="/">
                     <img src={logoIcon} alt="" height="60px" width="60px" />
-                  </a>
+                  </Link>
                   <h3>Regsiter Now</h3>
                 </div>
                 <form action="" className="col-12" id="registerUser">
@@ -124,6 +127,13 @@ export const Register = () => {
                           </div>
                         </div>
                       </div>
+                      {/* <div className="text-center">
+                        {error ? (
+                          <Notify variant="success" msg="Registration sucess" />
+                        ) : (
+                          <Notify variant="danger" msg="Something went worng" />
+                        )}
+                      </div> */}
 
                       <button
                         type="submit"
