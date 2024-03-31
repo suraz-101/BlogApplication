@@ -21,8 +21,9 @@ export const Login = () => {
       const response = await instance.post(URLS.LOGIN, credentials); // sends reques to http://localhost:8000/api/v1/users/login and store the response in response variable
       setToken(response?.data.message); // This line of code will call the setToken function of utils/session.js file and helps to setItem into the localStorage
       navigate("/admin");
-    } catch (error) {
-      setError(error);
+    } catch (e) {
+      // console.log("error is : ", e.response.data.message);
+      setError(e.response.data.message);
     } finally {
       setTimeout(() => {
         setError("");
@@ -99,12 +100,7 @@ export const Login = () => {
                       />
                     </div>
                     <div className="text-center">
-                      {error && (
-                        <Notify
-                          variant="danger"
-                          msg="Username or Password mismatch"
-                        />
-                      )}
+                      {error && <Notify variant="danger" msg={error} />}
                     </div>
                     <p className="m-auto">
                       <Link
