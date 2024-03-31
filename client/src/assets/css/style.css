@@ -1,0 +1,77 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  /* background-color: #e5e8e8; */
+}
+
+.boxShadow {
+  animation: changingColor 5s linear infinite;
+}
+h2 {
+  color: rgb(0, 34, 85);
+}
+
+@keyframes changingColor {
+  0% {
+    box-shadow: 0px 0px 100px 2px rgb(0, 34, 85);
+  }
+  25% {
+    box-shadow: 0px 0px 100px 2px rgb(1, 42, 104);
+  }
+  50% {
+    box-shadow: 0px 0px 100px 2px rgb(1, 56, 138);
+  }
+  75% {
+    box-shadow: 0px 0px 100px 2px rgb(0, 34, 85);
+  }
+  100% {
+    box-shadow: 0px 0px 100px 2px rgb(0, 34, 85);
+  }
+}
+
+label {
+  color: #4e545c;
+}
+
+.btn {
+  background-color: rgb(0, 34, 85);
+  color: white;
+  z-index: 1;
+}
+.btn:hover {
+  border: 1px solid rgb(0, 34, 85);
+  background-color: #e5e8e8;
+  color: #4e545c;
+  transition: 0.3s ease-in-out;
+  /* background-color: rgb(0, 34, 85); */
+  /* color: white; */
+}
+
+#password {
+  position: relative;
+  /* border: 1px solid white; */
+}
+
+.passwordValidation {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  height: auto;
+  width: 100%;
+  display: none;
+}
+
+.passwordValidation p {
+  font-size: 10px;
+}
+
+.loginButton {
+  border: 1px solid #4e545c;
+}
+
+.cross {
+  border: 3px solid transparent;
+  border-radius: 50%;
+  /* box-shadow: 0px px 100px 2px rgb(0, 34, 85); */
+}

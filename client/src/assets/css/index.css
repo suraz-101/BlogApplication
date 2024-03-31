@@ -1,0 +1,130 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.button {
+  background-color: rgb(0, 34, 85);
+  color: white;
+}
+.button:hover {
+  color: white;
+  box-shadow: 0px 0px 10px 2px rgb(0, 34, 85);
+  /* border: 3px solid rgb(0, 34, 85); */
+  background-color: white;
+}
+
+.menu-items {
+  color: #8d9797;
+}
+
+.content {
+  background-color: #e5e8e8;
+  height: 100vh;
+}
+
+.active-link {
+  color: rgb(0, 34, 85);
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link:hover {
+  color: rgb(0, 34, 85);
+}
+
+.nav-link::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  content: "";
+  width: 0%;
+  height: 2px;
+  background-color: rgb(0, 34, 85);
+}
+
+.nav-link:hover::after {
+  color: rgb(0, 34, 85);
+  transition: 0.4s ease-in-out;
+  width: 50%;
+}
+
+.active::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  content: "";
+  width: 50%;
+  height: 2px;
+  background-color: rgb(0, 34, 85);
+}
+
+.searchButton {
+  border: 1px solid rgb(0, 34, 85);
+  color: rgb(0, 34, 85);
+}
+
+.searchButton:hover {
+  box-shadow: 0px 0px 1px 2px rgb(0, 34, 85);
+}
+
+.imageBackground {
+  position: relative;
+  background-image: url("./images/homepage.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 300px;
+}
+
+.popular .active {
+  color: rgb(0, 34, 85);
+}
+
+.popular a {
+  color: #8d9797;
+}
+
+.popular a:hover {
+  color: rgb(0, 34, 85);
+  transition: 0.3s ease-in-out;
+}
+
+.topArticles a .card:hover {
+  box-shadow: 0px 0px 10px 0px rgb(0, 34, 85);
+  transition: 0.2s ease-in-out;
+}
+
+.btn:hover {
+  background-color: rgb(0, 34, 85);
+  color: white;
+  box-shadow: 0px 0px 10px 2px rgb(0, 34, 85);
+}
+
+.articles a .card:hover {
+  border: 1px solid gray;
+  box-shadow: 0px 0px 10px 0px gray;
+  transition: 0.2s ease-in-out;
+}
+
+.pagination .pages {
+  border-radius: 10px;
+}
+
+.pagination .pages.current {
+  box-shadow: 0px 0px 10px 0px gray;
+}
+.pagination .pages:hover {
+  box-shadow: 0px 0px 10px 0px gray;
+}
+
+.blog-list a .card:hover {
+  box-shadow: 0px 0px 10px 0px rgb(0, 34, 85);
+}
+
+.scrollbar {
+  background-color: rgb(0, 34, 85);
+}
