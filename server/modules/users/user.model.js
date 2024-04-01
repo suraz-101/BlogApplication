@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema(
     phoneNumber: {
       type: Number,
       required: [true, "Please provide contact details"],
+      unique: [true, "Phone Number must be unique"],
     },
     role: {
       type: [String],

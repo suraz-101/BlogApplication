@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import "../assets/css/style.css";
 import logo from "../assets/icons/android-chrome-192x192.png";
 
@@ -28,7 +29,7 @@ export const VerifyToken = () => {
                           className="form-control"
                           id="exampleInputEmail1"
                           aria-describedby="emailHelp"
-                          placeholder="Email - example@gmail.com"
+                          placeholder="email"
                           name="email"
                           required
                           disabled

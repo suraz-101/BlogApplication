@@ -5,11 +5,11 @@ import logo from "../assets/icons/android-chrome-192x192.png";
 import profile from "../assets/images/profile.jpeg";
 
 export const AdminNavbar = () => {
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const token = getToken("access_token");
   const jwtPayload = decodeJwt(token);
   useEffect(() => {
-    setEmail(jwtPayload.data.name);
+    setName(jwtPayload.data.name);
   }, []);
   return (
     <>
@@ -33,6 +33,7 @@ export const AdminNavbar = () => {
               alt=""
               style={{ height: "30px", width: "30px", borderRadius: " 50%" }}
             />
+            <span className="mx-2">{name}</span>
           </div>
         </div>
       </div>

@@ -1,10 +1,33 @@
 import logo from "../assets/icons/android-chrome-192x192.png";
 import "../assets/css/style.css";
+import { Link, useNavigate } from "react-router-dom";
 import { decodeJwt, getToken } from "../utils/session";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { Notify } from "../conponenets/Notify";
+
+import instance from "../utils/api";
+import { URLS } from "../constants";
 
 export const ForgetPassword = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+
+  const handleClick = async (e) => {
+    try {
+      e.preventDefault();
+      const response = await instance.post(URLS.GENERATE_OTP, { email }); // sends reques to http://localhost:8000/api/v1/users/login and store the response in response variable
+      alert(response.data.message);
+      navigate("/verifyToken", { state: { email } });
+    } catch (e) {
+      setError(e.response.data.message);
+    } finally {
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+      // setCredentials({ email: "", password: "" });
+    }
+  };
 
   return (
     <div
@@ -21,7 +44,12 @@ export const ForgetPassword = () => {
                 </a>
                 <h2>Forget Password</h2>
               </div>
-              <form action="" className="col-12 " id="forgetPasswordForm ">
+              <form
+                action=""
+                className="col-12 "
+                id="forgetPasswordForm "
+                onSubmit={(e) => handleClick(e)}
+              >
                 <div className="row container">
                   <div className="mb-3">
                     <label className="form-label">Email address</label>
@@ -31,10 +59,15 @@ export const ForgetPassword = () => {
                       id="exampleInputEmail1"
                       placeholder="Email - example@gmail.com"
                       name="email"
-                      value={email}
+                      // value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
                       required
-                      disabled
                     />
+                  </div>
+                  <div className="text-de">
+                    {error && <Notify variant="danger" msg={error} />}
                   </div>
                   <button
                     type="submit"

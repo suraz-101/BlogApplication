@@ -139,6 +139,7 @@ const loginUser = async (payload) => {
 
 const generateOTP = async (payload) => {
   const { email } = payload;
+  console.log(email);
   if (!email) throw new Error("please enter email");
   const user = await userModel.findOne({ email });
   if (!user) throw new Error("user does not exists");

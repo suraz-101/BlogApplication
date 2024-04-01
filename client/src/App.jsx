@@ -19,10 +19,12 @@ const App = () => {
     <>
       <Routes>
         {/* normal Users */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/forgetPassword" element={<ForgetPassword />} />
-        <Route path="register" element={<Register />} />
-        <Route path="/verifyToken" element={<VerifyToken />} />
+        <Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgetPassword" element={<ForgetPassword />} />
+          <Route path="register" element={<Register />} />
+          <Route path="/verifyToken" element={<VerifyToken />} />
+        </Route>
 
         <Route path="/" element={<AppLayout />}>
           <Route index element={<Home />} />
