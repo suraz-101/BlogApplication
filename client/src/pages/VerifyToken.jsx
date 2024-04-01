@@ -1,8 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../assets/css/style.css";
 import logo from "../assets/icons/android-chrome-192x192.png";
 
 export const VerifyToken = () => {
+  const location = useLocation();
+  const email = location.state.email;
   return (
     <div>
       <div
@@ -21,54 +23,53 @@ export const VerifyToken = () => {
                 </div>
                 <form action="" className="col-12" id="verifyToken">
                   <div className="row container">
-                    <form>
-                      <div className="mb-3">
-                        <label className="form-label">Email address</label>
-                        <input
-                          type="email"
-                          className="form-control"
-                          id="exampleInputEmail1"
-                          aria-describedby="emailHelp"
-                          placeholder="email"
-                          name="email"
-                          required
-                          disabled
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label className="form-label">OTP</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="token"
-                          placeholder="Please enter the OTP "
-                          name="token"
-                          required
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label className="form-label">New Password</label>
-                        <input
-                          type="password"
-                          className="form-control"
-                          id="newPassword"
-                          placeholder="Please enter New Password "
-                          name="newPassword"
-                          required
-                        />
-                      </div>
-                      <p className="m-auto">
-                        <a href="" className="text-decoration-none k">
-                          Resend code
-                        </a>
-                      </p>
-                      <button
-                        type="submit"
-                        className="btn col-sm-7 m-auto my-3 border border-dark"
-                      >
-                        Change Password
-                      </button>
-                    </form>
+                    <div className="mb-3">
+                      <label className="form-label">Email address</label>
+                      <input
+                        type="email"
+                        className="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        value={email}
+                        // placeholder={email}
+                        name="email"
+                        required
+                        disabled
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label">OTP</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="token"
+                        placeholder="Please enter the OTP "
+                        name="token"
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label">New Password</label>
+                      <input
+                        type="password"
+                        className="form-control"
+                        id="newPassword"
+                        placeholder="Please enter New Password "
+                        name="newPassword"
+                        required
+                      />
+                    </div>
+                    <p className="m-auto">
+                      <a href="" className="text-decoration-none k">
+                        Resend code
+                      </a>
+                    </p>
+                    <button
+                      type="submit"
+                      className="btn col-sm-7 m-auto my-3 border border-dark"
+                    >
+                      Change Password
+                    </button>
                   </div>
                 </form>
               </div>
