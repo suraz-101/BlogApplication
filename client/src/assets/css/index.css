@@ -74,7 +74,7 @@
 
 .imageBackground {
   position: relative;
-  background-image: url("./images/homepage.png");
+  background-image: url("../images//homepage.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 300px;

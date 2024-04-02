@@ -2,9 +2,55 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "../assets/css/style.css";
 import logo from "../assets/icons/android-chrome-192x192.png";
 
+import { Notify } from "../conponenets/Notify";
+
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import instance from "../utils/api";
+import { setToken } from "../utils/session";
+import { URLS } from "../constants";
+
 export const VerifyToken = () => {
-  const location = useLocation();
-  const email = location.state.email;
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const [isDisabled, setIsdisabled] = useState(false);
+  const { state } = useLocation();
+  const [payload, setPayload] = useState({
+    email: state.email,
+    otp: "",
+    password: "",
+  });
+
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      setIsdisabled(true);
+      const result = await instance.post(URLS.VERIFY_OTP, payload);
+      setSuccess(result.data.message);
+      // sends reques to http://localhost:8000/api/v1/users/login and store the response in response variable
+      // navigate("/login");
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+    } catch (e) {
+      setError(e.response.data.message);
+    } finally {
+      setIsdisabled(false);
+      setTimeout(() => {
+        setError("");
+        setSuccess("");
+        setPayload({
+          email: "",
+          otp: "",
+          password: "",
+        });
+      }, 3000);
+
+      // setCredentials({ email: "", password: "" });
+    }
+  };
+
   return (
     <div>
       <div
@@ -21,7 +67,14 @@ export const VerifyToken = () => {
                   </a>
                   <h2>Token Verification</h2>
                 </div>
-                <form action="" className="col-12" id="verifyToken">
+                <form
+                  action=""
+                  className="col-12"
+                  id="verifyToken"
+                  onSubmit={(e) => {
+                    handleSubmit(e);
+                  }}
+                >
                   <div className="row container">
                     <div className="mb-3">
                       <label className="form-label">Email address</label>
@@ -30,8 +83,7 @@ export const VerifyToken = () => {
                         className="form-control"
                         id="exampleInputEmail1"
                         aria-describedby="emailHelp"
-                        value={email}
-                        // placeholder={email}
+                        value={payload?.email || "user@example.com"}
                         name="email"
                         required
                         disabled
@@ -45,6 +97,12 @@ export const VerifyToken = () => {
                         id="token"
                         placeholder="Please enter the OTP "
                         name="token"
+                        value={payload.otp}
+                        onChange={(e) => {
+                          setPayload((prevVal) => {
+                            return { ...prevVal, otp: e.target.value };
+                          });
+                        }}
                         required
                       />
                     </div>
@@ -55,10 +113,23 @@ export const VerifyToken = () => {
                         className="form-control"
                         id="newPassword"
                         placeholder="Please enter New Password "
-                        name="newPassword"
+                        name="password"
+                        value={payload.password}
+                        onChange={(e) => {
+                          setPayload((prevVal) => {
+                            return { ...prevVal, password: e.target.value };
+                          });
+                        }}
                         required
                       />
                     </div>
+                    {success ||
+                      (error && (
+                        <Notify
+                          variant={error ? "danger" : "success"}
+                          msg={success || error}
+                        />
+                      ))}
                     <p className="m-auto">
                       <a href="" className="text-decoration-none k">
                         Resend code
@@ -67,6 +138,7 @@ export const VerifyToken = () => {
                     <button
                       type="submit"
                       className="btn col-sm-7 m-auto my-3 border border-dark"
+                      disabled={isDisabled}
                     >
                       Change Password
                     </button>
