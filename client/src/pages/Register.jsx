@@ -70,12 +70,9 @@ export const Register = () => {
                     backgroundColor: " white",
                   }}
                 >
-                  <a
-                    href="./index.html"
-                    className="text-decoration-none text-dark"
-                  >
+                  <Link to="/" className="text-decoration-none text-dark">
                     <i className="fa fa-close"></i>
-                  </a>
+                  </Link>
                 </div>
                 <div className="title col-12 p-2 text-center">
                   <Link to="/">

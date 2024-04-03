@@ -1,39 +1,37 @@
 import React from "react";
 
-export const pagination = () => {
+export const Pagination = () => {
   return (
-    <div>
-      <nav>
-        <ul class="pagination d-flex justify-content-center">
-          <li class="page-item">
-            <a class="page-link text-dark" href="#">
-              <span>&laquo;</span>
-              <span class="sr-only">Previous</span>
-            </a>
-          </li>
-          <li class="page-item">
-            <a class="page-link text-dark" href="#">
-              1
-            </a>
-          </li>
-          <li class="page-item">
-            <a class="page-link text-dark" href="#">
-              2
-            </a>
-          </li>
-          <li class="page-item">
-            <a class="page-link text-dark" href="#">
-              3
-            </a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">
-              <span>&raquo;</span>
-              <span class="sr-only text-dark">Next</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
+    <nav>
+      <ul className="pagination d-flex justify-content-center">
+        <li className="page-item">
+          <a className="page-link text-dark" href="#">
+            <span>&laquo;</span>
+            <span className="sr-only">Previous</span>
+          </a>
+        </li>
+        <li className="page-item">
+          <a className="page-link text-dark" href="#">
+            1
+          </a>
+        </li>
+        <li className="page-item">
+          <a className="page-link text-dark" href="#">
+            2
+          </a>
+        </li>
+        <li className="page-item">
+          <a className="page-link text-dark" href="#">
+            3
+          </a>
+        </li>
+        <li className="page-item">
+          <a className="page-link" href="#">
+            <span>&raquo;</span>
+            <span className="sr-only text-dark">Next</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   );
 };

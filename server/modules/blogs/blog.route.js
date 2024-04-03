@@ -28,7 +28,7 @@ router.get("/", checkRole(["user"]), async (req, res, next) => {
 
 router.get(
   "/getPublishedBlogs",
-  checkRole(["user", "admin"]),
+  // checkRole(["user", "admin"]),
   async (req, res, next) => {
     try {
       const { status, page, limit } = req.query;
