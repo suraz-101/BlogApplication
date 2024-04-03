@@ -2,12 +2,12 @@ import { useEffect } from "react";
 import { createContext, useState } from "react";
 import { useBlogs } from "../hooks/useBlogs";
 
-const blogContext = createContext(null);
+export const blogContext = createContext(null);
 
 export const BlogContextProvider = ({ children }) => {
   const { PublishedBlogsOnly, data } = useBlogs();
   const [page] = useState(1);
-  const [limit] = useState(2);
+  const [limit] = useState(20);
 
   // const [data, setData] = useState([]);
 

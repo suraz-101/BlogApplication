@@ -1,10 +1,13 @@
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
+
 import { Pagination } from "../conponenets/Pagination";
+import { blogContext } from "../context /BlogContext";
 import { useBlogs } from "../hooks/useBlogs";
 
 export const BlogsList = () => {
+  const context = useContext(blogContext);
+  console.log(context);
+
   // const [page, setPage] = useState(1);
   // const [limit, setLimit] = useState(2);
   // const { PublishedBlogsOnly } = useBlogs();
@@ -28,6 +31,61 @@ export const BlogsList = () => {
         </div>
         <div className="blog-list">
           <div className="container p-4 row m-auto d-flex">
+            {context.length > 0 &&
+              context.map((data) => {
+                return (
+                  <div className="col-12 col-sm-6 col-md-3 mt-2 p-2">
+                    <a href="" className="text-decoration-none">
+                      <div className="card col-12">
+                        <img
+                          src="../assets/images/profile.jpeg"
+                          className="card-img-top"
+                          style={{ minHeight: " 200px", maxHeight: "200px" }}
+                          alt="..."
+                        />
+                        <div className="card-body">
+                          <h5 className="card-title">{data.title}</h5>
+                          <p className="text-muted">{data.content}</p>
+                          <div className="contianer row">
+                            <div className="col-12 d-flex py-2">
+                              <div
+                                className="border"
+                                style={{
+                                  height: "40px",
+                                  width: " 40px",
+                                  borderRadius: "50%",
+                                }}
+                              >
+                                <img
+                                  src="../assets/images/profile.jpeg"
+                                  className="img-fluid rounded-start"
+                                  alt="..."
+                                />
+                              </div>
+                              <div className="mx-2">
+                                <h6
+                                  style={{
+                                    fontSize: "12px",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  {data.author}
+                                </h6>
+                                <h6
+                                  style={{ fontSize: "12px" }}
+                                  className="text-muted"
+                                >
+                                  {data.createAt}
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                );
+              })}
             <div className="col-12 col-sm-6 col-md-3 mt-2 p-2">
               <a href="./blog-details.html" className="text-decoration-none">
                 <div className="card col-12">
