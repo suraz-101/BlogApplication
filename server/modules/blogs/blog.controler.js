@@ -23,6 +23,11 @@ const commonQuerry = [
       author: "$BlogAuthor.name",
     },
   },
+  {
+    $addFields: {
+      authorProfile: "$BlogAuthor.profilePic",
+    },
+  },
 ];
 
 //commong pagination query that can be used in multiple functions (almost all the functions)
@@ -51,18 +56,18 @@ const facetQuerry = (page, limit) => {
 
 const create = (payload) => {
   payload.slug = generateSlug(payload.title);
+  payload.words = payload.content.split(" ").length;
   return BlogModel.create(payload);
 };
 
-const getPublishedBlogs = async (search, page = 1, limit = 3) => {
+const getPublishedBlogs = async (search, page = 1, limit = 20) => {
   const query = [];
-  if (search?.status) {
-    query.push({
-      $match: {
-        status: `${search.status}`,
-      },
-    });
-  }
+
+  query.push({
+    $match: {
+      status: "published",
+    },
+  });
 
   // using common querry that can used to merger users, comments and blog collection using lookup and unqind
   query.push.apply(query, commonQuerry);
@@ -77,6 +82,9 @@ const getPublishedBlogs = async (search, page = 1, limit = 3) => {
       author: 1,
       slug: 1,
       status: 1,
+      createAt: 1,
+      blogImage: 1,
+      authorProfile: 1,
     },
   });
 
@@ -92,7 +100,7 @@ const getPublishedBlogs = async (search, page = 1, limit = 3) => {
   };
 };
 
-const getAll = async (search, page = 1, limit = 3) => {
+const getAll = async (search, page = 1, limit = 20) => {
   const querry = [];
   // filter the data according to last createdAt
   querry.push({
@@ -116,6 +124,8 @@ const getAll = async (search, page = 1, limit = 3) => {
       status: 1,
       comments: "$BlogComments.comment",
       numberOfComments: 1,
+      createAt: 1,
+      blogImage: 1,
     },
   });
 

@@ -87,16 +87,25 @@ router.post(
   }
 );
 
-router.put("/updateBlog", checkRole(["admin"]), async (req, res, next) => {
-  try {
-    const { id, ...rest } = req.body;
-    console.log(rest);
-    const result = await blogController.updateById(id, rest);
-    res.json({ message: result });
-  } catch (err) {
-    next(err);
+router.put(
+  "/updateBlog",
+  uploadBlogImage.single("blogImage"),
+  //  checkRole(["admin"]),
+  async (req, res, next) => {
+    try {
+      if (req.file) {
+        req.body.blogImage = req.file.path.replace("public", "");
+      }
+
+      const { id, ...rest } = req.body;
+      console.log(rest);
+      const result = await blogController.updateById(id, rest);
+      res.json({ message: result });
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 router.patch("/status/:id", checkRole(["user"]), async (req, res, next) => {
   try {

@@ -29,7 +29,8 @@ export const useBlogs = () => {
       const response = await instance.get(
         `${URLS.PUBLISHED_BLOG_LIST}?limit=${limit}&${page}`
       );
-      setData(response.data.message.data);
+      console.log(response.data.message);
+      setData(response.data.message);
       return data;
       //   console.log(response.data.message.data);
       //   return response.data.message.data;
@@ -41,7 +42,7 @@ export const useBlogs = () => {
     }
   }, []);
 
-  return { BlogLists, data, PublishedBlogsOnly };
+  return { BlogLists, error, loading, data, PublishedBlogsOnly };
 
   //   useEffect(() => {}, []);
 };

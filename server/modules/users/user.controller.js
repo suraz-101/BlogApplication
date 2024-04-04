@@ -194,6 +194,7 @@ const getProfile = (userId) => {
 };
 
 const updateProfile = async (userId, payload) => {
+  console.log(payload);
   const user = await userModel.findOne({ _id: userId });
   if (!user) throw new Error("User does not exists");
   await userModel.updateOne({ _id: user.id }, payload);

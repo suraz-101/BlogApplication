@@ -123,7 +123,7 @@ router.patch(
 router.get("/get-user", checkRole(["user"]), async (req, res, next) => {
   try {
     const { id } = req.body;
-    
+
     if (!id) throw new Error("id is required");
     const result = await userController.getProfile(id);
     res.status(200).json({ message: result });
@@ -150,11 +150,14 @@ router.patch(
 // this is the api to update the profile of specific user which is only accessible forspecific user
 router.put(
   "/updateProfile",
+  upload.single("profilePic"),
   userUpdateVlaidation,
-  checkRole(["user"]),
+  // checkRole(["user"]),
   async (req, res, next) => {
     try {
-      console.log(req);
+      if (req.file) {
+        req.body.profilePic = req.file.path.replace("public", "");
+      }
       const { id, ...rest } = req.body;
       if (!id) throw new Error("Id is required");
       const result = await userController.updateProfile(id, rest);
