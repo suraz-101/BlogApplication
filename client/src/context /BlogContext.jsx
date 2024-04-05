@@ -5,15 +5,20 @@ import { useBlogs } from "../hooks/useBlogs";
 export const blogContext = createContext(null);
 
 export const BlogContextProvider = ({ children }) => {
-  const { PublishedBlogsOnly, data } = useBlogs();
-  const [page] = useState(1);
-  const [limit] = useState(20);
+  const { error, loasding, PublishedBlogsOnly, data } = useBlogs();
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(20);
+  console.log(data);
 
-  // const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);,
 
   useEffect(() => {
     PublishedBlogsOnly({ page, limit });
   }, [page, limit]);
 
-  return <blogContext.Provider value={data}>{children}</blogContext.Provider>;
+  return (
+    <blogContext.Provider value={{ data, page, limit, setPage, setLimit }}>
+      {children}
+    </blogContext.Provider>
+  );
 };

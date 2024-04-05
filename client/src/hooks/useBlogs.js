@@ -3,7 +3,7 @@ import { URLS } from "../constants";
 import instance from "../utils/api";
 
 export const useBlogs = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -16,7 +16,7 @@ export const useBlogs = () => {
       setData(response.data.message.data);
       return data;
     } catch (er) {
-      //   setError(er.response? er.response);
+      // setError(er.response? er.response);
       throw er;
     } finally {
       setLoading(false);
@@ -29,7 +29,6 @@ export const useBlogs = () => {
       const response = await instance.get(
         `${URLS.PUBLISHED_BLOG_LIST}?limit=${limit}&${page}`
       );
-      console.log(response.data.message);
       setData(response.data.message);
       return data;
       //   console.log(response.data.message.data);

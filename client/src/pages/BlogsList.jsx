@@ -7,17 +7,11 @@ import { BASE_URL } from "../constants/index.js";
 import { dateFormatter } from "../utils/dateFormatter";
 
 export const BlogsList = () => {
-  const context = useContext(blogContext);
-  const contextData = context.data;
-  const { error, loading } = useBlogs();
-  console.log(loading);
-  // const [page, setPage] = useState(1);
-  // const [limit, setLimit] = useState(2);
-  // const { PublishedBlogsOnly } = useBlogs();
+  const { data, setLimit, setPage, page, limit } = useContext(blogContext);
 
-  // useEffect(() => {
-  //   PublishedBlogsOnly({ page, limit });
-  // }, []);
+  const { error, loading } = useBlogs();
+  console.log("data and total", data);
+
   if (error) return <>Error Occured</>;
 
   return (
@@ -35,64 +29,7 @@ export const BlogsList = () => {
         </div>
         <div className="blog-list">
           <div className="container p-4 row m-auto d-flex">
-            <div className="col-12 col-sm-6 col-md-3 mt-2 p-2">
-              <a href="./blog-details.html" className="text-decoration-none">
-                <div className="card col-12">
-                  <img
-                    src="./images//homepage.jpg"
-                    className="card-img-top"
-                    style={{ minHeight: " 200px", maxHeight: "200px" }}
-                    alt="..."
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title placeholder-glow">
-                      <span className="placeholder col-12"></span>
-                    </h5>
-                    <p className="text-muted placeholder-glow">
-                      <span className="placeholder col-10"></span>
-                      <span className="placeholder col-10"></span>
-                      <span className="placeholder col-5"></span>
-                    </p>
-                    <div className="contianer row">
-                      <div className="col-12 d-flex py-2">
-                        <div
-                          className="border"
-                          style={{
-                            height: "40px",
-                            width: " 40px",
-                            borderRadius: "50%",
-                          }}
-                        >
-                          <img
-                            src="./images/homepage.png"
-                            className="img-fluid rounded-start"
-                            alt="..."
-                          />
-                        </div>
-                        <div className="mx-2">
-                          <h6
-                            className="placeholder-glow"
-                            style={{
-                              fontSize: "12px",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            <span className="placeholder col-12"></span>
-                          </h6>
-                          <h6
-                            style={{ fontSize: "12px" }}
-                            className="text-muted"
-                          >
-                            2h ago
-                          </h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            {/* {loading && (
+            {loading && (
               <div className="col-12 col-sm-6 col-md-3 mt-2 p-2">
                 <a href="./blog-details.html" className="text-decoration-none">
                   <div className="card col-12">
@@ -150,10 +87,10 @@ export const BlogsList = () => {
                   </div>
                 </a>
               </div>
-            )} */}
+            )}
 
-            {contextData?.length > 0 &&
-              contextData?.map((data) => {
+            {data?.data?.length > 0 &&
+              data?.data?.map((data) => {
                 return (
                   <div className="col-12 col-sm-6 col-md-3 mt-2 p-2">
                     <a href="" className="text-decoration-none">
@@ -216,7 +153,13 @@ export const BlogsList = () => {
               })}
           </div>
         </div>
-        <Pagination />
+        <Pagination
+          setPage={setPage}
+          setLimit={setLimit}
+          limit={limit}
+          page={page}
+          total={data.total}
+        />
       </div>
     </>
   );
