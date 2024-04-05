@@ -11,11 +11,19 @@ export const BlogContextProvider = ({ children }) => {
 
   useEffect(() => {
     PublishedBlogsOnly({ page, limit });
-  }, [PublishedBlogsOnly, page, limit]);
+  }, [page, limit]);
 
   return (
     <blogContext.Provider
-      value={{ data, page, limit, setPage, setLimit, loading, error }}
+      value={{
+        data,
+        page,
+        limit,
+        setPage,
+        setLimit,
+        loading,
+        error,
+      }}
     >
       {children}
     </blogContext.Provider>

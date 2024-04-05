@@ -7,7 +7,7 @@ export const useBlogs = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const BlogLists = async ({ page, limit }) => {
+  const BlogLists = async ({ page, limit, search }) => {
     try {
       setLoading(true);
       const response = await instance.get(

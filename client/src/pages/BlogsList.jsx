@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
 import { Paginate } from "../conponenets/Pagination";
 import { blogContext } from "../context /BlogContext";
 import { useBlogs } from "../hooks/useBlogs";
@@ -94,7 +94,10 @@ export const BlogsList = () => {
               data?.data?.map((data) => {
                 return (
                   <div className="col-12 col-sm-6 col-md-3 mt-2 p-2">
-                    <a href="" className="text-decoration-none">
+                    <Link
+                      to={`/blogsList/${data.slug}`}
+                      className="text-decoration-none"
+                    >
                       <div className="card col-12">
                         <img
                           src={BASE_URL.concat(data.blogImage)}
@@ -148,7 +151,7 @@ export const BlogsList = () => {
                           </div>
                         </div>
                       </div>
-                    </a>
+                    </Link>
                   </div>
                 );
               })}

@@ -1,6 +1,8 @@
 import "../assets/css/index.css";
 import { Link } from "react-router-dom";
 import logo from "../assets/icons/android-chrome-192x192.png";
+import { useContext } from "react";
+import { blogContext } from "../context /BlogContext";
 // import { FaSearch } from "react-icons";
 export const AppNavbar = () => {
   return (
@@ -36,6 +38,7 @@ export const AppNavbar = () => {
                     type="text"
                     className="form-control"
                     placeholder="Search Blogs"
+                   
                   />
                 </div>
               </div>

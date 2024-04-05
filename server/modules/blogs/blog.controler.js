@@ -63,6 +63,21 @@ const create = (payload) => {
 const getPublishedBlogs = async (search, page = 1, limit = 20) => {
   const query = [];
   console.log(page);
+
+  if (search?.title) {
+    querry.push({
+      $match: {
+        title: new RegExp(`${search.title}`, "gi"),
+      },
+    });
+  }
+  if (search?.author) {
+    querry.push({
+      $match: {
+        author: new RegExp(`${search.author}`, "gi"),
+      },
+    });
+  }
   query.push({
     $match: {
       status: "published",
