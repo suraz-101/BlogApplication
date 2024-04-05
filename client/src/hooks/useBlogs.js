@@ -13,7 +13,8 @@ export const useBlogs = () => {
       const response = await instance.get(
         `${URLS.PUBLISHED_BLOG_LIST}?page=${page}&limit=${limit}`
       );
-      setData(response.data.message.data);
+
+      setData(response.data.message);
       return data;
     } catch (er) {
       // setError(er.response? er.response);
@@ -27,14 +28,14 @@ export const useBlogs = () => {
     try {
       setLoading(true);
       const response = await instance.get(
-        `${URLS.PUBLISHED_BLOG_LIST}?limit=${limit}&${page}`
+        `${URLS.PUBLISHED_BLOG_LIST}?page=${page}&limit=${limit}`
       );
       setData(response.data.message);
       return data;
       //   console.log(response.data.message.data);
       //   return response.data.message.data;
     } catch (er) {
-      //   setError(er.response? er.response);
+      setError(er.response ? er.response : "something went wrong");
       throw er;
     } finally {
       setLoading(false);

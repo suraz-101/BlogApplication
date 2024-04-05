@@ -1,16 +1,17 @@
 import { useContext, useState, useEffect } from "react";
 
-import { Pagination } from "../conponenets/Pagination";
+import { Paginate } from "../conponenets/Pagination";
 import { blogContext } from "../context /BlogContext";
 import { useBlogs } from "../hooks/useBlogs";
 import { BASE_URL } from "../constants/index.js";
 import { dateFormatter } from "../utils/dateFormatter";
 
 export const BlogsList = () => {
-  const { data, setLimit, setPage, page, limit } = useContext(blogContext);
+  const { data, setLimit, setPage, page, limit, loading, error } =
+    useContext(blogContext);
 
-  const { error, loading } = useBlogs();
-  console.log("data and total", data);
+  // const { error, loading } = useBlogs();
+  // console.log("data and total", data);
 
   if (error) return <>Error Occured</>;
 
@@ -153,7 +154,7 @@ export const BlogsList = () => {
               })}
           </div>
         </div>
-        <Pagination
+        <Paginate
           setPage={setPage}
           setLimit={setLimit}
           limit={limit}

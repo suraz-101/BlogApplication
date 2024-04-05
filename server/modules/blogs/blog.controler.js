@@ -62,7 +62,7 @@ const create = (payload) => {
 
 const getPublishedBlogs = async (search, page = 1, limit = 20) => {
   const query = [];
-
+  console.log(page);
   query.push({
     $match: {
       status: "published",

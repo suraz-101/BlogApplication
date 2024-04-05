@@ -1,4 +1,4 @@
-import { Pagination } from "../conponenets/Pagination";
+import { Paginate } from "../conponenets/Pagination";
 import "../assets/css/index.css";
 
 export const Home = () => {
@@ -491,7 +491,7 @@ export const Home = () => {
               </a>
             </div>
           </div>
-          <Pagination />
+          <Paginate />
         </div>
       </div>
     </>

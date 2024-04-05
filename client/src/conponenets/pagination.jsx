@@ -1,57 +1,79 @@
 import React from "react";
+import Pagination from "react-bootstrap/Pagination";
 
-export const Pagination = ({ setLimit, setPage, limit, page, total }) => {
-  console.log("limit", limit);
-  console.log("tOTAL", total);
-
+export const Paginate = ({ setLimit, setPage, limit, page, total }) => {
+  // console.log("limit", limit);
+  // console.log("tOTAL", total);
+  let active = page;
   const totaNumberOfPages = Math.ceil(total / limit);
   let items = [];
 
   for (let i = 1; i <= totaNumberOfPages; i++) {
     items.push(
-      <li className="page-item">
-        <a className="page-link text-dark" href="#">
-          {i}
-        </a>
-      </li>
+      <Pagination.Item
+        key={i}
+        active={i === active}
+        onClick={() => {
+          setPage(i);
+        }}
+      >
+        {i}
+      </Pagination.Item>
     );
   }
-  console.log(items);
+
+  if (page === 0 || total === 0) {
+    return null;
+  }
   return (
-    <div className="d-flex justify-content-around container ">
-      <div>
-        <select
-          name=""
-          id=""
-          onChange={(e) => {
-            setLimit(e.target.value);
-          }}
-        >
-          <option value={5}>Limit</option>
-          <option value={10}>10</option>
-          <option value={20}>20</option>
-          <option value={50}>50</option>
-        </select>
+    <>
+      <div className="d-flex justify-content-around container ">
+        <div>
+          <select
+            name=""
+            id=""
+            onChange={(e) => {
+              setLimit(Number(e.target.value));
+            }}
+          >
+            <option value={5}>Limit</option>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+          </select>
+        </div>
+        <nav>
+          <Pagination>
+            <Pagination.First
+              disabled={page === 1}
+              onClick={() => {
+                setPage(1);
+              }}
+            />
+            <Pagination.Prev
+              disabled={page === 1}
+              onClick={() => {
+                page != 1 ? setPage(page - 1) : null;
+              }}
+            />
+            {items.map((item, index) => {
+              return <div key={index}>{item}</div>;
+            })}
+            <Pagination.Next
+              disabled={page === totaNumberOfPages}
+              onClick={() => {
+                page != totaNumberOfPages ? setPage(page + 1) : null;
+              }}
+            />
+            <Pagination.Last
+              disabled={page === totaNumberOfPages}
+              onClick={() => {
+                setPage(totaNumberOfPages);
+              }}
+            />
+          </Pagination>
+        </nav>
       </div>
-      <nav>
-        <ul className="pagination d-flex justify-content-center">
-          <li className="page-item">
-            <a className="page-link text-dark" href="#">
-              <span>&laquo;</span>
-              <span className="sr-only">Previous</span>
-            </a>
-          </li>
-          {items.map((item) => {
-            return <>{item}</>;
-          })}
-          <li className="page-item">
-            <a className="page-link" href="#">
-              <span>&raquo;</span>
-              <span className="sr-only text-dark">Next</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
+    </>
   );
 };
