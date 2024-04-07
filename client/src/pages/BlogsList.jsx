@@ -7,9 +7,25 @@ import { BASE_URL } from "../constants/index.js";
 import { dateFormatter } from "../utils/dateFormatter";
 
 export const BlogsList = () => {
-  const { data, setLimit, setPage, page, limit, loading, error } =
-    useContext(blogContext);
+  const {
+    data,
+    setLimit,
+    setPage,
+    page,
+    limit,
+    loading,
+    error,
+    setAuthor,
+    setTitle,
+  } = useContext(blogContext);
 
+  const [search, setSearch] = useState("blog");
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    setAuthor("");
+    setTitle("");
+  };
   // const { error, loading } = useBlogs();
   // console.log("data and total", data);
 
@@ -19,7 +35,36 @@ export const BlogsList = () => {
     <>
       <div className="main-content container-fluid bg-light">
         <div className="heading container d-flex justify-content-between align-items-center row m-auto py-2">
-          <h4 className="col-lg-2">Blogs</h4>
+          <div className="col-4">
+            <div className="col-lg-12">
+              <div className="input-group">
+                <div className="input-group-text">
+                  <select
+                    name="search btn btn-outline-none"
+                    id=""
+                    value={search}
+                    onChange={(e) => handleSearch(e)}
+                  >
+                    <option value="blog">Blogs</option>
+                    <option value="author">Author</option>
+                  </select>
+                </div>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search Blogs"
+                  onChange={(e) => {
+                    search === "blog"
+                      ? setTitle(e.target.value)
+                      : setAuthor(e.target.value);
+                  }}
+                />
+                <div className="input-group-text">
+                  <i className="fa fa-search"></i>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="col-lg-2">
             <select className="form-select" aria-label="Default select example">
               <option selected>Sort</option>
@@ -93,7 +138,10 @@ export const BlogsList = () => {
             {data?.data?.length > 0 &&
               data?.data?.map((data) => {
                 return (
-                  <div className="col-12 col-sm-6 col-md-3 mt-2 p-2">
+                  <div
+                    className="col-12 col-sm-6 col-md-3 mt-2 p-2"
+                    key={data.slug}
+                  >
                     <Link
                       to={`/blogsList/${data.slug}`}
                       className="text-decoration-none"

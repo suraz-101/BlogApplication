@@ -62,27 +62,28 @@ const create = (payload) => {
 
 const getPublishedBlogs = async (search, page = 1, limit = 20) => {
   const query = [];
-  console.log(page);
 
-  if (search?.title) {
-    querry.push({
-      $match: {
-        title: new RegExp(`${search.title}`, "gi"),
-      },
-    });
-  }
-  if (search?.author) {
-    querry.push({
-      $match: {
-        author: new RegExp(`${search.author}`, "gi"),
-      },
-    });
-  }
+  console.log(search?.author);
+
   query.push({
     $match: {
       status: "published",
     },
   });
+  if (search?.title) {
+    query.push({
+      $match: {
+        title: new RegExp(`${search?.title}`, "gi"),
+      },
+    });
+  }
+  // if (search?.author) {
+  //   query.push({
+  //     $match: {
+  //       author: new RegExp(`${search?.author}`, "gi"),
+  //     },
+  //   });
+  // }
 
   // using common querry that can used to merger users, comments and blog collection using lookup and unqind
   query.push.apply(query, commonQuerry);
@@ -102,6 +103,14 @@ const getPublishedBlogs = async (search, page = 1, limit = 20) => {
       authorProfile: 1,
     },
   });
+
+  if (search?.author) {
+    query.push({
+      $match: {
+        author: new RegExp(`${search?.author}`, "gi"),
+      },
+    });
+  }
 
   //using commong pagination query that can be used in getAll product as well
   query.push.apply(query, facetQuerry(page, limit));

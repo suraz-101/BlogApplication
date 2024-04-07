@@ -8,10 +8,12 @@ export const BlogContextProvider = ({ children }) => {
   const { error, loading, PublishedBlogsOnly, data } = useBlogs();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(20);
+  const [author, setAuthor] = useState("");
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
-    PublishedBlogsOnly({ page, limit });
-  }, [page, limit]);
+    PublishedBlogsOnly({ author, title, page, limit });
+  }, [author, title, page, limit]);
 
   return (
     <blogContext.Provider
@@ -23,6 +25,8 @@ export const BlogContextProvider = ({ children }) => {
         setLimit,
         loading,
         error,
+        setAuthor,
+        setTitle,
       }}
     >
       {children}

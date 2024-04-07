@@ -7,11 +7,11 @@ export const useBlogs = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const BlogLists = async ({ page, limit, search }) => {
+  const BlogLists = async ({ title, author, page, limit }) => {
     try {
       setLoading(true);
       const response = await instance.get(
-        `${URLS.PUBLISHED_BLOG_LIST}?page=${page}&limit=${limit}`
+        `${URLS.PUBLISHED_BLOG_LIST}?title=${title}&author=${author}&page=${page}&limit=${limit}`
       );
 
       setData(response.data.message);
@@ -24,23 +24,27 @@ export const useBlogs = () => {
     }
   };
 
-  const PublishedBlogsOnly = useCallback(async ({ page, limit }) => {
-    try {
-      setLoading(true);
-      const response = await instance.get(
-        `${URLS.PUBLISHED_BLOG_LIST}?page=${page}&limit=${limit}`
-      );
-      setData(response.data.message);
-      return data;
-      //   console.log(response.data.message.data);
-      //   return response.data.message.data;
-    } catch (er) {
-      setError(er.response ? er.response : "something went wrong");
-      throw er;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const PublishedBlogsOnly = useCallback(
+    async ({ title, author, page, limit }) => {
+      try {
+        setLoading(true);
+        const response = await instance.get(
+          `${URLS.PUBLISHED_BLOG_LIST}?title=${title}&author=${author}&page=${page}&limit=${limit}`
+        );
+        console.log(response?.data.message);
+        setData(response.data.message);
+        return data;
+        //   console.log(response.data.message.data);
+        //   return response.data.message.data;
+      } catch (er) {
+        setError(er.response ? er.response : "something went wrong");
+        throw er;
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
 
   return { BlogLists, error, loading, data, PublishedBlogsOnly };
 
