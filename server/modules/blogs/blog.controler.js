@@ -50,6 +50,13 @@ const facetQuerry = (page, limit) => {
         ],
       },
     },
+    {
+      $addFields: {
+        total: {
+          $arrayElemAt: ["$metadata.total", 0],
+        },
+      },
+    },
   ];
   return array;
 };
@@ -63,8 +70,6 @@ const create = (payload) => {
 const getPublishedBlogs = async (search, page = 1, limit = 20) => {
   const query = [];
 
-  console.log(search?.author);
-
   query.push({
     $match: {
       status: "published",
@@ -77,16 +82,16 @@ const getPublishedBlogs = async (search, page = 1, limit = 20) => {
       },
     });
   }
-  // if (search?.author) {
-  //   query.push({
-  //     $match: {
-  //       author: new RegExp(`${search?.author}`, "gi"),
-  //     },
-  //   });
-  // }
 
   // using common querry that can used to merger users, comments and blog collection using lookup and unqind
   query.push.apply(query, commonQuerry);
+  if (search?.author) {
+    query.push({
+      $match: {
+        author: new RegExp(`${search?.author}`, "gi"),
+      },
+    });
+  }
 
   // query to show the neccessary field
   query.push({
@@ -104,21 +109,14 @@ const getPublishedBlogs = async (search, page = 1, limit = 20) => {
     },
   });
 
-  if (search?.author) {
-    query.push({
-      $match: {
-        author: new RegExp(`${search?.author}`, "gi"),
-      },
-    });
-  }
-
   //using commong pagination query that can be used in getAll product as well
   query.push.apply(query, facetQuerry(page, limit));
 
   const result = await BlogModel.aggregate(query);
+
   return {
     data: result[0].data,
-    total: result[0].metadata[0].total,
+    total: result[0].total || 0,
     page: +page,
     limit: +limit,
   };
@@ -136,6 +134,20 @@ const getAll = async (search, page = 1, limit = 20) => {
   //commong code that can be repeated where we need to merger users and comment collections
   querry.push.apply(querry, commonQuerry); // => to merge two different array use syntax ==>  oldArray.push.apply(oldArray,newArray);
 
+  if (search?.title) {
+    querry.push({
+      $match: {
+        title: new RegExp(`${search.title}`, "gi"),
+      },
+    });
+  }
+  if (search?.author) {
+    querry.push({
+      $match: {
+        author: new RegExp(`${search.author}`, "gi"),
+      },
+    });
+  }
   // query to include different fields of the colletions
   querry.push({
     $project: {
@@ -154,20 +166,7 @@ const getAll = async (search, page = 1, limit = 20) => {
   });
 
   //query to search based on title and author name
-  if (search?.title) {
-    querry.push({
-      $match: {
-        title: new RegExp(`${search.title}`, "gi"),
-      },
-    });
-  }
-  if (search?.author) {
-    querry.push({
-      $match: {
-        author: new RegExp(`${search.author}`, "gi"),
-      },
-    });
-  }
+ 
 
   // using commong wuery for pagination which can be used in get published blogs  as well
   querry.push.apply(querry, facetQuerry(page, limit));
@@ -175,7 +174,7 @@ const getAll = async (search, page = 1, limit = 20) => {
   const result = await BlogModel.aggregate(querry);
   return {
     data: result[0].data,
-    total: result[0].metadata[0].total,
+    total: result[0].total || 0,
     page: +page,
     limit: +limit,
   };

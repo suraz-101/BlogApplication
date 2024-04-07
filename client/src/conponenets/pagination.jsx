@@ -2,8 +2,6 @@ import React from "react";
 import Pagination from "react-bootstrap/Pagination";
 
 export const Paginate = ({ setLimit, setPage, limit, page, total }) => {
-  // console.log("limit", limit);
-  // console.log("tOTAL", total);
   let active = page;
   const totaNumberOfPages = Math.ceil(total / limit);
   let items = [];

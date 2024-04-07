@@ -5,6 +5,7 @@ import { blogContext } from "../context /BlogContext";
 import { useBlogs } from "../hooks/useBlogs";
 import { BASE_URL } from "../constants/index.js";
 import { dateFormatter } from "../utils/dateFormatter";
+import { useDebounce } from "../hooks/useDebounce";
 
 export const BlogsList = () => {
   const {
@@ -20,17 +21,22 @@ export const BlogsList = () => {
   } = useContext(blogContext);
 
   const [search, setSearch] = useState("blog");
+  const [value, setValue] = useState("");
+  const debounceSearchTerm = useDebounce(value, 500);
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
     setAuthor("");
     setTitle("");
+    setValue("");
   };
-  // const { error, loading } = useBlogs();
-  // console.log("data and total", data);
+
+  useEffect(() => {
+    search === "blog" ? setTitle(value) : setAuthor(value);
+  }, [value, search, setAuthor, setTitle]);
 
   if (error) return <>Error Occured</>;
-
+  console.log(data.total);
   return (
     <>
       <div className="main-content container-fluid bg-light">
@@ -43,7 +49,9 @@ export const BlogsList = () => {
                     name="search btn btn-outline-none"
                     id=""
                     value={search}
-                    onChange={(e) => handleSearch(e)}
+                    onChange={(e) => {
+                      handleSearch(e);
+                    }}
                   >
                     <option value="blog">Blogs</option>
                     <option value="author">Author</option>
@@ -53,10 +61,9 @@ export const BlogsList = () => {
                   type="text"
                   className="form-control"
                   placeholder="Search Blogs"
+                  value={value}
                   onChange={(e) => {
-                    search === "blog"
-                      ? setTitle(e.target.value)
-                      : setAuthor(e.target.value);
+                    setValue(e.target.value);
                   }}
                 />
                 <div className="input-group-text">
@@ -135,7 +142,7 @@ export const BlogsList = () => {
               </div>
             )}
 
-            {data?.data?.length > 0 &&
+            {data?.data?.length > 0 ? (
               data?.data?.map((data) => {
                 return (
                   <div
@@ -202,7 +209,10 @@ export const BlogsList = () => {
                     </Link>
                   </div>
                 );
-              })}
+              })
+            ) : (
+              <div>No Data Found</div>
+            )}
           </div>
         </div>
         <Paginate
@@ -210,7 +220,7 @@ export const BlogsList = () => {
           setLimit={setLimit}
           limit={limit}
           page={page}
-          total={data.total}
+          total={data?.total}
         />
       </div>
     </>
