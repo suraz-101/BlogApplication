@@ -20,6 +20,7 @@ export const BlogsList = () => {
     setTitle,
   } = useContext(blogContext);
 
+  // const { data } = PublishedBlogsOnly(title, author, page, limit);
   const [search, setSearch] = useState("blog");
   const [value, setValue] = useState("");
   const debounceSearchTerm = useDebounce(value, 500);
@@ -193,7 +194,8 @@ export const BlogsList = () => {
                                     fontWeight: "bold",
                                   }}
                                 >
-                                  {data.author}
+                                  {data.author} (
+                                  <span className="text-muted">author</span>)
                                 </h6>
                                 <h6
                                   style={{ fontSize: "12px" }}

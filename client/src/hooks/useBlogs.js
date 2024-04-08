@@ -34,8 +34,6 @@ export const useBlogs = () => {
         console.log(response?.data.message);
         setData(response.data.message);
         return data;
-        //   console.log(response.data.message.data);
-        //   return response.data.message.data;
       } catch (er) {
         setError(er.response ? er.response : "something went wrong");
         throw er;
@@ -46,7 +44,7 @@ export const useBlogs = () => {
     []
   );
 
-  return { BlogLists, error, loading, data, PublishedBlogsOnly };
+  const getBySlug = () => {};
 
-  //   useEffect(() => {}, []);
+  return { BlogLists, error, loading, data, PublishedBlogsOnly, getBySlug };
 };

@@ -1,15 +1,38 @@
 import React, { useState } from "react";
 import { Card, Form, Button } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 import image from "../assets/images/homepage.png";
+import { Comments } from "../conponenets/Comment";
 
 export const Blog = () => {
+  const { pathname } = useLocation();
+  const slug = pathname.split("/")[2];
+  console.log(slug);
   return (
     <>
       <div className="container mt-4">
         <div className="row">
-          <div className="col-lg-8">
+          <div className="col-lg-12">
             {/* Blog Image */}
-            <img src={image} alt="Blog" className="img-fluid mb-4" />
+            <div className="blogImage d-flex justify-content-center">
+              <img
+                src={image}
+                alt="Blog"
+                className="img-fluid mb-4 border"
+                style={{ height: " 500px", width: "500px" }}
+              />
+            </div>
+            <div className="blog-title">
+              <h1>This is the title of the blog</h1>
+            </div>
+            <div className="my-4 border d-flex justify-content-between">
+              <span>
+                <i class="fa fa-user px-2"></i>Author Name
+              </span>
+              <span>
+                <i class="fa fa-calendar px-2"></i>Date
+              </span>
+            </div>
 
             {/* Blog Content */}
             <div className="blog-content">
@@ -21,47 +44,8 @@ export const Blog = () => {
               </p>
             </div>
           </div>
-          <div className="col-lg-4">
-            {/* Comments Section */}
-            <Card>
-              <Card.Header>
-                <h4>Comments</h4>
-              </Card.Header>
-              <Card.Body>
-                {/* {comments.map((comment, index) => (
-                  <div key={index}>
-                    <strong>{comment.name}</strong>: {comment.commentText}
-                    <hr />
-                  </div>
-                ))} */}
-              </Card.Body>
-              <Card.Footer>
-                <Form>
-                  <Form.Group controlId="name">
-                    <Form.Label>Name:</Form.Label>
-                    <Form.Control
-                      type="text"
-                      // value={name}
-                      // onChange={(e) => setName(e.target.value)}
-                      required
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="commentText">
-                    <Form.Label>Comment:</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      rows={4}
-                      // value={commentText}
-                      // onChange={(e) => setCommentText(e.target.value)}
-                      required
-                    />
-                  </Form.Group>
-                  <Button variant="primary" type="submit">
-                    Submit Comment
-                  </Button>
-                </Form>
-              </Card.Footer>
-            </Card>
+          <div className="col-lg-12">
+            <Comments url={window.location.href} id={slug} title={slug} />
           </div>
         </div>
 
