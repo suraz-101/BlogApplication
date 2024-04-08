@@ -3,6 +3,7 @@ import { Card, Form, Button } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import image from "../assets/images/homepage.png";
 import { Comments } from "../conponenets/Comment";
+import { DiscussionEmbed } from "disqus-react";
 
 export const Blog = () => {
   const { pathname } = useLocation();
@@ -45,7 +46,16 @@ export const Blog = () => {
             </div>
           </div>
           <div className="col-lg-12">
-            <Comments url={window.location.href} id={slug} title={slug} />
+            <DiscussionEmbed
+              shortname="example"
+              config={{
+                url: window.location.href,
+                identifier: slug,
+                title: slug,
+                language: "en-US", //e.g. for Traditional Chinese (Taiwan)
+              }}
+            />
+            {/* <Comments url={window.location.href} id={slug} title={slug} /> */}
           </div>
         </div>
 
