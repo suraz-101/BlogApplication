@@ -166,7 +166,6 @@ const getAll = async (search, page = 1, limit = 20) => {
   });
 
   //query to search based on title and author name
- 
 
   // using commong wuery for pagination which can be used in get published blogs  as well
   querry.push.apply(querry, facetQuerry(page, limit));
@@ -224,6 +223,9 @@ const getById = (slug) => {
         numberOfComments: 1,
         author: 0,
         author: "$author.name",
+        createAt: 1,
+        blogImage: 1,
+        authorProfile: "$author.profilePic",
       },
     },
     {

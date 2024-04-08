@@ -15,6 +15,10 @@ export const BlogContextProvider = ({ children }) => {
     PublishedBlogsOnly({ author, title, page, limit });
   }, [author, title, page, limit]);
 
+  // useEffect(() => {
+  //   getBySlug({ slug });
+  // }, []);
+
   return (
     <blogContext.Provider
       value={{

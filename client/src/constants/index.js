@@ -8,6 +8,7 @@ export const URLS = {
   GENERATE_OTP: API_VERSION + "/users/otpGeneration",
   VERIFY_OTP: API_VERSION + "/users/verifyOtp",
   PUBLISHED_BLOG_LIST: API_VERSION + "/blogs/getPublishedBlogs",
+  GET_SINGLE_BLOG: API_VERSION + "/blogs/singleBlog",
 };
 
 // This file is used to store all the information related to the url that we need to navigate

@@ -59,7 +59,7 @@ router.get(
   }
 );
 
-router.get("/slug/:slug", async (req, res, next) => {
+router.get("/singleBlog/:slug", async (req, res, next) => {
   try {
     const { slug } = req.params;
     console.log(slug);
