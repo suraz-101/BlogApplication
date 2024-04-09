@@ -9,6 +9,7 @@ export const URLS = {
   VERIFY_OTP: API_VERSION + "/users/verifyOtp",
   PUBLISHED_BLOG_LIST: API_VERSION + "/blogs/getPublishedBlogs",
   GET_SINGLE_BLOG: API_VERSION + "/blogs/singleBlog",
+  CREATE_BLOGS: API_VERSION + "/blogs",
 };
 
 // This file is used to store all the information related to the url that we need to navigate

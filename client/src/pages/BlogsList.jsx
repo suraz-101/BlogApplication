@@ -32,12 +32,18 @@ export const BlogsList = () => {
     setValue("");
   };
 
+  const handleSearchTerm = (e) => {
+    setValue(e.target.value);
+  };
+
   useEffect(() => {
-    search === "blog" ? setTitle(value) : setAuthor(value);
-  }, [value, search, setAuthor, setTitle]);
+    console.log({ debounceSearchTerm });
+    search === "blog"
+      ? setTitle(debounceSearchTerm)
+      : setAuthor(debounceSearchTerm);
+  }, [debounceSearchTerm, search, setAuthor, setTitle]);
 
   if (error) return <>Error Occured</>;
-  console.log(data.total);
   return (
     <>
       <div className="main-content container-fluid bg-light">
@@ -64,7 +70,7 @@ export const BlogsList = () => {
                   placeholder="Search Blogs"
                   value={value}
                   onChange={(e) => {
-                    setValue(e.target.value);
+                    handleSearchTerm(e);
                   }}
                 />
                 <div className="input-group-text">

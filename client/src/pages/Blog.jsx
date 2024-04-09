@@ -22,7 +22,7 @@ export const Blog = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const datas = await getBySlug({ slug });
+      const datas = await getBySlug(slug);
       setBlogData(datas);
     };
     fetchData();

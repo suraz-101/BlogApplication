@@ -5,12 +5,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter } from "react-router-dom";
 import { BlogContextProvider } from "./context /BlogContext.jsx";
 
+import { Provider } from "react-redux";
+import { store, newStore } from "./store";
+import { PersistGate } from "redux-persist/integration/react";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BlogContextProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </BlogContextProvider>
+    <Provider store={store}>
+      {/* <PersistGate loading={null} persisStore={newStore}> */}
+      <BlogContextProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </BlogContextProvider>
+      {/* </PersistGate> */}
+    </Provider>
   </React.StrictMode>
 );

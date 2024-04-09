@@ -31,9 +31,9 @@ export const useBlogs = () => {
         const response = await instance.get(
           `${URLS.PUBLISHED_BLOG_LIST}?title=${title}&author=${author}&page=${page}&limit=${limit}`
         );
-        console.log(response?.data.message);
-        setData(response.data.message);
-        return data;
+        // console.log(response?.data.message);
+        setData(response?.data?.message);
+        return response?.data;
       } catch (er) {
         setError(er.response ? er.response : "something went wrong");
         throw er;
@@ -44,7 +44,7 @@ export const useBlogs = () => {
     []
   );
 
-  const getBySlug = useCallback(async ({ slug }) => {
+  const getBySlug = useCallback(async (slug) => {
     try {
       console.log("slug:", slug);
       setLoading(true);
