@@ -1,10 +1,13 @@
 import "../assets/css/index.css";
 import { Link } from "react-router-dom";
 import logo from "../assets/icons/android-chrome-192x192.png";
+import { useSelector } from "react-redux";
+
 import { useContext } from "react";
 import { blogContext } from "../context /BlogContext";
 // import { FaSearch } from "react-icons";
 export const AppNavbar = () => {
+  const { quantity } = useSelector((state) => state.bookmark);
   return (
     <>
       <div className="container-fluid bg-light sticky-top">
@@ -38,7 +41,6 @@ export const AppNavbar = () => {
                     type="text"
                     className="form-control"
                     placeholder="Search Blogs"
-                   
                   />
                 </div>
               </div>
@@ -63,6 +65,15 @@ export const AppNavbar = () => {
               <li className="nav-item">
                 <Link className="nav-link px-4 button " to="/login">
                   Login
+                </Link>
+              </li>
+              <li className="nav-item ">
+                <Link className="nav-link px-4 button ">
+                  <i
+                    className="fa fa-bookmark-o"
+                    style={{ fontSize: "20px" }}
+                  ></i>
+                  {quantity}
                 </Link>
               </li>
             </ul>

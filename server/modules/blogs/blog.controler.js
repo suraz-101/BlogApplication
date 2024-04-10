@@ -96,7 +96,7 @@ const getPublishedBlogs = async (search, page = 1, limit = 20) => {
   // query to show the neccessary field
   query.push({
     $project: {
-      _id: 0,
+      _id: 1,
       title: 1,
       content: 1,
       author: 0,
@@ -106,6 +106,7 @@ const getPublishedBlogs = async (search, page = 1, limit = 20) => {
       createAt: 1,
       blogImage: 1,
       authorProfile: 1,
+      
     },
   });
 
@@ -214,7 +215,7 @@ const getById = (slug) => {
     },
     {
       $project: {
-        _id: 0,
+        _id: 1,
         title: 1,
         content: 1,
         slug: 1,

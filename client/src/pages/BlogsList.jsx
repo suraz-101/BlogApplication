@@ -7,7 +7,11 @@ import { BASE_URL } from "../constants/index.js";
 import { dateFormatter } from "../utils/dateFormatter";
 import { useDebounce } from "../hooks/useDebounce";
 
+import { useDispatch } from "react-redux";
+import { addBookmark } from "../slices/bookmarkSlice";
+
 export const BlogsList = () => {
+  const dispatch = useDispatch();
   const {
     data,
     setLimit,
@@ -160,7 +164,7 @@ export const BlogsList = () => {
                       to={`/blogsList/${data.slug}`}
                       className="text-decoration-none"
                     >
-                      <div className="card col-12">
+                      <div className="card col-12  ">
                         <img
                           src={BASE_URL.concat(data.blogImage)}
                           onError={(e) => {
@@ -177,38 +181,53 @@ export const BlogsList = () => {
                             {data.content.slice(0, 30).concat("...")}
                           </p>
                           <div className="contianer row">
-                            <div className="col-12 d-flex py-2">
-                              <div
-                                className="border"
-                                style={{
-                                  height: "40px",
-                                  width: " 40px",
-                                  borderRadius: "50%",
-                                }}
-                              >
-                                <img
-                                  src={BASE_URL.concat(data.authorProfile)}
-                                  className="img-fluid rounded-start"
-                                  alt="..."
-                                  style={{ width: "100%", height: "100%" }}
-                                />
-                              </div>
-                              <div className="mx-2">
-                                <h6
+                            <div className="col-12 d-flex py-2  justify-content-between  align-items-center  ">
+                              <div className=" d-flex align-items-center ">
+                                <div
+                                  className="border"
                                   style={{
-                                    fontSize: "12px",
-                                    fontWeight: "bold",
+                                    height: "40px",
+                                    width: " 40px",
+                                    borderRadius: "50%",
                                   }}
                                 >
-                                  {data.author} (
-                                  <span className="text-muted">author</span>)
-                                </h6>
-                                <h6
-                                  style={{ fontSize: "12px" }}
-                                  className="text-muted"
+                                  <img
+                                    src={BASE_URL.concat(data.authorProfile)}
+                                    className="img-fluid rounded-start"
+                                    alt="..."
+                                    style={{ width: "100%", height: "100%" }}
+                                  />
+                                </div>
+                                <div className="mx-2 ">
+                                  <h6
+                                    style={{
+                                      fontSize: "12px",
+                                      fontWeight: "bold",
+                                    }}
+                                  >
+                                    {data.author} (
+                                    <span className="text-muted">author</span>)
+                                  </h6>
+                                  <h6
+                                    style={{ fontSize: "12px" }}
+                                    className="text-muted"
+                                  >
+                                    {dateFormatter(data.createAt)}
+                                  </h6>
+                                </div>
+                              </div>
+                              <div className="bookmarkIcon">
+                                <button
+                                  className="btn btn-outline-none"
+                                  onClick={() => {
+                                    dispatch(addBookmark(data));
+                                  }}
                                 >
-                                  {dateFormatter(data.createAt)}
-                                </h6>
+                                  <i
+                                    className="fa fa-bookmark-o"
+                                    style={{ fontSize: "15px" }}
+                                  ></i>
+                                </button>
                               </div>
                             </div>
                           </div>

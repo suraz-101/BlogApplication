@@ -9,10 +9,10 @@ const persistBookmarkConfig = {
   storage,
 };
 
-const persisBookmark = persistReducer(persistBookmarkConfig, bookmarkReducer);
+const persistBookmark = persistReducer(persistBookmarkConfig, bookmarkReducer);
 export const store = configureStore({
   reducer: {
-    bookmark: persisBookmark,
+    bookmark: persistBookmark,
   },
 });
 
