@@ -6,7 +6,7 @@ import { BlogDetail } from "./pages/admin/BlogDetail";
 import { Blogs } from "./pages/admin/Blogs";
 import { Blog } from "./pages/Blog";
 import { BlogsList } from "./pages/BlogsList";
-import { Bookmark } from "./pages/Bookmark";
+import { BookmarkPage } from "./pages/Bookmark";
 import { ForgetPassword } from "./pages/ForgetPassword";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
@@ -31,9 +31,9 @@ const App = () => {
           <Route path="about" element={<About />} />
           <Route path="/blogsList">
             <Route index element={<BlogsList />} />
-            <Route path=":id" element={<Blog />} />
+            <Route path=":slug" element={<Blog />} />
           </Route>
-          <Route path="bookmark" element={<Bookmark />} />
+          <Route path="bookmark" element={<BookmarkPage />} />
         </Route>
 
         {/* admin  */}

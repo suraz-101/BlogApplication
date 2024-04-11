@@ -68,7 +68,7 @@ export const AppNavbar = () => {
                 </Link>
               </li>
               <li className="nav-item ">
-                <Link className="nav-link px-4 button ">
+                <Link to="/bookmark" className="nav-link px-4 button ">
                   <i
                     className="fa fa-bookmark-o"
                     style={{ fontSize: "20px" }}
