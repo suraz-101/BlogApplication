@@ -22,20 +22,16 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.get(
-  "/",
-  // checkRole(["user"]),
-  async (req, res, next) => {
-    try {
-      const { limit, page, name, role } = req.query;
-      const search = { name, role };
-      const result = await userController.getAllUsers(search, page, limit);
-      res.json({ message: result });
-    } catch (error) {
-      next(error);
-    }
+router.get("/", checkRole(["admin"]), async (req, res, next) => {
+  try {
+    const { limit, page, name, role } = req.query;
+    const search = { name, role };
+    const result = await userController.getAllUsers(search, page, limit);
+    res.json({ message: result });
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 router.post("/", validate, async (req, res) => {
   const userData = req.body;

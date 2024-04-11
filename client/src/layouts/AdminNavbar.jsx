@@ -1,19 +1,27 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Dropdown } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { decodeJwt, getToken } from "../utils/session";
 import logo from "../assets/icons/android-chrome-192x192.png";
 import profile from "../assets/images/profile.jpeg";
 
 export const AdminNavbar = () => {
-  const [name, setName] = useState("");
-  const token = getToken("access_token");
-  const jwtPayload = decodeJwt(token);
-  useEffect(() => {
-    setName(jwtPayload.data.name);
-  }, []);
+  // const [name, setName] = useState("");
+  // const token = getToken("access_token");
+  // const jwtPayload = decodeJwt(token);
+
+  // useEffect(() => {
+  //   if (jwtPayload) {
+  //     setName(jwtPayload.data.name);
+  //   }
+  // }, [jwtPayload]);
+
   return (
     <>
-      <div className="nav container-fluid p-2">
+      <div
+        className="nav container-fluid p-2"
+        style={{ position: "relative", zIndex: "1" }}
+      >
         <div className="logo col-3">
           <img
             className="mx-3"
@@ -27,21 +35,26 @@ export const AdminNavbar = () => {
           <span>
             <i className="fa fa-bell"></i>
           </span>
-          <div className="mx-3">
+
+          <div class="mx-3">
             <img
               src={profile}
               alt=""
-              style={{ height: "30px", width: "30px", borderRadius: " 50%" }}
+              style={{ height: "30px", width: "30px", borderRadius: "50%" }}
             />
-            <span className="mx-2">{name}</span>
+            <span className="mx-2 p-3">
+              <button
+                className="btn btn-outline-none border border-primary"
+                onClick={() => {
+                  console.log("clicked");
+                }}
+              >
+                Logout
+              </button>
+            </span>
           </div>
         </div>
       </div>
-      {/* <div className="container border d-flex justify-content-between py-2">
-        <span>Admin Navbar</span>
-
-        <span>Welcome {email}</span>
-      </div> */}
     </>
   );
 };

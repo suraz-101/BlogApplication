@@ -7,9 +7,10 @@ export const AdminLayout = () => {
   return (
     <div>
       <AdminNavbar />
-
-      <AdminSidebar />
-      <Outlet />
+      <div className="row m-auto">
+        <AdminSidebar />
+        <Outlet />
+      </div>
     </div>
   );
 };

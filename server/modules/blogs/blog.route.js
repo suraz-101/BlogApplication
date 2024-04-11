@@ -110,6 +110,7 @@ router.put(
 router.patch("/status/:id", checkRole(["user"]), async (req, res, next) => {
   try {
     const { id } = req.params;
+    console.log(id);
 
     const result = await blogController.updateTheStatusOnly(id);
     res.json({ message: result });

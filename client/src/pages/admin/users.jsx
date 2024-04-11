@@ -1,5 +1,14 @@
-import React from "react";
-
-export const users = () => {
-  return <div>users</div>;
+export const Users = () => {
+  return (
+    <div
+      className="contentArea col-lg-10 col-sm-8 col-7 bg-light"
+      style={{ zIndex: "0" }}
+    >
+      <div className="container p-4">
+        <div className="card shadow">
+          <div className="card-body">USERS</div>
+        </div>
+      </div>
+    </div>
+  );
 };

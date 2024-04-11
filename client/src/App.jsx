@@ -2,8 +2,10 @@ import { Routes, Route } from "react-router-dom";
 import { AdminLayout } from "./layouts/AdminLayout";
 import { AppLayout } from "./layouts/AppLayout";
 import { About } from "./pages/About";
+import { AddBlog } from "./pages/admin/AddBlog";
 import { BlogDetail } from "./pages/admin/BlogDetail";
 import { Blogs } from "./pages/admin/Blogs";
+import { Users } from "./pages/admin/Users";
 import { Blog } from "./pages/Blog";
 import { BlogsList } from "./pages/BlogsList";
 import { BookmarkPage } from "./pages/Bookmark";
@@ -42,6 +44,8 @@ const App = () => {
             <Route index element={<Blogs />} />
             <Route path=":id" element={<BlogDetail />} />
           </Route>
+          <Route path="users" element={<Users />} />
+          <Route path="addBlog" element={<AddBlog />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

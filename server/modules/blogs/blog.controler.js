@@ -106,7 +106,6 @@ const getPublishedBlogs = async (search, page = 1, limit = 20) => {
       createAt: 1,
       blogImage: 1,
       authorProfile: 1,
-      
     },
   });
 
@@ -311,7 +310,7 @@ const getAuthorBlog = async (search, page = 1, limit = 3) => {
 };
 
 const updateTheStatusOnly = async (_id) => {
-  const blog = await BlogModel.findOne(_id);
+  const blog = await BlogModel.findOne({ _id });
   if (!blog) throw new Error("Blog not Found");
   const payload = { status: blog?.status === "draft" ? "published" : "draft" };
   return BlogModel.updateOne({ _id }, payload);
