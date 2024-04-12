@@ -1,10 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
 import { List } from "../services/blog";
 
 const initialState = {
   blogs: [],
-  currentPage: 1,
+  page: 1,
   total: 0,
   limit: 20,
   loading: false,
@@ -12,10 +11,14 @@ const initialState = {
 };
 
 export const listBlogs = createAsyncThunk(
-  "blogs/listBlos",
+  "blogs/listBlogs",
   async ({ limit, page }) => {
-    const res = await List(limit, page);
-    return res?.data;
+    try {
+      const response = await List(limit, page);
+      return response.data; // Assuming the response structure is { data: { total, data } }
+    } catch (error) {
+      throw Error(error.message);
+    }
   }
 );
 
@@ -24,12 +27,29 @@ const blogSlice = createSlice({
   initialState,
   reducers: {
     setPage: (state, { payload }) => {
-      state.currentPage = payload;
+      state.page = payload;
     },
-    // setLimit:(state, {payload})
+    setLimit: (state, { payload }) => {
+      state.page = 1;
+      state.limit = payload;
+    },
   },
-  extraReducers: () => {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(listBlogs.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(listBlogs.fulfilled, (state, action) => {
+        state.loading = false;
+        state.total = action.payload.total;
+        state.blogs = action.payload.message.data;
+      })
+      .addCase(listBlogs.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
+  },
 });
 
-export const { setCurrentPage } = blogSlice.actions;
+export const { setPage, setLimit } = blogSlice.actions;
 export const blogReducer = blogSlice.reducer;

@@ -62,6 +62,7 @@ export const AddBlog = () => {
                               Content
                             </label>
                             <textarea
+                              className="form-control"
                               name="content"
                               id="blogContent"
                               cols="82"

@@ -11,7 +11,10 @@ export const AdminSidebar = () => {
 
   return (
     <>
-      <div className="scrollbar col-lg-2 col-sm-4 col-5 vh-100">
+      <div
+        className="scrollbar col-lg-2 col-sm-4 col-5 "
+        style={{ minHeight: "100vh" }}
+      >
         <div className="d-flex flex-column flex-shrink-0 p-3 text-white scrollbar">
           <ul className="nav nav-pills flex-column mb-auto">
             <li className="nav-item">
@@ -22,6 +25,7 @@ export const AdminSidebar = () => {
                 <i className="fa fa-home"></i> Home
               </Link>
             </li>
+            <hr />
             <li>
               <Link
                 to="/admin/users"
@@ -32,6 +36,7 @@ export const AdminSidebar = () => {
                 <i className="fa fa-users"></i> Users
               </Link>
             </li>
+            <hr />
             <li>
               <Link
                 to="/admin/blogs"

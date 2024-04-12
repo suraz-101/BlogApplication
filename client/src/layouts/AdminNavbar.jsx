@@ -36,7 +36,7 @@ export const AdminNavbar = () => {
             <i className="fa fa-bell"></i>
           </span>
 
-          <div class="mx-3">
+          <div className="mx-3">
             <img
               src={profile}
               alt=""
@@ -44,7 +44,7 @@ export const AdminNavbar = () => {
             />
             <span className="mx-2 p-3">
               <button
-                className="btn btn-outline-none border border-primary"
+                className="btn btn-outline-none border border-dark"
                 onClick={() => {
                   console.log("clicked");
                 }}

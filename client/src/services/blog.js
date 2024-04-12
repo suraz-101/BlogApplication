@@ -6,7 +6,8 @@ const createBlog = (payload) => {
 };
 
 const List = (limit, page) => {
-  return instance.get(URLS.BLOGS`/?limit=${limit}&page=${page}`);
+  // console.log(limit, page);
+  return instance.get(URLS.BLOGS + `?page=${page}&limit=${limit}`);
 };
 
 const changeStatus = (id) => {

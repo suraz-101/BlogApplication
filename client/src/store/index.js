@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { bookmarkReducer } from "../slices/bookmarkSlice";
+import { blogReducer } from "../slices/blogSlice";
 
 import {
   persistStore,
@@ -24,6 +25,7 @@ const persistBookmark = persistReducer(persistBookmarkConfig, bookmarkReducer);
 export const store = configureStore({
   reducer: {
     bookmark: persistBookmark,
+    blogs: blogReducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({

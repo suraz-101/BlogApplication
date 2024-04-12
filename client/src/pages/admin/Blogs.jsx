@@ -1,7 +1,22 @@
 import { Link } from "react-router-dom";
 import { Paginate } from "../../conponenets/Pagination";
-import { Dropdown } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+
+import { listBlogs } from "../../slices/blogSlice.js";
+import { useCallback } from "react";
+import { useEffect } from "react";
+import { dateFormatter } from "../../utils/dateFormatter";
 export const Blogs = () => {
+  const dispatch = useDispatch();
+  const { blogs, page, limit } = useSelector((state) => state.blogs);
+
+  const initFetch = useCallback(() => {
+    dispatch(listBlogs({ limit, page }));
+  }, [dispatch, limit, page]);
+
+  useEffect(() => {
+    initFetch();
+  }, [initFetch]);
   return (
     <div
       className="contentArea col-lg-10 col-sm-8 col-7 bg-light"
@@ -15,7 +30,7 @@ export const Blogs = () => {
               <Link to="/admin/addBlog" className="text-decoration-none">
                 <button
                   type="button"
-                  className="btn button d-flex justify-content-center align-items-center"
+                  className="btn btn-primary button border  d-flex justify-content-center align-items-center"
                 >
                   Add Blog <i className="fa fa-plus mx-2"></i>
                 </button>
@@ -46,6 +61,31 @@ export const Blogs = () => {
                   </tr>
                 </thead>
                 <tbody>
+                  {blogs?.length > 0 &&
+                    blogs.map((blog, index) => {
+                      return (
+                        <tr className="placeholder-glow" key={blog._id}>
+                          <th scope="row">{index + 1}</th>
+                          <td>{blog.title}</td>
+                          <td>{blog.author}</td>
+                          <td>{blog.status}</td>
+                          <td>{dateFormatter(blog.createAt)}</td>
+                          <td>
+                            <button className="btn button">
+                              <i className="fa fa-eye"></i>
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              className="btn "
+                              style={{ backgroundColor: "red" }}
+                            >
+                              <i className="fa fa-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   <tr className="placeholder-glow">
                     <th scope="row">1</th>
                     <td>How to be a good developer?</td>
