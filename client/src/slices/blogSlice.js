@@ -41,7 +41,7 @@ const blogSlice = createSlice({
       })
       .addCase(listBlogs.fulfilled, (state, action) => {
         state.loading = false;
-        state.total = action.payload.total;
+        state.total = action.payload.message.total;
         state.blogs = action.payload.message.data;
       })
       .addCase(listBlogs.rejected, (state, action) => {

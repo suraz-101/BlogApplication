@@ -2,13 +2,14 @@ import { Link } from "react-router-dom";
 import { Paginate } from "../../conponenets/Pagination";
 import { useDispatch, useSelector } from "react-redux";
 
-import { listBlogs } from "../../slices/blogSlice.js";
+import { listBlogs, setLimit } from "../../slices/blogSlice.js";
 import { useCallback } from "react";
 import { useEffect } from "react";
 import { dateFormatter } from "../../utils/dateFormatter";
 export const Blogs = () => {
   const dispatch = useDispatch();
-  const { blogs, page, limit } = useSelector((state) => state.blogs);
+  const { blogs, page, limit, total } = useSelector((state) => state.blogs);
+  console.log(total);
 
   const initFetch = useCallback(() => {
     dispatch(listBlogs({ limit, page }));
@@ -61,7 +62,7 @@ export const Blogs = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {blogs?.length > 0 &&
+                  {blogs?.length > 0 ? (
                     blogs.map((blog, index) => {
                       return (
                         <tr className="placeholder-glow" key={blog._id}>
@@ -85,28 +86,16 @@ export const Blogs = () => {
                           </td>
                         </tr>
                       );
-                    })}
-                  <tr className="placeholder-glow">
-                    <th scope="row">1</th>
-                    <td>How to be a good developer?</td>
-                    <td>Suraj Pandey</td>
-                    <td>Published</td>
-                    <td>22 march 2024</td>
-                    <td>
-                      <button className="btn button">
-                        <i className="fa fa-eye"></i>
-                      </button>
-                    </td>
-                    <td>
-                      <button
-                        className="btn "
-                        style={{ backgroundColor: "red" }}
-                      >
-                        <i className="fa fa-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr className="placeholder-glow">
+                    })
+                  ) : (
+                    <tr>
+                      <td scope="row" colSpan={6} className="text-center ">
+                        No Blogs Found
+                      </td>
+                    </tr>
+                  )}
+
+                  {/* <tr className="placeholder-glow">
                     <th scope="row">1</th>
                     <td>
                       <span className="placeholder col-12"></span>
@@ -133,12 +122,18 @@ export const Blogs = () => {
                         <i className="fa fa-trash"></i>
                       </button>
                     </td>
-                  </tr>
+                  </tr> */}
                 </tbody>
               </table>
             </div>
             <div className="mt-3">
-              <Paginate />
+              <Paginate
+                setPage={page}
+                setLimit={limit}
+                limit={limit}
+                page={page}
+                total={total}
+              />
             </div>{" "}
           </div>
         </div>
