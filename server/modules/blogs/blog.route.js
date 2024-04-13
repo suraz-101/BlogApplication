@@ -15,7 +15,7 @@ const blogImageStorage = multer.diskStorage({
 
 const uploadBlogImage = multer({ storage: blogImageStorage });
 
-router.get("/", checkRole(["user"]), async (req, res, next) => {
+router.get("/", checkRole(["admin"]), async (req, res, next) => {
   try {
     const { title, author, page, limit } = req.query;
     const search = { title, author };

@@ -5,6 +5,7 @@ import { About } from "./pages/About";
 import { AddBlog } from "./pages/admin/AddBlog";
 import { BlogDetail } from "./pages/admin/BlogDetail";
 import { Blogs } from "./pages/admin/Blogs";
+import { Profile } from "./pages/admin/Profile";
 import { Users } from "./pages/admin/Users";
 import { Blog } from "./pages/Blog";
 import { BlogsList } from "./pages/BlogsList";
@@ -15,6 +16,7 @@ import { Login } from "./pages/Login";
 import { NotFound } from "./pages/NotFound";
 import { Register } from "./pages/Register";
 import { VerifyToken } from "./pages/VerifyToken";
+import { PrivateRoute } from "./conponenets/Route";
 
 const App = () => {
   return (
@@ -41,11 +43,26 @@ const App = () => {
         {/* admin  */}
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="/admin/blogs">
-            <Route index element={<Blogs />} />
+            <Route
+              index
+              element={
+                <PrivateRoute>
+                  <Blogs />
+                </PrivateRoute>
+              }
+            />
             <Route path=":id" element={<BlogDetail />} />
           </Route>
-          <Route path="users" element={<Users />} />
+          <Route
+            path="users"
+            element={
+              <PrivateRoute role="admin">
+                <Users />
+              </PrivateRoute>
+            }
+          />
           <Route path="addBlog" element={<AddBlog />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
