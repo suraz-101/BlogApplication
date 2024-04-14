@@ -6,6 +6,7 @@ import { useState, createContext } from "react";
 import instance from "../utils/api";
 import { setToken } from "../utils/session";
 import { URLS } from "../constants";
+import { createUser } from "../utils/login";
 // import { Register } from "./Register";
 // import { Home } from "./Home";
 
@@ -19,7 +20,8 @@ export const Login = () => {
     try {
       e.preventDefault();
       const response = await instance.post(URLS.LOGIN, credentials); // sends reques to http://localhost:8000/api/v1/users/login and store the response in response variable
-      setToken(response?.data.message); // This line of code will call the setToken function of utils/session.js file and helps to setItem into the localStorage
+      setToken(response?.data.message);
+      createUser(); // This line of code will call the setToken function of utils/session.js file and helps to setItem into the localStorage
       navigate("/admin");
     } catch (e) {
       // console.log("error is : ", e.response.data.message);

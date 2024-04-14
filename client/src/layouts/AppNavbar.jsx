@@ -63,7 +63,10 @@ export const AppNavbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link px-4 button " to="/login">
+                <Link
+                  className="nav-link px-4 button border border-dark"
+                  to="/login"
+                >
                   Login
                 </Link>
               </li>

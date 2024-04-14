@@ -20,3 +20,13 @@ export const validRole = (role) => {
   if (!isValid) return false;
   return true;
 };
+
+export const createUser = () => {
+  const token = getToken("access_token");
+  const { data } = jwtDecode(token);
+  return localStorage.setItem("currentUser", JSON.stringify(data));
+};
+
+export const getUser = () => {
+  return localStorage.getItem("currentUser");
+};

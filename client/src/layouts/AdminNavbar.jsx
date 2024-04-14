@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { decodeJwt, getToken } from "../utils/session";
+import { decodeJwt, getToken, removeToken, removeUser } from "../utils/session";
 import logo from "../assets/icons/android-chrome-192x192.png";
 import profile from "../assets/images/profile.jpeg";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { setUseStrictShallowCopy } from "immer";
+import { getUser } from "../utils/login";
 
 export const AdminNavbar = () => {
-  // const [name, setName] = useState("");
-  // const token = getToken("access_token");
-  // const jwtPayload = decodeJwt(token);
+  const [user, setUser] = useState({});
 
-  // useEffect(() => {
-  //   if (jwtPayload) {
-  //     setName(jwtPayload.data.name);
-  //   }
-  // }, [jwtPayload]);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    removeToken();
+    removeUser();
+    navigate("/login");
+  };
+
+  useEffect(() => {
+    const user = JSON.parse(getUser());
+
+    setUser(user);
+  }, []);
 
   return (
     <>
@@ -42,11 +52,13 @@ export const AdminNavbar = () => {
               alt=""
               style={{ height: "30px", width: "30px", borderRadius: "50%" }}
             />
+            <span> {user?.name}</span>
             <span className="mx-2 p-3">
+              {/* {user?.role?.length>0 && user?.role.includes("admin") && ()} */}
               <button
                 className="btn btn-outline-none border border-dark"
-                onClick={() => {
-                  console.log("clicked");
+                onClick={(e) => {
+                  handleLogout(e);
                 }}
               >
                 Logout

@@ -12,6 +12,10 @@ export const removeToken = () => {
   return localStorage.removeItem("access_token");
 };
 
+export const removeUser = () => {
+  return localStorage.removeItem("currentUser");
+};
+
 export const decodeJwt = (token) => {
   return jwtDecode(token);
 };

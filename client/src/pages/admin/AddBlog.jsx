@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/icons/android-chrome-192x192.png";
 
 export const AddBlog = () => {
+  const [image, setImage] = useState("");
   return (
     <div
       className="contentArea col-lg-10 col-sm-8 col-7 bg-light"
@@ -38,6 +40,43 @@ export const AddBlog = () => {
                     <form action="" className="col-12" id="registerUser">
                       <div className="row container">
                         <form>
+                          <div className="d-flex justify-content-center">
+                            {image ? (
+                              <img
+                                src={image}
+                                alt=""
+                                height="200px"
+                                width="200px"
+                              />
+                            ) : (
+                              <></>
+                            )}
+                          </div>
+                          <div className="mb-3 d-flex flex-column">
+                            <label
+                              for="exampleInputEmail"
+                              className="form-label"
+                            >
+                              Blog Image
+                            </label>
+                            <input
+                              className="border p-2"
+                              type="file"
+                              name="blogImage"
+                              id="blogImage"
+                              required
+                              onChange={(e) => {
+                                const file = e.target.files[0];
+                                if (file) {
+                                  const reader = new FileReader();
+                                  reader.onload = () => {
+                                    setImage(reader.result);
+                                  };
+                                  reader.readAsDataURL(file);
+                                }
+                              }}
+                            />
+                          </div>
                           <div className="mb-3">
                             <label
                               for="exampleInputName"
@@ -69,21 +108,6 @@ export const AddBlog = () => {
                               rows="10"
                               placeholder="Enter the content of the blog"
                             ></textarea>
-                          </div>
-                          <div className="mb-3 d-flex flex-column">
-                            <label
-                              for="exampleInputEmail"
-                              className="form-label"
-                            >
-                              Blog Image
-                            </label>
-                            <input
-                              className="border p-2"
-                              type="file"
-                              name="blogImage"
-                              id="blogImage"
-                              required
-                            />
                           </div>
 
                           <button
