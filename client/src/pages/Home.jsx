@@ -33,17 +33,30 @@ export const Home = () => {
         {slider?.length > 0 &&
           slider?.map((data) => {
             return (
-              <div className="cta container row m-auto" key={data?._id}>
+              <div
+                className="cta container row m-auto position-relative"
+                key={data?._id}
+              >
                 <div className="col-lg-6 p-5 d-sm-block cta-content text-center ">
                   <h2>{data.title}</h2>
                   <p className="text-muted">By {data.author}</p>
                   <p>{data.content.slice(0, 100).concat("...")}</p>
 
                   <div className="row py-4">
-                    <button className="btn button col-6 col-sm-4 m-auto border border-dark shadow ">
+                    <Link
+                      to={`blogsList/${data?.slug}`}
+                      className="btn button col-6 col-sm-4 m-auto border border-dark shadow "
+                    >
                       Learn More
-                    </button>
+                    </Link>
                   </div>
+                  {/* <img
+                    src={BASE_URL.concat(data.blogImage)}
+                    height="400px"
+                    width="100%"
+                    alt=""
+                    className="position-absolute"
+                  /> */}
                 </div>
                 <div className="col-lg-6 d-sm-none d-none d-lg-block ">
                   <img
