@@ -29,7 +29,7 @@ export const AdminSidebar = () => {
             <li>
               <Link
                 to="/admin/users"
-                className={`nav-link text-white ${
+                className={`nav-link text-white  ${
                   current === "users" ? "active" : ""
                 }`}
               >

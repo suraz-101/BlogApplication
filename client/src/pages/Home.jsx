@@ -5,6 +5,9 @@ import { blogContext } from "../context /BlogContext";
 import { useEffect } from "react";
 import _ from "underscore";
 import { BASE_URL } from "../constants";
+import { dateFormatter } from "../utils/dateFormatter";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export const Home = () => {
   const { data } = useContext(blogContext);
@@ -13,7 +16,16 @@ export const Home = () => {
   useEffect(() => {
     const currentData = data.data;
     setSlider(_.sample(currentData, 1));
-  }, []);
+  }, [data]);
+
+  const rescentData = (number = 4) => {
+    const currentData = data.data;
+    // console.log(currentData);
+    const filterRelatedData = currentData?.filter(
+      (data) => data?.slug !== slider?.slug
+    );
+    return _.sample(filterRelatedData, number);
+  };
 
   return (
     <>
@@ -49,7 +61,7 @@ export const Home = () => {
             <ul className="nav list-style-none w-100  p-2 justify-content-between popular">
               <li className="nav-links">
                 <a href="" className="nav-link active text-decoration-none">
-                  Recent
+                  Popular
                 </a>
               </li>
               {/* <li>
@@ -71,259 +83,72 @@ export const Home = () => {
           </div>
           <div>
             <div
-              className="container p-4 row m-auto d-flex flex-nowrap overflow-x-scroll topArticles"
+              className="container p-4 row m-auto d-flex flex-nowrap overflow-x-scroll topArticles border"
               id="scrollbar"
             >
-              <div className="col-12 col-sm-6 col-md-3 mt-2 p-2">
-                <a href="" className="text-decoration-none">
-                  <div className="card col-12">
-                    <img
-                      src="../assets/images/profile.jpeg"
-                      className="card-img-top"
-                      style={{ minHeight: " 200px", maxHeight: "200px" }}
-                      alt="..."
-                    />
-                    <div className="card-body">
-                      <h5 className="card-title">This is the title</h5>
-                      <p className="text-muted">
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                      </p>
-                      <div className="contianer row">
-                        <div className="col-12 d-flex py-2">
-                          <div
-                            className="border"
-                            style={{
-                              height: "40px",
-                              width: " 40px",
-                              borderRadius: "50%",
-                            }}
-                          >
-                            <img
-                              src="../assets/images/profile.jpeg"
-                              className="img-fluid rounded-start"
-                              alt="..."
-                            />
-                          </div>
-                          <div className="mx-2">
-                            <h6
-                              style={{ fontSize: "12px", fontWeight: "bold" }}
-                            >
-                              Author Name
-                            </h6>
-                            <h6
-                              style={{ fontSize: "12px" }}
-                              className="text-muted"
-                            >
-                              2h ago
-                            </h6>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div className="col-12 col-sm-6 col-md-3 mt-2 p-2">
-                <a href="" className="text-decoration-none">
-                  <div className="card col-12">
-                    <img
-                      src="../assets/images/profile.jpeg"
-                      className="card-img-top"
-                      style={{ minHeight: " 200px", maxHeight: "200px" }}
-                      alt="..."
-                    />
-                    <div className="card-body">
-                      <h5 className="card-title">This is the title</h5>
-                      <p className="text-muted">
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                      </p>
-                      <div className="contianer row">
-                        <div className="col-12 d-flex py-2">
-                          <div
-                            className="border"
-                            style={{
-                              height: "40px",
-                              width: " 40px",
-                              borderRadius: "50%",
-                            }}
-                          >
-                            <img
-                              src="../assets/images/profile.jpeg"
-                              className="img-fluid rounded-start"
-                              alt="..."
-                            />
-                          </div>
-                          <div className="mx-2">
-                            <h6
-                              style={{ fontSize: "12px", fontWeight: "bold" }}
-                            >
-                              Author Name
-                            </h6>
-                            <h6
-                              style={{ fontSize: "12px" }}
-                              className="text-muted"
-                            >
-                              2h ago
-                            </h6>
+              {rescentData()?.length > 0 &&
+                rescentData()?.map((data) => {
+                  return (
+                    <div
+                      className="col-12 col-sm-6 col-md-3 mt-2 p-2 "
+                      key={data?._id}
+                    >
+                      <Link
+                        to={`/blogsList/${data.slug}`}
+                        className="text-decoration-none"
+                      >
+                        <div className="card col-12">
+                          <img
+                            src={BASE_URL.concat(data.blogImage)}
+                            className="card-img-top"
+                            style={{ minHeight: " 200px", maxHeight: "200px" }}
+                            alt="..."
+                          />
+                          <div className="card-body">
+                            <h5 className="card-title">{data.title}</h5>
+                            <p className="text-muted">
+                              {data.content.slice(0, 80).concat("...")}
+                            </p>
+                            <div className="contianer row">
+                              <div className="col-12 d-flex py-2">
+                                <div
+                                  className="border"
+                                  style={{
+                                    height: "40px",
+                                    width: " 40px",
+                                    borderRadius: "50%",
+                                  }}
+                                >
+                                  <img
+                                    src={BASE_URL.concat(data.authorProfile)}
+                                    className="img-fluid rounded-start"
+                                    alt="..."
+                                  />
+                                </div>
+                                <div className="mx-2">
+                                  <h6
+                                    style={{
+                                      fontSize: "12px",
+                                      fontWeight: "bold",
+                                    }}
+                                  >
+                                    {data.author}
+                                  </h6>
+                                  <h6
+                                    style={{ fontSize: "12px" }}
+                                    className="text-muted"
+                                  >
+                                    {dateFormatter(data.createAt)}
+                                  </h6>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </Link>
                     </div>
-                  </div>
-                </a>
-              </div>
-              <div className="col-12 col-sm-6 col-md-3 mt-2 p-2">
-                <a href="" className="text-decoration-none">
-                  <div className="card col-12">
-                    <img
-                      src="../assets/images/profile.jpeg"
-                      className="card-img-top"
-                      style={{ minHeight: " 200px", maxHeight: "200px" }}
-                      alt="..."
-                    />
-                    <div className="card-body">
-                      <h5 className="card-title">This is the title</h5>
-                      <p className="text-muted">
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                      </p>
-                      <div className="contianer row">
-                        <div className="col-12 d-flex py-2">
-                          <div
-                            className="border"
-                            style={{
-                              height: "40px",
-                              width: " 40px",
-                              borderRadius: "50%",
-                            }}
-                          >
-                            <img
-                              src="../assets/images/profile.jpeg"
-                              className="img-fluid rounded-start"
-                              alt="..."
-                            />
-                          </div>
-                          <div className="mx-2">
-                            <h6
-                              style={{ fontSize: "12px", fontWeight: "bold" }}
-                            >
-                              Author Name
-                            </h6>
-                            <h6
-                              style={{ fontSize: "12px" }}
-                              className="text-muted"
-                            >
-                              2h ago
-                            </h6>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div className="col-12 col-sm-6 col-md-3 mt-2 p-2">
-                <a href="" className="text-decoration-none">
-                  <div className="card col-12">
-                    <img
-                      src="../assets/images/profile.jpeg"
-                      className="card-img-top"
-                      style={{ minHeight: " 200px", maxHeight: "200px" }}
-                      alt="..."
-                    />
-                    <div className="card-body">
-                      <h5 className="card-title">This is the title</h5>
-                      <p className="text-muted">
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                      </p>
-                      <div className="contianer row">
-                        <div className="col-12 d-flex py-2">
-                          <div
-                            className="border"
-                            style={{
-                              height: "40px",
-                              width: " 40px",
-                              borderRadius: "50%",
-                            }}
-                          >
-                            <img
-                              src="../assets/images/profile.jpeg"
-                              className="img-fluid rounded-start"
-                              alt="..."
-                            />
-                          </div>
-                          <div className="mx-2">
-                            <h6
-                              style={{ fontSize: "12px", fontWeight: "bold" }}
-                            >
-                              Author Name
-                            </h6>
-                            <h6
-                              style={{ fontSize: "12px" }}
-                              className="text-muted"
-                            >
-                              2h ago
-                            </h6>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div className="col-12 col-sm-6 col-md-3 mt-2 p-2">
-                <a href="" className="text-decoration-none">
-                  <div className="card col-12">
-                    <img
-                      src="../assets/images/profile.jpeg"
-                      className="card-img-top"
-                      style={{ minHeight: " 200px", maxHeight: "200px" }}
-                      alt="..."
-                    />
-                    <div className="card-body">
-                      <h5 className="card-title">This is the title</h5>
-                      <p className="text-muted">
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                      </p>
-                      <div className="contianer row">
-                        <div className="col-12 d-flex py-2">
-                          <div
-                            className="border"
-                            style={{
-                              height: "40px",
-                              width: " 40px",
-                              borderRadius: "50%",
-                            }}
-                          >
-                            <img
-                              src="../assets/images/profile.jpeg"
-                              className="img-fluid rounded-start"
-                              alt="..."
-                            />
-                          </div>
-                          <div className="mx-2">
-                            <h6
-                              style={{ fontSize: "12px", fontWeight: "bold" }}
-                            >
-                              Author Name
-                            </h6>
-                            <h6
-                              style={{ fontSize: "12px" }}
-                              className="text-muted"
-                            >
-                              2h ago
-                            </h6>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
+                  );
+                })}
             </div>
             <div className="showmore container d-flex justify-content-end">
               <a

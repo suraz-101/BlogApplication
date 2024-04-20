@@ -5,8 +5,13 @@ import { useSelector } from "react-redux";
 
 import { useContext } from "react";
 import { blogContext } from "../context /BlogContext";
+import { useLocation } from "react-router-dom";
 // import { FaSearch } from "react-icons";
 export const AppNavbar = () => {
+  const { pathname } = useLocation();
+  const currentPage = pathname.split("/")[1];
+  console.log(currentPage);
+
   const { quantity } = useSelector((state) => state.bookmark);
   return (
     <>
@@ -47,18 +52,31 @@ export const AppNavbar = () => {
             </div>
             <ul className="navbar-nav  justify-content-between col-6 ">
               <li className="nav-item">
-                <Link to="/" className="nav-link active">
+                <Link
+                  to="/"
+                  className={`nav-link  ${!currentPage ? "active" : ""}`}
+                >
                   Home
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/about" className="nav-link ">
+                <Link
+                  to="/about"
+                  className={`nav-link ${
+                    currentPage === "about" ? "active" : ""
+                  }`}
+                >
                   About Us
                 </Link>
               </li>
 
               <li className="nav-item">
-                <Link to="/blogsList" className="nav-link ">
+                <Link
+                  to="/blogsList"
+                  className={`nav-link ${
+                    currentPage === "blogsList" ? "active" : ""
+                  }`}
+                >
                   Blogs
                 </Link>
               </li>
