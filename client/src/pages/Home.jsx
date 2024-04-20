@@ -1,33 +1,58 @@
 import { Paginate } from "../conponenets/Pagination";
 import "../assets/css/index.css";
+import { useContext, useState } from "react";
+import { blogContext } from "../context /BlogContext";
+import { useEffect } from "react";
+import _ from "underscore";
+import { BASE_URL } from "../constants";
 
 export const Home = () => {
+  const { data } = useContext(blogContext);
+  const [slider, setSlider] = useState({});
+
+  useEffect(() => {
+    const currentData = data.data;
+    setSlider(_.sample(currentData, 1));
+  }, []);
+
   return (
     <>
       <div className="container-fluid main-content bg-light">
-        <div className="cta container row m-auto">
-          <div className="col-lg-6 p-5 d-sm-block cta-content text-center">
-            <h2>This is the title of the blog</h2>
-            <p className="text-muted">By Author Name</p>
-            <p>This is content of the blog but the summary only ...</p>
+        {slider?.length > 0 &&
+          slider?.map((data) => {
+            return (
+              <div className="cta container row m-auto" key={data?._id}>
+                <div className="col-lg-6 p-5 d-sm-block cta-content text-center ">
+                  <h2>{data.title}</h2>
+                  <p className="text-muted">By {data.author}</p>
+                  <p>{data.content.slice(0, 100).concat("...")}</p>
 
-            <div className="row py-4">
-              <button className="btn button col-6 col-sm-4 m-auto border border-dark shadow ">
-                Learn More
-              </button>
-            </div>
-          </div>
-          <div className="col-lg-6 d-sm-none d-none d-lg-block imageBackground"></div>
-        </div>
+                  <div className="row py-4">
+                    <button className="btn button col-6 col-sm-4 m-auto border border-dark shadow ">
+                      Learn More
+                    </button>
+                  </div>
+                </div>
+                <div className="col-lg-6 d-sm-none d-none d-lg-block ">
+                  <img
+                    src={BASE_URL.concat(data.blogImage)}
+                    height="400px"
+                    width="100%"
+                    alt=""
+                  />
+                </div>
+              </div>
+            );
+          })}
         <div className="contianer-fluid title p-4">
           <div className="container">
-            <ul className="nav list-style-none w-100 border p-2 justify-content-between popular">
+            <ul className="nav list-style-none w-100  p-2 justify-content-between popular">
               <li className="nav-links">
                 <a href="" className="nav-link active text-decoration-none">
-                  Top
+                  Recent
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a className="nav-link text-decoration-none" href="">
                   Popular
                 </a>
@@ -41,7 +66,7 @@ export const Home = () => {
                 <a className="nav-link text-decoration-none" href="">
                   Recent
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
           <div>
