@@ -10,16 +10,15 @@ import { useLocation } from "react-router-dom";
 export const AppNavbar = () => {
   const { pathname } = useLocation();
   const currentPage = pathname.split("/")[1];
-  console.log(currentPage);
 
   const { quantity } = useSelector((state) => state.bookmark);
   return (
     <>
       <div className="container-fluid bg-light sticky-top">
         <nav className="nav m-auto container navbar navbar-expand-lg navbar-light bg-light justify-content-between w-100 row">
-          <a className="navbar-brand col-sm-2" href="./index.html">
+          <Link to="/" className="navbar-brand col-sm-2" href="./index.html">
             <img src={logo} style={{ height: "50px", width: "50px" }} alt="" />
-          </a>
+          </Link>
           <button
             className="navbar-toggler col-sm-2"
             type="button"

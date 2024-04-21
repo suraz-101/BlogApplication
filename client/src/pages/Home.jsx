@@ -7,10 +7,23 @@ import _ from "underscore";
 import { BASE_URL } from "../constants";
 import { dateFormatter } from "../utils/dateFormatter";
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addBookmark } from "../slices/bookmarkSlice";
 
 export const Home = () => {
-  const { data } = useContext(blogContext);
+  const dispatch = useDispatch();
+  const {
+    data,
+    setLimit,
+    setPage,
+    page,
+    limit,
+    loading,
+    error,
+    setAuthor,
+    setTitle,
+  } = useContext(blogContext);
+
   const [slider, setSlider] = useState({});
 
   useEffect(() => {
@@ -20,10 +33,19 @@ export const Home = () => {
 
   const rescentData = (number = 4) => {
     const currentData = data.data;
-    // console.log(currentData);
+
     const filterRelatedData = currentData?.filter(
-      (data) => data?.slug !== slider?.slug
+      (data) => data?.slug !== slider[0]?.slug
     );
+    return _.sample(filterRelatedData, number);
+  };
+
+  const moreArticles = (number = 4) => {
+    const currentData = data.data;
+    const filterRelatedData = currentData?.filter(
+      (data) => data?.slug !== slider[0]?.slug
+    );
+
     return _.sample(filterRelatedData, number);
   };
 
@@ -61,7 +83,7 @@ export const Home = () => {
                 <div className="col-lg-6 d-sm-none d-none d-lg-block ">
                   <img
                     src={BASE_URL.concat(data.blogImage)}
-                    height="400px"
+                    height="300px"
                     width="100%"
                     alt=""
                   />
@@ -176,185 +198,66 @@ export const Home = () => {
           <div className="container">
             <h4 className="container pt-4">More Articles</h4>
           </div>
-          <div className="categoryButton container p-4 d-flex flex-{grow|shrink}-0 justify-content-between flex-nowrap overflow-x-scroll">
-            <button className="btn button m-auto flex-shrink-0">Sceince</button>
-            <button className="btn btn-outline-dark m-auto flex-shrink-0">
-              Technology
-            </button>
-            <button className="btn btn-outline-dark m-auto flex-shrink-0">
-              Sceince
-            </button>
-            <button className="btn btn-outline-dark m-auto flex-shrink-0">
-              Sceince
-            </button>
-            <button className="btn btn-outline-dark m-auto flex-shrink-0">
-              Sceince
-            </button>
-          </div>
 
           <div className="container articles m-auto">
             <div className="row m-auto">
-              <a
-                href=""
-                className="text-decoration-none col-sm-6 col-lg-6 mt-2 p-2"
-              >
-                <div className="card col-sm-12">
-                  <div className="row g-0">
-                    <div className="col-md-4">
-                      <img
-                        src="../assets/images/profile.jpeg"
-                        className="img-fluid rounded-start"
-                        alt="..."
-                      />
-                    </div>
-                    <div className="col-md-8">
-                      <div className="card-body">
-                        <div className="d-flex justify-content-between">
-                          <h5 className="card-title">
-                            This is the title of the blog
-                          </h5>
-                          <i
-                            className="fa fa-bookmark-o"
-                            style={{ fontSize: "20px" }}
-                          ></i>
+              {moreArticles()?.length > 0 &&
+                moreArticles()?.map((data) => {
+                  return (
+                    <Link
+                      to={`blogsList/${data?.slug}`}
+                      className="text-decoration-none col-sm-6 col-lg-6 mt-2 p-2"
+                    >
+                      <div className="card col-sm-12">
+                        <div className="row g-0">
+                          <div className="col-md-4 border">
+                            <img
+                              src={BASE_URL.concat(data?.blogImage)}
+                              className="img-fluid rounded-start"
+                              alt="..."
+                              style={{ height: "100%", width: "100%" }}
+                            />
+                          </div>
+                          <div className="col-md-8">
+                            <div className="card-body">
+                              <div className="d-flex justify-content-between">
+                                <h5 className="card-title">{data?.title}</h5>
+                                <button
+                                  className="btn btn-none "
+                                  onClick={() => {
+                                    dispatch(addBookmark(data));
+                                  }}
+                                >
+                                  <i
+                                    className="fa fa-bookmark-o"
+                                    style={{ fontSize: "15px" }}
+                                  ></i>
+                                </button>
+                              </div>
+                              <p className="card-text">
+                                {data?.content.slice(0, 90).concat("...")}
+                              </p>
+                              <p className="card-text">
+                                <small className="text-muted">
+                                  {dateFormatter(data?.createAt)}
+                                </small>
+                              </p>
+                            </div>
+                          </div>
                         </div>
-                        <p className="card-text">
-                          This is a wider card with supporting text below as a
-                          natural lead-in to additional content. This content is
-                          a little bit longer.
-                        </p>
-                        <p className="card-text">
-                          <small className="text-muted">
-                            Last updated 3 mins ago
-                          </small>
-                        </p>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-              <a
-                href=""
-                className="text-decoration-none col-sm-6 col-lg-6 mt-2 p-2"
-              >
-                <div className="card col-sm-12">
-                  <div className="row g-0">
-                    <div className="col-md-4">
-                      <img
-                        src="../assets/images/profile.jpeg"
-                        className="img-fluid rounded-start"
-                        alt="..."
-                      />
-                    </div>
-                    <div className="col-md-8">
-                      <div className="card-body">
-                        <div className="d-flex justify-content-between">
-                          <h5 className="card-title">
-                            This is the title of the blog
-                          </h5>
-                          <i
-                            className="fa fa-bookmark-o"
-                            style={{ fontSize: "20px" }}
-                          ></i>
-                        </div>
-                        <p className="card-text">
-                          This is a wider card with supporting text below as a
-                          natural lead-in to additional content. This content is
-                          a little bit longer.
-                        </p>
-                        <p className="card-text">
-                          <small className="text-muted">
-                            Last updated 3 mins ago
-                          </small>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-              <a
-                href=""
-                className="text-decoration-none col-sm-6 col-lg-6 mt-2 p-2"
-              >
-                <div className="card mb-3">
-                  <div className="row g-0">
-                    <div className="col-md-4">
-                      <img
-                        src="../assets/images/profile.jpeg"
-                        className="img-fluid rounded-start"
-                        alt="..."
-                      />
-                    </div>
-                    <div className="col-md-8">
-                      <div className="card-body">
-                        <div className="d-flex justify-content-between">
-                          <h5 className="card-title">
-                            This is the title of the blog
-                          </h5>
-                          <i
-                            className="fa fa-bookmark-o"
-                            style={{ fontSize: "20px" }}
-                          ></i>
-                        </div>
-                        s is the third title of the blog
-                        <p className="card-text">
-                          This is a wider card with supporting text below as a
-                          natural lead-in to additional content. This content is
-                          a little bit longer.
-                        </p>
-                        <p className="card-text">
-                          <small className="text-muted">
-                            Last updated 3 mins ago
-                          </small>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-              <a
-                href=""
-                className="text-decoration-none col-sm-6 col-lg-6 mt-2 p-2"
-              >
-                <div className="card mb-3">
-                  <div className="row g-0">
-                    <div className="col-md-4">
-                      <img
-                        src="../assets/images/profile.jpeg"
-                        className="img-fluid rounded-start"
-                        alt="..."
-                      />
-                    </div>
-                    <div className="col-md-8">
-                      <div className="card-body">
-                        <div className="d-flex justify-content-between">
-                          <h5 className="card-title">
-                            This is the title of the blog
-                          </h5>
-                          <i
-                            className="fa fa-bookmark-o"
-                            style={{ fontSize: "20px" }}
-                          ></i>
-                        </div>
-                        This is the third title of the blog
-                        <p className="card-text">
-                          This is a wider card with supporting text below as a
-                          natural lead-in to additional content. This content is
-                          a little bit longer.
-                        </p>
-                        <p className="card-text">
-                          <small className="text-muted">
-                            Last updated 3 mins ago
-                          </small>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
+                    </Link>
+                  );
+                })}
             </div>
           </div>
-          <Paginate />
+          <Paginate
+            setPage={setPage}
+            setLimit={setLimit}
+            limit={limit}
+            page={page}
+            total={data?.total}
+          />
         </div>
       </div>
     </>
