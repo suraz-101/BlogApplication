@@ -20,7 +20,7 @@ const commonQuerry = [
   },
   {
     $addFields: {
-      author: "$BlogAuthor.name",
+      author_name: "$BlogAuthor.name",
     },
   },
   {
@@ -75,6 +75,7 @@ const getPublishedBlogs = async (search, page = 1, limit = 20) => {
       status: "published",
     },
   });
+
   if (search?.title) {
     query.push({
       $match: {
@@ -85,22 +86,22 @@ const getPublishedBlogs = async (search, page = 1, limit = 20) => {
 
   // using common querry that can used to merger users, comments and blog collection using lookup and unqind
   query.push.apply(query, commonQuerry);
+
   if (search?.author) {
     query.push({
       $match: {
-        author: new RegExp(`${search?.author}`, "gi"),
+        author_name: new RegExp(`${search?.author}`, "gi"),
       },
     });
   }
-
   // query to show the neccessary field
   query.push({
     $project: {
       _id: 1,
       title: 1,
       content: 1,
-      author: 0,
       author: 1,
+      author_name: 1,
       slug: 1,
       status: 1,
       createAt: 1,
@@ -124,6 +125,7 @@ const getPublishedBlogs = async (search, page = 1, limit = 20) => {
 
 const getAll = async (search, page = 1, limit = 20) => {
   const querry = [];
+  console.log(search);
   // filter the data according to last createdAt
   querry.push({
     $sort: {
@@ -144,7 +146,7 @@ const getAll = async (search, page = 1, limit = 20) => {
   if (search?.author) {
     querry.push({
       $match: {
-        author: new RegExp(`${search.author}`, "gi"),
+        author_name: new RegExp(`${search?.author}`, "gi"),
       },
     });
   }
@@ -154,8 +156,8 @@ const getAll = async (search, page = 1, limit = 20) => {
       _id: 1,
       title: 1,
       content: 1,
-      author: 0,
       author: 1,
+      author_name: 1,
       slug: 1,
       status: 1,
       comments: "$BlogComments.comment",
@@ -221,8 +223,8 @@ const getById = (slug) => {
         comment: 0,
         comment: "$blogsComment.comment",
         numberOfComments: 1,
-        author: 0,
-        author: "$author.name",
+        author: 1,
+        author_name: "$author.name",
         createAt: 1,
         blogImage: 1,
         authorProfile: "$author.profilePic",

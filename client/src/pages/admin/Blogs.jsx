@@ -68,7 +68,7 @@ export const Blogs = () => {
                         <tr className="placeholder-glow" key={blog._id}>
                           <th scope="row">{index + 1}</th>
                           <td>{blog.title}</td>
-                          <td>{blog.author}</td>
+                          <td>{blog.author_name}</td>
                           <td>{blog.status}</td>
                           <td>{dateFormatter(blog.createAt)}</td>
                           <td>

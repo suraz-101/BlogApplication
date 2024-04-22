@@ -61,7 +61,7 @@ export const Home = () => {
               >
                 <div className="col-lg-6 p-5 d-sm-block cta-content text-center ">
                   <h2>{data.title}</h2>
-                  <p className="text-muted">By {data.author}</p>
+                  <p className="text-muted">By {data.author_name}</p>
                   <p>{data.content.slice(0, 100).concat("...")}</p>
 
                   <div className="row py-4">
@@ -167,7 +167,7 @@ export const Home = () => {
                                       fontWeight: "bold",
                                     }}
                                   >
-                                    {data.author}
+                                    {data.author_name}
                                   </h6>
                                   <h6
                                     style={{ fontSize: "12px" }}

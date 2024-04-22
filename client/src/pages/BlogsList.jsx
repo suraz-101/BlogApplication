@@ -205,7 +205,7 @@ export const BlogsList = () => {
                                       fontWeight: "bold",
                                     }}
                                   >
-                                    {data.author} (
+                                    {data.author_name} (
                                     <span className="text-muted">author</span>)
                                   </h6>
                                   <h6

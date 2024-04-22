@@ -18,7 +18,11 @@ const uploadBlogImage = multer({ storage: blogImageStorage });
 router.get("/", checkRole(["admin"]), async (req, res, next) => {
   try {
     const { title, author, page, limit } = req.query;
+    // if (req.body.author) {
+    //   const author = req.body.author;
+    // }
     const search = { title, author };
+
     const result = await blogController.getAll(search, page, limit);
     res.json({ message: result });
   } catch (error) {

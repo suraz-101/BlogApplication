@@ -61,7 +61,7 @@ export const Blog = () => {
                     style={{ height: " 50px", width: "50px" }}
                   />
                 </span>
-                <span className="mx-2">{blogData.author}</span>
+                <span className="mx-2">{blogData.author_name}</span>
                 <span className="text-muted">(author)</span>
               </span>
               <span>
@@ -141,7 +141,7 @@ export const Blog = () => {
                                         fontWeight: "bold",
                                       }}
                                     >
-                                      {data?.author}
+                                      {data?.author_name}
                                     </h6>
                                     <h6
                                       style={{ fontSize: "12px" }}
