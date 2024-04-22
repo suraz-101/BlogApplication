@@ -15,13 +15,17 @@ const blogImageStorage = multer.diskStorage({
 
 const uploadBlogImage = multer({ storage: blogImageStorage });
 
-router.get("/", checkRole(["admin"]), async (req, res, next) => {
+router.get("/", checkRole(["admin", "user"]), async (req, res, next) => {
   try {
     const { title, author, page, limit } = req.query;
+    const search = { title, author, authorId: "" };
+
+    if (req?.currentUser && req.role.includes("user")) {
+      search.authorId = req.currentUser;
+    }
     // if (req.body.author) {
     //   const author = req.body.author;
     // }
-    const search = { title, author };
 
     const result = await blogController.getAll(search, page, limit);
     res.json({ message: result });

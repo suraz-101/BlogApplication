@@ -125,7 +125,6 @@ const getPublishedBlogs = async (search, page = 1, limit = 20) => {
 
 const getAll = async (search, page = 1, limit = 20) => {
   const querry = [];
-  console.log(search);
   // filter the data according to last createdAt
   querry.push({
     $sort: {
@@ -135,6 +134,13 @@ const getAll = async (search, page = 1, limit = 20) => {
   // query to merger users and comments and blogs collection
   //commong code that can be repeated where we need to merger users and comment collections
   querry.push.apply(querry, commonQuerry); // => to merge two different array use syntax ==>  oldArray.push.apply(oldArray,newArray);
+  if (search?.authorId) {
+    querry.push({
+      $match: {
+        author: search?.authorId,
+      },
+    });
+  }
 
   if (search?.title) {
     querry.push({
@@ -150,6 +156,7 @@ const getAll = async (search, page = 1, limit = 20) => {
       },
     });
   }
+
   // query to include different fields of the colletions
   querry.push({
     $project: {
@@ -166,6 +173,8 @@ const getAll = async (search, page = 1, limit = 20) => {
       blogImage: 1,
     },
   });
+  const { authorId } = search;
+  console.log("here we are", authorId);
 
   //query to search based on title and author name
 
@@ -173,6 +182,7 @@ const getAll = async (search, page = 1, limit = 20) => {
   querry.push.apply(querry, facetQuerry(page, limit));
 
   const result = await BlogModel.aggregate(querry);
+  console.log(result[0].data);
   return {
     data: result[0].data,
     total: result[0].total || 0,
