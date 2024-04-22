@@ -7,7 +7,6 @@ const checkRole = (sysRole) => {
       const { access_token } = req.headers || "";
       if (!access_token) throw new Error("Access Token is required");
       const { data } = verifyJWT(access_token);
-      console.log(data);
       const isValidRole = sysRole.some((role) => data.role.includes(role));
       if (!isValidRole) throw new Error("Permission Denied");
       const { email } = data;

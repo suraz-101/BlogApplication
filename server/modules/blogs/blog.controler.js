@@ -173,8 +173,6 @@ const getAll = async (search, page = 1, limit = 20) => {
       blogImage: 1,
     },
   });
-  const { authorId } = search;
-  console.log("here we are", authorId);
 
   //query to search based on title and author name
 
@@ -182,7 +180,6 @@ const getAll = async (search, page = 1, limit = 20) => {
   querry.push.apply(querry, facetQuerry(page, limit));
 
   const result = await BlogModel.aggregate(querry);
-  console.log(result[0].data);
   return {
     data: result[0].data,
     total: result[0].total || 0,

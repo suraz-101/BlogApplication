@@ -15,11 +15,15 @@ const List = (limit, page) => {
 };
 
 const changeStatus = (id) => {
-  return instance.patch(URLS.BLOGS + `/status/${id}`);
+  return instance.patch(URLS.BLOGS + `/status/${id}`, {
+    headers: { access_token: localStorage.getItem("access_token") },
+  });
 };
 
 const updateBlog = (payload) => {
-  return instance.put(URLS.BLOGS + `/updateBlog`, payload);
+  return instance.put(URLS.BLOGS + `/updateBlog`, payload, {
+    headers: { access_token: localStorage.getItem("access_token") },
+  });
 };
 
 const getById = (id) => {
@@ -29,7 +33,9 @@ const getById = (id) => {
 };
 
 const remove = (id) => {
-  return instance.delete(URLS.BLOGS + `/deleteBlog/${id}`);
+  return instance.delete(URLS.BLOGS + `/deleteBlog/${id}`, {
+    headers: { access_token: localStorage.getItem("access_token") },
+  });
 };
 
 export { createBlog, List, changeStatus, updateBlog, remove, getById };
