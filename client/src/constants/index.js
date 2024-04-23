@@ -10,6 +10,7 @@ export const URLS = {
   PUBLISHED_BLOG_LIST: API_VERSION + "/blogs/getPublishedBlogs",
   GET_SINGLE_BLOG: API_VERSION + "/blogs/singleBlog",
   BLOGS: API_VERSION + "/blogs",
+  USERS: API_VERSION + "/users",
 };
 
 // This file is used to store all the information related to the url that we need to navigate
