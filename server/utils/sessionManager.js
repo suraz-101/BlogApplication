@@ -11,9 +11,6 @@ const checkRole = (sysRole) => {
       if (!isValidRole) throw new Error("Permission Denied");
       const { email } = data;
       const user = await userModel.findOne({ email });
-      // req.body.author = role.includes("user")
-      //   ? user._id.toString()
-      //   : req.body.author;
       req.currentUser = user?._id;
       req.role = user?.role;
 

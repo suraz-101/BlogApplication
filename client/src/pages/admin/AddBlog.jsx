@@ -4,6 +4,17 @@ import logo from "../../assets/icons/android-chrome-192x192.png";
 
 export const AddBlog = () => {
   const [image, setImage] = useState("");
+
+  const handleSubmit = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   return (
     <div
       className="contentArea col-lg-10 col-sm-8 col-7 bg-light"
@@ -66,14 +77,7 @@ export const AddBlog = () => {
                               id="blogImage"
                               required
                               onChange={(e) => {
-                                const file = e.target.files[0];
-                                if (file) {
-                                  const reader = new FileReader();
-                                  reader.onload = () => {
-                                    setImage(reader.result);
-                                  };
-                                  reader.readAsDataURL(file);
-                                }
+                                handleSubmit(e);
                               }}
                             />
                           </div>
