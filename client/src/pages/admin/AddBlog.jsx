@@ -1,19 +1,40 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/icons/android-chrome-192x192.png";
+import { create } from "../../services/blog";
+import { createBlog } from "../../slices/blogSlice";
 
 export const AddBlog = () => {
-  const [image, setImage] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [preview, setPreview] = useState("");
+  const [payload, setPayload] = useState({
+    title: "",
+    content: "",
+    blogImage: "",
+  });
 
   const handleSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(createBlog(payload));
+    navigate("/admin/blogs");
+  };
+
+  const handleFile = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setImage(reader.result);
+        setPreview(reader.result);
       };
       reader.readAsDataURL(file);
     }
+
+    setPayload((preV) => {
+      return { ...preV, blogImage: e.target.files[0].name };
+    });
   };
   return (
     <div
@@ -48,80 +69,86 @@ export const AddBlog = () => {
                       </a>
                       <h3>Add Blog</h3>
                     </div>
-                    <form action="" className="col-12" id="registerUser">
+                    <form
+                      action=""
+                      className="col-12"
+                      id="registerUser"
+                      onSubmit={(e) => {
+                        handleSubmit(e);
+                      }}
+                    >
                       <div className="row container">
-                        <form>
-                          <div className="d-flex justify-content-center">
-                            {image ? (
-                              <img
-                                src={image}
-                                alt=""
-                                height="200px"
-                                width="200px"
-                              />
-                            ) : (
-                              <></>
-                            )}
-                          </div>
-                          <div className="mb-3 d-flex flex-column">
-                            <label
-                              for="exampleInputEmail"
-                              className="form-label"
-                            >
-                              Featured Image
-                            </label>
-                            <input
-                              className="border p-2"
-                              type="file"
-                              name="blogImage"
-                              id="blogImage"
-                              required
-                              onChange={(e) => {
-                                handleSubmit(e);
-                              }}
+                        <div className="d-flex justify-content-center">
+                          {preview ? (
+                            <img
+                              src={preview}
+                              alt=""
+                              height="200px"
+                              width="200px"
                             />
-                          </div>
-                          <div className="mb-3">
-                            <label
-                              for="exampleInputName"
-                              className="form-label"
-                            >
-                              Title
-                            </label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="exampleInputName"
-                              placeholder="This is the title of the blog "
-                              name="title"
-                              required
-                            />
-                          </div>
-                          <div className="mb-3">
-                            <label
-                              for="exampleInputEmail"
-                              className="form-label"
-                            >
-                              Content
-                            </label>
-                            <textarea
-                              className="form-control"
-                              name="content"
-                              id="blogContent"
-                              cols="82"
-                              rows="10"
-                              placeholder="Enter the content of the blog"
-                            ></textarea>
-                          </div>
+                          ) : (
+                            <></>
+                          )}
+                        </div>
+                        <div className="mb-3 d-flex flex-column">
+                          <label for="exampleInputEmail" className="form-label">
+                            Featured Image
+                          </label>
+                          <input
+                            className="border p-2"
+                            type="file"
+                            name="blogImage"
+                            id="blogImage"
+                            required
+                            onChange={(e) => {
+                              handleFile(e);
+                            }}
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label for="exampleInputName" className="form-label">
+                            Title
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="exampleInputName"
+                            placeholder="This is the title of the blog "
+                            name="title"
+                            required
+                            onChange={(e) => {
+                              setPayload((preV) => {
+                                return { ...preV, title: e.target.value };
+                              });
+                            }}
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label for="exampleInputEmail" className="form-label">
+                            Content
+                          </label>
+                          <textarea
+                            className="form-control"
+                            name="content"
+                            id="blogContent"
+                            cols="82"
+                            rows="10"
+                            placeholder="Enter the content of the blog"
+                            onChange={(e) => {
+                              setPayload((preV) => {
+                                return { ...preV, content: e.target.value };
+                              });
+                            }}
+                          ></textarea>
+                        </div>
 
-                          <button
-                            type="submit"
-                            id="regsiterButton"
-                            className="btn btn-outline-none border border-dark bg-dark text-white col-sm-5 m-auto mb-2"
-                          >
-                            Add Blog
-                          </button>
-                        </form>
+                        <button
+                          type="submit"
+                          id="regsiterButton"
+                          className="btn btn-outline-none border border-dark bg-dark text-white col-sm-5 m-auto mb-2"
+                        >
+                          Add Blog
+                        </button>
                       </div>
                     </form>
                   </div>

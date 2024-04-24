@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { List } from "../services/blog";
+import { List, create } from "../services/blog";
 
 const initialState = {
   blogs: [],
+  blog: {},
   page: 1,
   total: 0,
   limit: 20,
@@ -16,6 +17,18 @@ export const listBlogs = createAsyncThunk(
     try {
       const response = await List(limit, page);
       console.log(response);
+      return response.data; // Assuming the response structure is { data: { total, data } }
+    } catch (error) {
+      throw Error(error.message);
+    }
+  }
+);
+
+export const createBlog = createAsyncThunk(
+  "blogs/createBlog",
+  async (payload) => {
+    try {
+      const response = await create(payload);
       return response.data; // Assuming the response structure is { data: { total, data } }
     } catch (error) {
       throw Error(error.message);
@@ -42,12 +55,22 @@ const blogSlice = createSlice({
         state.loading = true;
       })
       .addCase(listBlogs.fulfilled, (state, action) => {
-        console.log(action);
         state.loading = false;
         state.total = action.payload.message.total;
         state.blogs = action.payload.message.data;
       })
       .addCase(listBlogs.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(createBlog.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createBlog.fulfilled, (state, action) => {
+        state.loading = false;
+        state.blog = action.payload.message.data;
+      })
+      .addCase(createBlog.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

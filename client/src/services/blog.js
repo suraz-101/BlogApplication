@@ -1,7 +1,7 @@
 import instance from "../utils/api";
 import { URLS } from "../constants";
 
-const createBlog = (payload) => {
+const create = (payload) => {
   return instance.post(URLS.BLOGS, payload, {
     headers: { access_token: localStorage.getItem("access_token") },
   });
@@ -38,4 +38,4 @@ const remove = (id) => {
   });
 };
 
-export { createBlog, List, changeStatus, updateBlog, remove, getById };
+export { create, List, changeStatus, updateBlog, remove, getById };
