@@ -8,7 +8,9 @@ import { useEffect } from "react";
 import { dateFormatter } from "../../utils/dateFormatter";
 export const Blogs = () => {
   const dispatch = useDispatch();
-  const { blogs, page, limit, total } = useSelector((state) => state.blogs);
+  const { blogs, page, limit, total, setPage, setLimit } = useSelector(
+    (state) => state.blogs
+  );
   console.log(total);
 
   const initFetch = useCallback(() => {

@@ -80,8 +80,17 @@ router.post(
   validate,
   async (req, res, next) => {
     try {
+      console.log("here qwe are");
       // uploadBlogImage.single("blogImage");
-      req.body.blogImage = req.file.path.replace("public", "");
+      if (req?.file) {
+        req.body.blogImage = req.file.path.replace("public", "");
+      }
+      console.log("current user:", req.currentUser);
+      if (req?.currentUser) {
+        req.body.author = req.currentUser;
+      }
+      console.log(req.body);
+
       const result = await blogController.create(req.body);
       res.json({ data: result });
     } catch (err) {

@@ -4,11 +4,10 @@ const Schema = Joi.object({
   title: Joi.string().required(),
   tags: [Joi.string()], //["Science", "mern-stack"] ??
   content: Joi.string(),
-  author: Joi.string().required(),
+  // author: Joi.string().required(),
   words: Joi.number(),
   status: Joi.string(),
   blogImage: Joi.string(),
-  
 });
 
 const validate = (req, res, next) => {

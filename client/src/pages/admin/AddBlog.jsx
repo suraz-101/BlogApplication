@@ -57,7 +57,7 @@ export const AddBlog = () => {
                               for="exampleInputEmail"
                               className="form-label"
                             >
-                              Blog Image
+                              Featured Image
                             </label>
                             <input
                               className="border p-2"
