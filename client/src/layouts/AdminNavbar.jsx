@@ -52,7 +52,15 @@ export const AdminNavbar = () => {
               alt=""
               style={{ height: "30px", width: "30px", borderRadius: "50%" }}
             />
-            <span> {user?.name}</span>
+            <span>
+              {" "}
+              <Link
+                to="/admin/profile"
+                className="text-decoration-none text-dark"
+              >
+                {user?.name}
+              </Link>
+            </span>
             <span className="mx-2 p-3">
               {/* {user?.role?.length>0 && user?.role.includes("admin") && ()} */}
               <button
