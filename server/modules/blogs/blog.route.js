@@ -76,7 +76,7 @@ router.get("/singleBlog/:slug", async (req, res, next) => {
 router.post(
   "/",
   uploadBlogImage.single("blogImage"),
-  checkRole(["user"]),
+  checkRole(["user", "admin"]),
   validate,
   async (req, res, next) => {
     try {

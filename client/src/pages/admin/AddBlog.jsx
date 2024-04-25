@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/icons/android-chrome-192x192.png";
 import { create } from "../../services/blog";
 import { createBlog } from "../../slices/blogSlice";
-
+import { Notify } from "../../conponenets/Notify";
 export const AddBlog = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -14,12 +14,19 @@ export const AddBlog = () => {
     content: "",
     blogImage: "",
   });
+  const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
 
-    dispatch(createBlog(payload));
-    navigate("/admin/blogs");
+      const response = dispatch(createBlog(payload));
+      console.log("response is :", response);
+
+      navigate("/admin/blogs");
+    } catch (err) {
+      setError(err);
+    }
   };
 
   const handleFile = (e) => {
@@ -68,6 +75,7 @@ export const AddBlog = () => {
                         <img src={logo} alt="" height="60px" width="60px" />
                       </a>
                       <h3>Add Blog</h3>
+                      {error && <Notify variant="danger" msg={error}></Notify>}
                     </div>
                     <form
                       action=""
