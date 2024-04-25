@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/icons/android-chrome-192x192.png";
 import { create } from "../../services/blog";
 import { createBlog } from "../../slices/blogSlice";
 import { Notify } from "../../conponenets/Notify";
 export const AddBlog = () => {
+  const { blog, error } = useSelector((state) => state.blogs);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [preview, setPreview] = useState("");
@@ -14,17 +16,14 @@ export const AddBlog = () => {
     content: "",
     blogImage: null,
   });
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
-    try {
-      e.preventDefault();
+    e.preventDefault();
 
-      dispatch(createBlog(payload));
-
+    dispatch(createBlog(payload));
+    if (blog) {
       navigate("/admin/blogs");
-    } catch (err) {
-      setError(err);
     }
   };
 
