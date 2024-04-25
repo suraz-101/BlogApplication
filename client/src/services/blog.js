@@ -2,8 +2,12 @@ import instance from "../utils/api";
 import { URLS } from "../constants";
 
 const create = (payload) => {
+  console.log("payload", payload);
   return instance.post(URLS.BLOGS, payload, {
-    headers: { access_token: localStorage.getItem("access_token") },
+    headers: {
+      access_token: localStorage.getItem("access_token"),
+      "Content-Type": "multipart/form-data",
+    },
   });
 };
 

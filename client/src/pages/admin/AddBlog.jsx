@@ -12,7 +12,7 @@ export const AddBlog = () => {
   const [payload, setPayload] = useState({
     title: "",
     content: "",
-    blogImage: "",
+    blogImage: null,
   });
   const [error, setError] = useState("");
 
@@ -20,8 +20,7 @@ export const AddBlog = () => {
     try {
       e.preventDefault();
 
-      const response = dispatch(createBlog(payload));
-      console.log("response is :", response);
+      dispatch(createBlog(payload));
 
       navigate("/admin/blogs");
     } catch (err) {
@@ -38,9 +37,9 @@ export const AddBlog = () => {
       };
       reader.readAsDataURL(file);
     }
-
-    setPayload((preV) => {
-      return { ...preV, blogImage: e.target.files[0].name };
+    console.log("file", file.name);
+    setPayload((prevVal) => {
+      return { ...prevVal, blogImage: file };
     });
   };
   return (
