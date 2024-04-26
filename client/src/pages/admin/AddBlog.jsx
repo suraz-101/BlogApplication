@@ -28,6 +28,7 @@ export const AddBlog = () => {
   };
 
   const handleFile = (e) => {
+    console.log(e.target.files);
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -36,7 +37,7 @@ export const AddBlog = () => {
       };
       reader.readAsDataURL(file);
     }
-    console.log("file", file.name);
+    // console.log("file", file.name);
     setPayload((prevVal) => {
       return { ...prevVal, blogImage: file };
     });
