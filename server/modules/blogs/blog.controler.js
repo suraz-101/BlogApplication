@@ -104,7 +104,7 @@ const getPublishedBlogs = async (search, page = 1, limit = 20) => {
       author_name: 1,
       slug: 1,
       status: 1,
-      createAt: 1,
+      createdAt: 1,
       blogImage: 1,
       authorProfile: 1,
     },
@@ -128,7 +128,7 @@ const getAll = async (search, page = 1, limit = 20) => {
   // filter the data according to last createdAt
   querry.push({
     $sort: {
-      createAt: 1,
+      createdAt: -1,
     },
   });
   // query to merger users and comments and blogs collection
@@ -169,8 +169,8 @@ const getAll = async (search, page = 1, limit = 20) => {
       status: 1,
       comments: "$BlogComments.comment",
       numberOfComments: 1,
-      createAt: 1,
       blogImage: 1,
+      createdAt: 1,
     },
   });
 
@@ -232,7 +232,7 @@ const getById = (slug) => {
         numberOfComments: 1,
         author: 1,
         author_name: "$author.name",
-        createAt: 1,
+        createdAt: 1,
         blogImage: 1,
         authorProfile: "$author.profilePic",
       },

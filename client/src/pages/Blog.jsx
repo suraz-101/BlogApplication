@@ -68,7 +68,7 @@ export const Blog = () => {
                 <i class="fa fa-calendar px-2"></i>
                 <span>Published on : </span>
                 <span className="text-muted">
-                  {dateFormatter(blogData.createAt)}
+                  {dateFormatter(blogData.createdAt)}
                 </span>
               </span>
             </div>

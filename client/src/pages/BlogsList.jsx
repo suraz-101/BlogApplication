@@ -155,6 +155,7 @@ export const BlogsList = () => {
 
             {data?.data?.length > 0 ? (
               data?.data?.map((data) => {
+                console.log(data);
                 return (
                   <div
                     className="col-12 col-sm-6 col-md-3 mt-2 p-2"
@@ -212,7 +213,7 @@ export const BlogsList = () => {
                                     style={{ fontSize: "12px" }}
                                     className="text-muted"
                                   >
-                                    {dateFormatter(data.createAt)}
+                                    {dateFormatter(data.createdAt)}
                                   </h6>
                                 </div>
                               </div>

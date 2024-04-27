@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Paginate } from "../../conponenets/Pagination";
 import { useDispatch, useSelector } from "react-redux";
 
-import { listBlogs, setLimit } from "../../slices/blogSlice.js";
+import { listBlogs, removeBlog, setLimit } from "../../slices/blogSlice.js";
 import { useCallback } from "react";
 import { useEffect } from "react";
 import { dateFormatter } from "../../utils/dateFormatter";
@@ -12,18 +12,24 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 
 export const Blogs = () => {
   const dispatch = useDispatch();
-  const { blogs, page, limit, total, setPage, setLimit } = useSelector(
+  const { blogs, page, limit, total, blog } = useSelector(
     (state) => state.blogs
   );
-  console.log(total);
-
+  // console.log(blog);
   const initFetch = useCallback(() => {
     dispatch(listBlogs({ limit, page }));
   }, [dispatch, limit, page]);
 
+  const handleDelete = (id) => {
+    dispatch(removeBlog(id));
+  };
+
   useEffect(() => {
+    if (blog?.acknowledged) {
+      initFetch();
+    }
     initFetch();
-  }, [initFetch]);
+  }, [initFetch, blog]);
   return (
     <div
       className="contentArea col-lg-10 col-sm-8 col-7 bg-light"
@@ -77,7 +83,7 @@ export const Blogs = () => {
                           <td>{blog.author_name}</td>
                           <td>
                             {blog.status}{" "}
-                            <DropdownButton
+                            {/* <DropdownButton
                               id="dropdown-basic-button"
                               title={blog.status}
                             >
@@ -90,10 +96,10 @@ export const Blogs = () => {
                               <Dropdown.Item href="#/action-3">
                                 Something else
                               </Dropdown.Item>
-                            </DropdownButton>
+                            </DropdownButton> */}
                           </td>
 
-                          <td>{dateFormatter(blog.createAt)}</td>
+                          <td>{dateFormatter(blog.createdAt)}</td>
                           <td>
                             <button className="btn button">
                               <i className="fa fa-eye"></i>
@@ -103,6 +109,9 @@ export const Blogs = () => {
                             <button
                               className="btn "
                               style={{ backgroundColor: "red" }}
+                              onClick={(e) => {
+                                handleDelete(blog?._id);
+                              }}
                             >
                               <i className="fa fa-trash"></i>
                             </button>

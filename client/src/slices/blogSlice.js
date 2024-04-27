@@ -1,5 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { List, create } from "../services/blog";
+import {
+  create,
+  List,
+  changeStatus,
+  updateBlog,
+  remove,
+  getById,
+} from "../services/blog";
 
 const initialState = {
   blogs: [],
@@ -16,7 +23,6 @@ export const listBlogs = createAsyncThunk(
   async ({ limit, page }) => {
     try {
       const response = await List(limit, page);
-      console.log(response);
       return response.data; // Assuming the response structure is { data: { total, data } }
     } catch (error) {
       throw Error(error.message);
@@ -35,6 +41,52 @@ export const createBlog = createAsyncThunk(
     }
   }
 );
+
+export const getBlog = createAsyncThunk("blogs/getBlog", async (id) => {
+  try {
+    const response = await getById(id);
+    return response.data; // Assuming the response structure is { data: { total, data } }
+  } catch (error) {
+    throw Error(error.message);
+  }
+});
+
+export const updateBlogById = createAsyncThunk(
+  "blogs/updateBlogById",
+  async (payload) => {
+    try {
+      const response = await updateBlog(payload);
+      console.log("update", response);
+
+      return response.data; // Assuming the response structure is { data: { total, data } }
+    } catch (error) {
+      throw Error(error.message);
+    }
+  }
+);
+
+export const updateStatus = createAsyncThunk(
+  "blogs/updateStatus",
+  async (id) => {
+    try {
+      const response = await changeStatus(id);
+      console.log("status", response.data.message);
+
+      return response.data.message; // Assuming the response structure is { data: { total, data } }
+    } catch (error) {
+      throw Error(error.message);
+    }
+  }
+);
+
+export const removeBlog = createAsyncThunk("blogs/removeBlog", async (id) => {
+  try {
+    const response = await remove(id);
+    return response.data; // Assuming the response structure is { data: { total, data } }
+  } catch (error) {
+    throw Error(error.message);
+  }
+});
 
 const blogSlice = createSlice({
   name: "blogs",
@@ -71,6 +123,51 @@ const blogSlice = createSlice({
         state.blog = action.payload.message.data;
       })
       .addCase(createBlog.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getBlog.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getBlog.fulfilled, (state, action) => {
+        state.loading = false;
+        state.blog = action.payload.message.data;
+      })
+      .addCase(getBlog.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(updateBlogById.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateBlogById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.blog = action.payload.message.data;
+      })
+      .addCase(updateBlogById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(updateStatus.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateStatus.fulfilled, (state, action) => {
+        state.loading = false;
+        state.blog = action.payload.message.data;
+      })
+      .addCase(updateStatus.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(removeBlog.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(removeBlog.fulfilled, (state, action) => {
+        state.loading = false;
+        state.blog = action.payload.message;
+        console.log(state.blog);
+      })
+      .addCase(removeBlog.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
