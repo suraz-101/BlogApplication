@@ -24,7 +24,7 @@ export const Login = () => {
       createUser(); // This line of code will call the setToken function of utils/session.js file and helps to setItem into the localStorage
       navigate("/admin");
     } catch (e) {
-      // console.log("error is : ", e.response.data.message);
+      console.log("error is : ", e.response.data.message);
       setError(e.response.data.message);
     } finally {
       setTimeout(() => {

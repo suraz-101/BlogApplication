@@ -61,7 +61,14 @@ const App = () => {
               </PrivateRoute>
             }
           />
-          <Route path="addBlog" element={<AddBlog />} />
+          <Route
+            path="addBlog"
+            element={
+              <PrivateRoute>
+                <AddBlog />
+              </PrivateRoute>
+            }
+          />
           <Route path="profile" element={<Profile />} />
         </Route>
         <Route path="*" element={<NotFound />} />
