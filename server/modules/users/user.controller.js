@@ -86,8 +86,8 @@ const getAllUsers = async (search, page = 1, limit = 2) => {
   };
 };
 
-const getUserById = (_id) => {
-  return userModel.findOne(_id);
+const getUserById = (email) => {
+  return userModel.findOne(email);
 };
 
 const updateUsersDetails = (_id, payload) => {
@@ -192,8 +192,8 @@ const changePassword = async (payload) => {
   return "password changed successfully";
 };
 
-const getProfile = (userId) => {
-  return userModel.findOne({ _id: userId });
+const getProfile = (email) => {
+  return userModel.findOne({ email });
 };
 
 const updateProfile = async (userId, payload) => {

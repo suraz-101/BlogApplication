@@ -17,7 +17,7 @@ import { NotFound } from "./pages/NotFound";
 import { Register } from "./pages/Register";
 import { VerifyToken } from "./pages/VerifyToken";
 import { PrivateRoute } from "./conponenets/Route";
-
+import { BlogEdit } from "./pages/admin/BlogEdit";
 const App = () => {
   return (
     <>
@@ -41,7 +41,14 @@ const App = () => {
         </Route>
 
         {/* admin  */}
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoute>
+              <AdminLayout />
+            </PrivateRoute>
+          }
+        >
           <Route path="/admin/blogs">
             <Route
               index
@@ -66,6 +73,14 @@ const App = () => {
             element={
               <PrivateRoute>
                 <AddBlog />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="editBlog"
+            element={
+              <PrivateRoute>
+                <BlogEdit />
               </PrivateRoute>
             }
           />

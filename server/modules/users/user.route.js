@@ -123,10 +123,10 @@ router.patch(
 // this pau is used for get data of logged in user which is only accessible for specific users
 router.get("/get-user", checkRole(["user"]), async (req, res, next) => {
   try {
-    const { id } = req.body;
+    const { email } = req.query;
 
-    if (!id) throw new Error("id is required");
-    const result = await userController.getProfile(id);
+    if (!email) throw new Error("email is required");
+    const result = await userController.getProfile(email);
     res.status(200).json({ message: result });
   } catch (error) {
     next(error);

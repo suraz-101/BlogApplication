@@ -102,7 +102,12 @@ export const Blogs = () => {
                           <td>{dateFormatter(blog.createdAt)}</td>
                           <td>
                             <button className="btn button">
-                              <i className="fa fa-eye"></i>
+                              <Link
+                                to="/admin/editBlog"
+                                className="text-decoration-none text-dark bg-success py-2 px-3 rounded"
+                              >
+                                <i className="fa fa-eye"></i>
+                              </Link>
                             </button>
                           </td>
                           <td>
@@ -113,7 +118,7 @@ export const Blogs = () => {
                                 handleDelete(blog?._id);
                               }}
                             >
-                              <i className="fa fa-trash"></i>
+                              <i className="fa fa-trash text-white"></i>
                             </button>
                           </td>
                         </tr>

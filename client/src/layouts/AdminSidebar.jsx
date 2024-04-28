@@ -4,10 +4,19 @@ import { Link } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { getUser } from "../utils/login";
 
 export const AdminSidebar = () => {
   const { pathname } = useLocation();
   const current = pathname.split("/")[2];
+
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const user = JSON.parse(getUser());
+    setUsername(user);
+  }, []);
 
   return (
     <>
@@ -26,17 +35,22 @@ export const AdminSidebar = () => {
               </Link>
             </li>
             <hr />
-            <li>
-              <Link
-                to="/admin/users"
-                className={`nav-link text-white  ${
-                  current === "users" ? "active" : ""
-                }`}
-              >
-                <i className="fa fa-users"></i> Users
-              </Link>
-            </li>
-            <hr />
+            {username?.role?.length > 0 && username?.role.includes("admin") && (
+              <>
+                <li>
+                  <Link
+                    to="/admin/users"
+                    className={`nav-link text-white  ${
+                      current === "users" ? "active" : ""
+                    }`}
+                  >
+                    <i className="fa fa-users"></i> Users
+                  </Link>
+                </li>
+                <hr />
+              </>
+            )}
+
             <li>
               <Link
                 to="/admin/blogs"

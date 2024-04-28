@@ -84,7 +84,7 @@ export const Users = () => {
                   ) : (
                     <tr>
                       <td scope="row" colSpan={6} className="text-center ">
-                        No Blogs Found
+                        No Users Found
                       </td>
                     </tr>
                   )}

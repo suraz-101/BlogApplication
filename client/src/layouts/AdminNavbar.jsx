@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { decodeJwt, getToken, removeToken, removeUser } from "../utils/session";
 import logo from "../assets/icons/android-chrome-192x192.png";
-import profile from "../assets/images/profile.jpeg";
-import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { setUseStrictShallowCopy } from "immer";
 import { getUser } from "../utils/login";
+import profile from "../assets/images/profile.jpeg";
+import { removeToken, removeUser } from "../utils/session";
 
 export const AdminNavbar = () => {
-  const [user, setUser] = useState({});
+  const [username, setUsername] = useState({});
 
   const navigate = useNavigate();
 
@@ -22,8 +19,7 @@ export const AdminNavbar = () => {
 
   useEffect(() => {
     const user = JSON.parse(getUser());
-
-    setUser(user);
+    setUsername(user);
   }, []);
 
   return (
@@ -58,7 +54,7 @@ export const AdminNavbar = () => {
                 to="/admin/profile"
                 className="text-decoration-none text-dark"
               >
-                {user?.name}
+                {username?.name}
               </Link>
             </span>
             <span className="mx-2 p-3">

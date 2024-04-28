@@ -23,8 +23,8 @@ const updateUserDetails = (payload) => {
   });
 };
 
-const getById = (id) => {
-  return instance.get(URLS.USERS + `/${id}`, {
+const getById = (email) => {
+  return instance.get(URLS.USERS + `?email=${email}`, {
     headers: { access_token: localStorage.getItem("access_token") },
   });
 };
