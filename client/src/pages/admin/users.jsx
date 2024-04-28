@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { listUsers } from "../../slices/userSlice";
 import { Link } from "react-router-dom";
 import { Paginate } from "../../conponenets/Pagination";
@@ -7,14 +7,15 @@ import { Paginate } from "../../conponenets/Pagination";
 export const Users = () => {
   const dispatch = useDispatch();
   const { users, page, limit, total } = useSelector((state) => state.users);
+  const [email, setEmail] = useState("");
 
   const initFetch = useCallback(() => {
-    dispatch(listUsers({ limit, page }));
-  }, [dispatch, limit, page]);
+    dispatch(listUsers({ limit, page, email }));
+  }, [dispatch, limit, page, email]);
 
   useEffect(() => {
     initFetch();
-  }, [initFetch]);
+  }, [initFetch, email]);
 
   return (
     <div
@@ -37,6 +38,9 @@ export const Users = () => {
                   type="text"
                   className="form-control"
                   placeholder="Search Users"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                 />
               </div>
             </div>

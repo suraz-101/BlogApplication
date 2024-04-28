@@ -14,9 +14,10 @@ const initialState = {
 
 export const listUsers = createAsyncThunk(
   "users/listUsers",
-  async ({ limit, page }) => {
+  async ({ limit, page, email }) => {
     try {
-      const response = await List(limit, page);
+      // console.log(email);
+      const response = await List(limit, page, email);
       return response.data; // Assuming the response structure is { data: { total, data } }
     } catch (error) {
       throw Error(error.message);

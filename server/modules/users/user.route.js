@@ -24,8 +24,9 @@ const upload = multer({ storage: storage });
 
 router.get("/", checkRole(["admin"]), async (req, res, next) => {
   try {
-    const { limit, page, name, role } = req.query;
-    const search = { name, role };
+    console.log("query", req.query);
+    const { limit, page, name, email } = req.query;
+    const search = { name, email };
     const result = await userController.getAllUsers(search, page, limit);
     res.json({ message: result });
   } catch (error) {

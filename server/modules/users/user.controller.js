@@ -10,6 +10,7 @@ const createUser = (payload) => {
 };
 
 const getAllUsers = async (search, page = 1, limit = 2) => {
+  console.log(search);
   const querry = [];
   if (search?.name) {
     querry.push({
@@ -18,10 +19,10 @@ const getAllUsers = async (search, page = 1, limit = 2) => {
       },
     });
   }
-  if (search?.role) {
+  if (search?.email) {
     querry.push({
       $match: {
-        role: [search.role],
+        email: new RegExp(search.email, "gi"),
       },
     });
   }
@@ -72,8 +73,10 @@ const getAllUsers = async (search, page = 1, limit = 2) => {
       },
     }
   );
+  console.log(querry);
 
   const result = await userModel.aggregate(querry);
+  // console.log(result);
   // if(!result[0].total[0]) throw new Error("user not found")
   return {
     data: result[0].data,

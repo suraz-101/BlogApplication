@@ -7,11 +7,14 @@ const createUser = (payload) => {
   });
 };
 
-const List = (limit, page) => {
+const List = (limit, page, email = "") => {
   // console.log(limit, page);[]
-  return instance.get(URLS.USERS + `?page=${page}&limit=${limit}`, {
-    headers: { access_token: localStorage.getItem("access_token") },
-  });
+  return instance.get(
+    URLS.USERS + `?page=${page}&limit=${limit}&email=${email}`,
+    {
+      headers: { access_token: localStorage.getItem("access_token") },
+    }
+  );
 };
 
 const updateUserDetails = (payload) => {
