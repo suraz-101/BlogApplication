@@ -77,7 +77,7 @@ const App = () => {
             }
           />
           <Route
-            path="editBlog"
+            path="editBlog/:id"
             element={
               <PrivateRoute>
                 <BlogEdit />

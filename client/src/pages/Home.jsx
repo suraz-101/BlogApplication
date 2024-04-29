@@ -173,7 +173,7 @@ export const Home = () => {
                                     style={{ fontSize: "12px" }}
                                     className="text-muted"
                                   >
-                                    {dateFormatter(data.createAt)}
+                                    {dateFormatter(data.publishedDate)}
                                   </h6>
                                 </div>
                               </div>
@@ -239,7 +239,7 @@ export const Home = () => {
                               </p>
                               <p className="card-text">
                                 <small className="text-muted">
-                                  {dateFormatter(data?.createAt)}
+                                  {dateFormatter(data?.publishedDate)}
                                 </small>
                               </p>
                             </div>

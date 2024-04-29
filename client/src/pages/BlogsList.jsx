@@ -23,6 +23,7 @@ export const BlogsList = () => {
     setAuthor,
     setTitle,
   } = useContext(blogContext);
+  console.log("data", data);
 
   // const { data } = PublishedBlogsOnly(title, author, page, limit);
   const [search, setSearch] = useState("blog");
@@ -41,7 +42,6 @@ export const BlogsList = () => {
   };
 
   useEffect(() => {
-    console.log({ debounceSearchTerm });
     search === "blog"
       ? setTitle(debounceSearchTerm)
       : setAuthor(debounceSearchTerm);
@@ -213,7 +213,7 @@ export const BlogsList = () => {
                                     style={{ fontSize: "12px" }}
                                     className="text-muted"
                                   >
-                                    {dateFormatter(data.createdAt)}
+                                    {dateFormatter(data.publishedDate)}
                                   </h6>
                                 </div>
                               </div>

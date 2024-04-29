@@ -26,12 +26,15 @@ const changeStatus = (id) => {
 
 const updateBlog = (payload) => {
   return instance.put(URLS.BLOGS + `/updateBlog`, payload, {
-    headers: { access_token: localStorage.getItem("access_token") },
+    headers: {
+      access_token: localStorage.getItem("access_token"),
+      "Content-Type": "multipart/form-data",
+    },
   });
 };
 
 const getById = (id) => {
-  return instance.get(URLS.BLOGS + `/${id}`, {
+  return instance.get(URLS.BLOGS + `/singleBlog/${id}`, {
     headers: { access_token: localStorage.getItem("access_token") },
   });
 };

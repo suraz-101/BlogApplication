@@ -99,11 +99,11 @@ export const Blogs = () => {
                             </DropdownButton> */}
                           </td>
 
-                          <td>{dateFormatter(blog.createdAt)}</td>
+                          <td>{dateFormatter(blog.publishedDate)}</td>
                           <td>
                             <button className="btn button">
                               <Link
-                                to="/admin/editBlog"
+                                to={`/admin/editBlog/${blog._id}`}
                                 className="text-decoration-none text-dark bg-success py-2 px-3 rounded"
                               >
                                 <i className="fa fa-eye"></i>

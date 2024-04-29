@@ -1,6 +1,7 @@
 const BlogModel = require("./blog.model");
 const { generateSlug } = require("../../utils/slug");
 const { default: slugify } = require("slugify");
+const { ObjectId } = require("mongodb");
 
 //cooming querry that can be used in different functions which reduces the code redundancy and easy while updating
 const commonQuerry = [
@@ -107,6 +108,7 @@ const getPublishedBlogs = async (search, page = 1, limit = 20) => {
       createdAt: 1,
       blogImage: 1,
       authorProfile: 1,
+      publishedDate: 1,
     },
   });
 
@@ -171,6 +173,7 @@ const getAll = async (search, page = 1, limit = 20) => {
       numberOfComments: 1,
       blogImage: 1,
       createdAt: 1,
+      publishedDate: 1,
     },
   });
 
@@ -188,9 +191,10 @@ const getAll = async (search, page = 1, limit = 20) => {
   };
 };
 
-const getById = (slug) => {
-  const query = [];
-  query.push();
+const getById = (id) => {
+  console.log(id);
+  // const query = [];
+  // query.push();
   return BlogModel.aggregate([
     {
       $lookup: {
@@ -235,11 +239,13 @@ const getById = (slug) => {
         createdAt: 1,
         blogImage: 1,
         authorProfile: "$author.profilePic",
+        publishedDate: 1,
+        status: 1,
       },
     },
     {
       $match: {
-        slug: `${slug}`,
+        _id: new ObjectId(`${id}`),
       },
     },
   ]);

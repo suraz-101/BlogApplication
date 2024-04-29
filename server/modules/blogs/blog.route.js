@@ -62,11 +62,11 @@ router.get(
   }
 );
 
-router.get("/singleBlog/:slug", async (req, res, next) => {
+router.get("/singleBlog/:id", async (req, res, next) => {
   try {
-    const { slug } = req.params;
-    console.log(slug);
-    const result = await blogController.getById(slug);
+    const { id } = req.params;
+
+    const result = await blogController.getById(id);
     res.json({ data: result });
   } catch (error) {
     next(error);
@@ -108,10 +108,10 @@ router.put(
       if (req.file) {
         req.body.blogImage = req.file.path.replace("public", "");
       }
-
-      const { id, ...rest } = req.body;
-      console.log("rest", rest);
-      const result = await blogController.updateById(id, rest);
+      console.log(req.body);
+      const { _id, ...rest } = req.body;
+      // console.log("rest", rest);
+      const result = await blogController.updateById(_id, rest);
       res.json({ message: result });
     } catch (err) {
       next(err);

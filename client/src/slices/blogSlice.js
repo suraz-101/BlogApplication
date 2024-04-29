@@ -44,8 +44,11 @@ export const createBlog = createAsyncThunk(
 
 export const getBlog = createAsyncThunk("blogs/getBlog", async (id) => {
   try {
+    console.log("response", id);
+
     const response = await getById(id);
-    return response.data; // Assuming the response structure is { data: { total, data } }
+    console.log("response", response.data.data[0]);
+    return response?.data.data[0]; // Assuming the response structure is { data: { total, data } }
   } catch (error) {
     throw Error(error.message);
   }
@@ -131,7 +134,7 @@ const blogSlice = createSlice({
       })
       .addCase(getBlog.fulfilled, (state, action) => {
         state.loading = false;
-        state.blog = action.payload.message.data;
+        state.blog = action.payload;
       })
       .addCase(getBlog.rejected, (state, action) => {
         state.loading = false;
