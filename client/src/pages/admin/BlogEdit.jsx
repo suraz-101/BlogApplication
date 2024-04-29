@@ -19,16 +19,13 @@ export const BlogEdit = () => {
   const [payload, setPayload] = useState({});
 
   const dispatch = useDispatch();
-  const { blog, error, success } = useSelector((state) => state.blogs);
+  const { blog, error } = useSelector((state) => state.blogs);
   const { _id, author, slug, ...rest } = payload;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateBlogById({ id: id, blog: rest }));
     navigate("/admin/blogs");
-    if (error) {
-      alert(error);
-    }
   };
 
   useEffect(() => {

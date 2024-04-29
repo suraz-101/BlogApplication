@@ -17,7 +17,6 @@ const initialState = {
   limit: 20,
   loading: false,
   error: "",
-  success: "",
 };
 
 export const listBlogs = createAsyncThunk(
@@ -147,8 +146,8 @@ const blogSlice = createSlice({
       })
       .addCase(updateBlogById.fulfilled, (state, action) => {
         state.loading = false;
-        // state.blog = action.payload;
-        state.success = action.payload;
+        state.blog = action.payload;
+        // state.success = action.payload;
       })
       .addCase(updateBlogById.rejected, (state, action) => {
         state.loading = false;
