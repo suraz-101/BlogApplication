@@ -81,23 +81,7 @@ export const Blogs = () => {
                           <th scope="row">{index + 1}</th>
                           <td>{blog.title}</td>
                           <td>{blog.author_name}</td>
-                          <td>
-                            {blog.status}{" "}
-                            {/* <DropdownButton
-                              id="dropdown-basic-button"
-                              title={blog.status}
-                            >
-                              <Dropdown.Item href="#/action-1">
-                                Action
-                              </Dropdown.Item>
-                              <Dropdown.Item href="#/action-2">
-                                Another action
-                              </Dropdown.Item>
-                              <Dropdown.Item href="#/action-3">
-                                Something else
-                              </Dropdown.Item>
-                            </DropdownButton> */}
-                          </td>
+                          <td>{blog.status} </td>
 
                           <td>{dateFormatter(blog.publishedDate)}</td>
                           <td>

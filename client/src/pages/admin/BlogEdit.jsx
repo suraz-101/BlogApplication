@@ -191,6 +191,9 @@ export const BlogEdit = () => {
                             type="date"
                             name=""
                             id=""
+                            value={moment(payload.publishedDate).format(
+                              "YYYY-MM-DD"
+                            )}
                             onChange={(e) => {
                               setPayload((prevVal) => {
                                 return {
