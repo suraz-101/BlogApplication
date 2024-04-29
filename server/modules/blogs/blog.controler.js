@@ -174,6 +174,7 @@ const getAll = async (search, page = 1, limit = 20) => {
       blogImage: 1,
       createdAt: 1,
       publishedDate: 1,
+      words: 1,
     },
   });
 
@@ -254,6 +255,7 @@ const getById = (id) => {
 const updateById = async (_id, payload) => {
   delete payload.slug;
   if (payload.title) payload.slug = generateSlug(payload.title);
+  if (payload.content) payload.words = payload.content.split(" ").length;
   if (!_id) throw new Error("Id is required");
   const blog = await BlogModel.findOne({ _id });
   if (!blog) throw new Error("Blog didn't found!!");

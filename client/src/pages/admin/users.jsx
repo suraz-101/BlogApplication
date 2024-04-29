@@ -53,6 +53,7 @@ export const Users = () => {
                     <th scope="col">Email</th>
                     <th scope="col">Phone Number</th>
                     <th scope="col">Gender</th>
+                    <th scope="col">Role</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -65,19 +66,7 @@ export const Users = () => {
                           <td>{user.email}</td>
                           <td>{user.phoneNumber}</td>
                           <td>{user.gender}</td>
-                          <td>
-                            <button className="btn button">
-                              <i className="fa fa-eye"></i>
-                            </button>
-                          </td>
-                          <td>
-                            <button
-                              className="btn "
-                              style={{ backgroundColor: "red" }}
-                            >
-                              <i className="fa fa-trash"></i>
-                            </button>
-                          </td>
+                          <td>{user.role}</td>
                         </tr>
                       );
                     })

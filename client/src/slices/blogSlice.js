@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { BlogDetail } from "../pages/admin/BlogDetail";
 import {
   create,
   List,
@@ -16,6 +17,7 @@ const initialState = {
   limit: 20,
   loading: false,
   error: "",
+  success: "",
 };
 
 export const listBlogs = createAsyncThunk(
@@ -56,12 +58,12 @@ export const getBlog = createAsyncThunk("blogs/getBlog", async (id) => {
 
 export const updateBlogById = createAsyncThunk(
   "blogs/updateBlogById",
-  async (payload) => {
+  async ({ id, blog }) => {
     try {
-      const response = await updateBlog(payload);
-      console.log("update", response);
-
-      return response.data; // Assuming the response structure is { data: { total, data } }
+      console.log("id", id);
+      console.log("blog:", blog);
+      const response = await updateBlog({ id, payload: blog });
+      return response.data.message;
     } catch (error) {
       throw Error(error.message);
     }
@@ -77,7 +79,7 @@ export const updateStatus = createAsyncThunk(
 
       return response.data.message; // Assuming the response structure is { data: { total, data } }
     } catch (error) {
-      throw Error(error.message);
+      throw Error(error);
     }
   }
 );
@@ -145,7 +147,8 @@ const blogSlice = createSlice({
       })
       .addCase(updateBlogById.fulfilled, (state, action) => {
         state.loading = false;
-        state.blog = action.payload.message.data;
+        // state.blog = action.payload;
+        state.success = action.payload;
       })
       .addCase(updateBlogById.rejected, (state, action) => {
         state.loading = false;
@@ -157,6 +160,7 @@ const blogSlice = createSlice({
       .addCase(updateStatus.fulfilled, (state, action) => {
         state.loading = false;
         state.blog = action.payload.message.data;
+        // state.success = action.payload.message;
       })
       .addCase(updateStatus.rejected, (state, action) => {
         state.loading = false;

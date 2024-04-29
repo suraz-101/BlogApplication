@@ -24,8 +24,8 @@ const changeStatus = (id) => {
   });
 };
 
-const updateBlog = (payload) => {
-  return instance.put(URLS.BLOGS + `/updateBlog`, payload, {
+const updateBlog = ({ id, payload }) => {
+  return instance.put(URLS.BLOGS + `/updateBlog/${id}`, payload, {
     headers: {
       access_token: localStorage.getItem("access_token"),
       "Content-Type": "multipart/form-data",

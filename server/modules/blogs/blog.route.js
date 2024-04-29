@@ -100,7 +100,7 @@ router.post(
 );
 
 router.put(
-  "/updateBlog",
+  "/updateBlog/:id",
   uploadBlogImage.single("blogImage"),
   //  checkRole(["admin"]),
   async (req, res, next) => {
@@ -108,10 +108,12 @@ router.put(
       if (req.file) {
         req.body.blogImage = req.file.path.replace("public", "");
       }
+      console.log(req.params);
       console.log(req.body);
-      const { _id, ...rest } = req.body;
+      const { id } = req.params;
+      const data = req.body;
       // console.log("rest", rest);
-      const result = await blogController.updateById(_id, rest);
+      const result = await blogController.updateById(id, data);
       res.json({ message: result });
     } catch (err) {
       next(err);

@@ -9,6 +9,7 @@ import { BASE_URL } from "../../constants";
 import { getBlog, updateBlogById } from "../../slices/blogSlice";
 import Form from "react-bootstrap/Form";
 import moment from "moment";
+import { Notify } from "../../conponenets/Notify";
 
 export const BlogEdit = () => {
   const navigate = useNavigate();
@@ -18,15 +19,15 @@ export const BlogEdit = () => {
   const [payload, setPayload] = useState({});
 
   const dispatch = useDispatch();
-  const { blog, error } = useSelector((state) => state.blogs);
+  const { blog, error, success } = useSelector((state) => state.blogs);
+  const { _id, author, slug, ...rest } = payload;
 
   const handleSubmit = (e) => {
-    try {
-      e.preventDefault();
-      dispatch(updateBlogById(payload));
-      navigate("/admin/blogs");
-    } catch (err) {
-      console.log(error);
+    e.preventDefault();
+    dispatch(updateBlogById({ id: id, blog: rest }));
+    navigate("/admin/blogs");
+    if (error) {
+      alert(error);
     }
   };
 
@@ -77,7 +78,12 @@ export const BlogEdit = () => {
                         <img src={logoIcon} alt="" height="60px" width="60px" />
                       </a>
                       <h3>Update Blog</h3>
-                      {/* {error && <Notify variant="danger" msg={error}></Notify>} */}
+                      {/* {sucessNotification && (
+                        <Notify
+                          variant="success"
+                          msg={sucessNotification}
+                        ></Notify>
+                      )} */}
                     </div>
                     <form
                       action=""
@@ -121,7 +127,7 @@ export const BlogEdit = () => {
                             className="form-control"
                             id="exampleInputTitle"
                             name="title"
-                            value={payload?.title}
+                            value={payload?.title || ""}
                             onChange={(e) => {
                               setPayload((prevVal) => {
                                 return { ...prevVal, title: e.target.value };
@@ -175,7 +181,7 @@ export const BlogEdit = () => {
                             ) : (
                               <option value="darft">Draft</option>
                             )} */}
-                            <option value="darft">Draft</option>
+                            <option value="draft">Draft</option>
                             <option value="published">Published</option>
                           </Form.Select>
                         </div>
