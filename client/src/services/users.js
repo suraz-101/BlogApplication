@@ -18,13 +18,14 @@ const List = (limit, page, email = "") => {
 };
 
 const updateUserDetails = (payload) => {
-  return instance.put(URLS.USERS + `/updateBlog`, payload, {
+  console.log("services payload", payload);
+  return instance.put(URLS.USERS + `/updateProfile`, payload, {
     headers: { access_token: localStorage.getItem("access_token") },
   });
 };
 
 const getById = (email) => {
-  return instance.get(URLS.USERS + `?email=${email}`, {
+  return instance.get(URLS.USERS + `/get-user?email=${email}`, {
     headers: { access_token: localStorage.getItem("access_token") },
   });
 };

@@ -121,17 +121,21 @@ router.patch(
 );
 
 // this pau is used for get data of logged in user which is only accessible for specific users
-router.get("/get-user", checkRole(["user"]), async (req, res, next) => {
-  try {
-    const { email } = req.query;
-
-    if (!email) throw new Error("email is required");
-    const result = await userController.getProfile(email);
-    res.status(200).json({ message: result });
-  } catch (error) {
-    next(error);
+router.get(
+  "/get-user",
+  checkRole(["user", "admin"]),
+  async (req, res, next) => {
+    try {
+      const { email } = req.query;
+      console.log("query", req.query);
+      if (!email) throw new Error("email is required");
+      const result = await userController.getProfile(email);
+      res.status(200).json({ message: result });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // this is the api accessible to only user role to change password
 router.patch(
@@ -159,6 +163,7 @@ router.put(
       if (req.file) {
         req.body.profilePic = req.file.path.replace("public", "");
       }
+      console.log("route payload", req.body);
       const { id, ...rest } = req.body;
       if (!id) throw new Error("Id is required");
       const result = await userController.updateProfile(id, rest);

@@ -1,7 +1,7 @@
 // userSlice.js
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getById, List } from "../services/users";
+import { getById, List, updateUserDetails } from "../services/users";
 
 const initialState = {
   users: [],
@@ -29,8 +29,20 @@ export const getSingleUser = createAsyncThunk(
   "users/getSingleUser",
   async ({ email }) => {
     try {
-      console.log("email", email);
       const response = await getById(email);
+      return response.data; // Assuming the response structure is { data: { total, data } }
+    } catch (error) {
+      throw Error(error.message);
+    }
+  }
+);
+
+export const updateUser = createAsyncThunk(
+  "users/updateUser",
+  async (payload) => {
+    try {
+      console.log("payload slice", payload);
+      const response = await updateUserDetails(payload);
       return response.data; // Assuming the response structure is { data: { total, data } }
     } catch (error) {
       throw Error(error.message);
@@ -69,9 +81,20 @@ const userSlice = createSlice({
       })
       .addCase(getSingleUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.message.data;
+        state.user = action.payload.message;
       })
       .addCase(getSingleUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.message;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
