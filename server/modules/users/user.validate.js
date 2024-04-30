@@ -26,9 +26,10 @@ const loginSchena = Joi.object({
 });
 
 const updateUserSchema = Joi.object({
-  id: Joi.string().required(),
+  _id: Joi.string().required(),
   name: Joi.string(),
   phoneNumber: Joi.number(),
+  profilePic: Joi.string(),
 });
 
 const changePass = Joi.object({

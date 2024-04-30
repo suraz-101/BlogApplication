@@ -156,7 +156,7 @@ router.patch(
 router.put(
   "/updateProfile",
   upload.single("profilePic"),
-  userUpdateVlaidation,
+  // userUpdateVlaidation,
   // checkRole(["user"]),
   async (req, res, next) => {
     try {
@@ -164,9 +164,9 @@ router.put(
         req.body.profilePic = req.file.path.replace("public", "");
       }
       console.log("route payload", req.body);
-      const { id, ...rest } = req.body;
-      if (!id) throw new Error("Id is required");
-      const result = await userController.updateProfile(id, rest);
+      const { _id, ...rest } = req.body;
+      if (!_id) throw new Error("Id is required");
+      const result = await userController.updateProfile(_id, rest);
       res.status(200).json({ message: result });
     } catch (error) {
       next(error);

@@ -1,15 +1,18 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../constants";
 import { getSingleUser, updateUser } from "../../slices/userSlice";
 import { getUser } from "../../utils/login";
 import { decodeJwt, getToken } from "../../utils/session";
 
+import { Notify } from "../../conponenets/Notify";
+
 export const Profile = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.users);
+  const { user, message } = useSelector((state) => state.users);
   const data = JSON.parse(getUser());
   const email = data.email;
   const [disabled, setDisabled] = useState(true);
@@ -48,7 +51,9 @@ export const Profile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateUser(payload));
+    const { email, ...rest } = payload;
+    dispatch(updateUser(rest));
+    console.log(message);
   };
 
   return (
@@ -66,7 +71,7 @@ export const Profile = () => {
                   backgroundColor: " white",
                 }}
               >
-                <Link to="/" className="text-decoration-none text-dark">
+                <Link to="/admin" className="text-decoration-none text-dark">
                   <i className="fa fa-close"></i>
                 </Link>
               </div>
@@ -100,6 +105,7 @@ export const Profile = () => {
                       type="file"
                       id="profile-image"
                       className="hidden-input"
+                      // placeholder="Change Profile Pic"
                       onChange={(e) => {
                         handleFile(e);
                       }}
@@ -111,9 +117,13 @@ export const Profile = () => {
                       type="text"
                       className="form-control"
                       id="exampleInputName"
-                      placeholder="Cristiano Ronaldo  "
                       name="name"
                       value={payload?.name}
+                      onChange={(e) => {
+                        setPayload((preV) => {
+                          return { ...preV, name: e.target.value };
+                        });
+                      }}
                       required
                     />
                   </div>
@@ -123,10 +133,10 @@ export const Profile = () => {
                       type="email"
                       className="form-control"
                       id="exampleInputEmail"
-                      placeholder=" crish7@gmail.com"
                       name="email"
                       value={payload?.email}
                       required
+                      disabled
                     />
                   </div>
 
@@ -136,29 +146,37 @@ export const Profile = () => {
                       type="tel"
                       className="form-control"
                       id="exampleInputPhonenumber"
-                      placeholder="984XXXXXX"
                       name="phoneNumber"
                       value={payload?.phoneNumber}
+                      onChange={(e) => {
+                        setPayload((preV) => {
+                          return { ...preV, phoneNumber: e.target.value };
+                        });
+                      }}
                       required
                     />
                   </div>
 
                   <div className="text-center">
-                    {/* {success ||
-                            (error && (
-                              <Notify
-                                variant={error ? "danger" : "success"}
-                                msg={success || error}
-                              />
-                            ))} */}
+                    {message && <Notify variant="success" msg={message} />}
                   </div>
-
+                  <Link
+                    to="/admin/changePasssword"
+                    type="submit"
+                    id="regsiterButton"
+                    className="btn col-sm-5 m-auto mb-2 border border-dark d-flex justify-content-between align-items-center "
+                    // disabled={disabled}
+                  >
+                    <i className="fa fa-key"></i>
+                    Change Password
+                  </Link>
                   <button
                     type="submit"
                     id="regsiterButton"
-                    className="btn col-sm-5 m-auto mb-2 border border-dark "
+                    className="btn btn-primary col-sm-3 m-auto mb-2 border border-dark  d-flex justify-content-between align-items-center"
                     // disabled={disabled}
                   >
+                    <i className="fa fa-edit"></i>
                     Update
                   </button>
                 </div>

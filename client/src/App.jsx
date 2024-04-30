@@ -18,6 +18,7 @@ import { Register } from "./pages/Register";
 import { VerifyToken } from "./pages/VerifyToken";
 import { PrivateRoute } from "./conponenets/Route";
 import { BlogEdit } from "./pages/admin/BlogEdit";
+import { ChangePassword } from "./pages/admin/ChangePassword";
 const App = () => {
   return (
     <>
@@ -84,7 +85,22 @@ const App = () => {
               </PrivateRoute>
             }
           />
-          <Route path="profile" element={<Profile />} />
+          <Route
+            path="profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="changePasssword"
+            element={
+              <PrivateRoute>
+                <ChangePassword />
+              </PrivateRoute>
+            }
+          />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

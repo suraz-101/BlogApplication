@@ -11,6 +11,7 @@ const initialState = {
   limit: 20,
   loading: false,
   error: "",
+  message: "",
 };
 
 export const listUsers = createAsyncThunk(
@@ -92,11 +93,11 @@ const userSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.message;
+        state.message = action.payload.message;
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.message = action.error.message;
       });
   },
 });

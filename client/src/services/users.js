@@ -20,7 +20,10 @@ const List = (limit, page, email = "") => {
 const updateUserDetails = (payload) => {
   console.log("services payload", payload);
   return instance.put(URLS.USERS + `/updateProfile`, payload, {
-    headers: { access_token: localStorage.getItem("access_token") },
+    headers: {
+      access_token: localStorage.getItem("access_token"),
+      "Content-Type": "multipart/form-data",
+    },
   });
 };
 
