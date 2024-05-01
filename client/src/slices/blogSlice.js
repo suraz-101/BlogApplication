@@ -17,6 +17,7 @@ const initialState = {
   limit: 20,
   loading: false,
   error: "",
+  message: "",
 };
 
 export const listBlogs = createAsyncThunk(

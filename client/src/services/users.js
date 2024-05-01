@@ -18,7 +18,6 @@ const List = (limit, page, email = "") => {
 };
 
 const updateUserDetails = (payload) => {
-  console.log("services payload", payload);
   return instance.put(URLS.USERS + `/updateProfile`, payload, {
     headers: {
       access_token: localStorage.getItem("access_token"),
@@ -33,10 +32,19 @@ const getById = (email) => {
   });
 };
 
+const changePass = (payload) => {
+  return instance.patch(URLS.USERS + `/changePassword`, payload, {
+    headers: {
+      access_token: localStorage.getItem("access_token"),
+      // "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
 const remove = (id) => {
   return instance.delete(URLS.USERS + `/deleteBlog/${id}`, {
     headers: { access_token: localStorage.getItem("access_token") },
   });
 };
 
-export { createUser, List, updateUserDetails, remove, getById };
+export { createUser, List, updateUserDetails, remove, getById, changePass };

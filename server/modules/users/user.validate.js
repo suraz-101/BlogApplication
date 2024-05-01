@@ -33,7 +33,7 @@ const updateUserSchema = Joi.object({
 });
 
 const changePass = Joi.object({
-  userId: Joi.string().required(),
+  email: Joi.string().required(),
   oldPassword: Joi.string().required(),
   newPassword: Joi.string().required(),
 });

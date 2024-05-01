@@ -85,10 +85,10 @@ export const Profile = () => {
                       : preview
                   }
                   alt=""
-                  height="100px"
-                  width="100px"
+                  height="200px"
+                  style={{ maxWidth: "200px" }}
                   type="file"
-                  className="mt-3 mb-3"
+                  className="mt-3 mb-3 shadow rounded"
                 />
               </div>
               <form

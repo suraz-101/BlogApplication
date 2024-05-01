@@ -176,16 +176,16 @@ const resetPassword = async (payload) => {
 };
 
 const changePassword = async (payload) => {
-  const { userId, oldPassword, newPassword } = payload;
-  if (!userId || !oldPassword || !newPassword)
+  const { email, oldPassword, newPassword } = payload;
+  if (!email || !oldPassword || !newPassword)
     throw new Error("Something is missing");
-  const user = await userModel.findOne({ _id: userId }).select("+password");
+  const user = await userModel.findOne({ email}).select("+password");
   if (!user) throw new Error("User does not exist ");
   const comparision = decryption(oldPassword, user.password);
   if (!comparision) throw new Error("password doesnot match");
 
   await userModel.updateOne(
-    { _id: user.id },
+    { email: email },
     { password: encryption(newPassword) }
   );
 

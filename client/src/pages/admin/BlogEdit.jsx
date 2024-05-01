@@ -17,6 +17,7 @@ export const BlogEdit = () => {
   const id = pathname.split("/")[3];
 
   const [payload, setPayload] = useState({});
+  const [preview, setPreview] = useState("");
 
   const dispatch = useDispatch();
   const { blog, error } = useSelector((state) => state.blogs);
@@ -41,6 +42,21 @@ export const BlogEdit = () => {
       "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
     );
     return formattedDate;
+  };
+
+  const handleFile = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+    console.log("file", file.name);
+    setPayload((prevVal) => {
+      return { ...prevVal, blogImage: file };
+    });
   };
 
   return (
@@ -94,7 +110,11 @@ export const BlogEdit = () => {
                         <div className="d-flex justify-content-center">
                           {blog ? (
                             <img
-                              src={BASE_URL.concat(payload?.blogImage)}
+                              src={
+                                preview === ""
+                                  ? BASE_URL.concat(payload?.blogImage)
+                                  : preview
+                              }
                               alt=""
                               height="200px"
                               width="200px"
@@ -112,6 +132,9 @@ export const BlogEdit = () => {
                             type="file"
                             name="blogImage"
                             id="blogImage"
+                            onChange={(e) => {
+                              handleFile(e);
+                            }}
                             // value={payload?.blogImage.replace("blog", "")}
                           />
                         </div>

@@ -79,6 +79,7 @@ router.post(
   checkRole(["user", "admin"]),
   validate,
   async (req, res, next) => {
+    
     try {
       console.log("here qwe are");
       // uploadBlogImage.single("blogImage");

@@ -141,7 +141,7 @@ router.get(
 router.patch(
   "/changePassword",
   changePasswordValidation,
-  checkRole(["user"]),
+  // checkRole(["user", "admin"]),
   async (req, res, next) => {
     try {
       const result = await userController.changePassword(req.body);

@@ -1,7 +1,12 @@
 // userSlice.js
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getById, List, updateUserDetails } from "../services/users";
+import {
+  changePass,
+  getById,
+  List,
+  updateUserDetails,
+} from "../services/users";
 
 const initialState = {
   users: [],
@@ -44,6 +49,19 @@ export const updateUser = createAsyncThunk(
     try {
       console.log("payload slice", payload);
       const response = await updateUserDetails(payload);
+      return response.data; // Assuming the response structure is { data: { total, data } }
+    } catch (error) {
+      throw Error(error.message);
+    }
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  "users/changePassword",
+  async (payload) => {
+    try {
+      console.log("payload slice", payload);
+      const response = await changePass(payload);
       return response.data; // Assuming the response structure is { data: { total, data } }
     } catch (error) {
       throw Error(error.message);
@@ -94,10 +112,26 @@ const userSlice = createSlice({
       .addCase(updateUser.fulfilled, (state, action) => {
         state.loading = false;
         state.message = action.payload.message;
+        state.error = "";
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
-        state.message = action.error.message;
+        state.error = action.error.message;
+        state.message = "";
+      })
+      .addCase(changePassword.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(changePassword.fulfilled, (state, action) => {
+        state.loading = false;
+
+        state.message = action.payload.message;
+        state.error = "";
+      })
+      .addCase(changePassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+        state.message = "";
       });
   },
 });
