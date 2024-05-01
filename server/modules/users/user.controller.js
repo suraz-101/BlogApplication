@@ -179,7 +179,7 @@ const changePassword = async (payload) => {
   const { email, oldPassword, newPassword } = payload;
   if (!email || !oldPassword || !newPassword)
     throw new Error("Something is missing");
-  const user = await userModel.findOne({ email}).select("+password");
+  const user = await userModel.findOne({ email }).select("+password");
   if (!user) throw new Error("User does not exist ");
   const comparision = decryption(oldPassword, user.password);
   if (!comparision) throw new Error("password doesnot match");

@@ -90,6 +90,8 @@ const userSlice = createSlice({
         state.loading = false;
         state.total = action.payload.message.total;
         state.users = action.payload.message.data;
+        state.error = "";
+        state.message = "";
       })
       .addCase(listUsers.rejected, (state, action) => {
         state.loading = false;
@@ -101,6 +103,8 @@ const userSlice = createSlice({
       .addCase(getSingleUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.message;
+        state.error = "";
+        state.message = "";
       })
       .addCase(getSingleUser.rejected, (state, action) => {
         state.loading = false;
@@ -124,7 +128,6 @@ const userSlice = createSlice({
       })
       .addCase(changePassword.fulfilled, (state, action) => {
         state.loading = false;
-
         state.message = action.payload.message;
         state.error = "";
       })

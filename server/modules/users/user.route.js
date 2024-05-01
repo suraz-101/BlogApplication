@@ -145,6 +145,7 @@ router.patch(
   async (req, res, next) => {
     try {
       const result = await userController.changePassword(req.body);
+      console.log("result", result);
       res.status(200).json({ message: result });
     } catch (error) {
       next(error);
@@ -167,6 +168,7 @@ router.put(
       const { _id, ...rest } = req.body;
       if (!_id) throw new Error("Id is required");
       const result = await userController.updateProfile(_id, rest);
+
       res.status(200).json({ message: result });
     } catch (error) {
       next(error);

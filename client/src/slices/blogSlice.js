@@ -115,6 +115,8 @@ const blogSlice = createSlice({
         state.loading = false;
         state.total = action.payload.message.total;
         state.blogs = action.payload.message.data;
+        state.error = "";
+        state.message = "";
       })
       .addCase(listBlogs.rejected, (state, action) => {
         state.loading = false;
@@ -148,11 +150,15 @@ const blogSlice = createSlice({
       .addCase(updateBlogById.fulfilled, (state, action) => {
         state.loading = false;
         state.blog = action.payload;
+        state.message = action.payload;
+        state.error = "";
+        // state.message = "";
         // state.success = action.payload;
       })
       .addCase(updateBlogById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+        state.message = "";
       })
       .addCase(updateStatus.pending, (state) => {
         state.loading = true;

@@ -20,13 +20,15 @@ export const BlogEdit = () => {
   const [preview, setPreview] = useState("");
 
   const dispatch = useDispatch();
-  const { blog, error } = useSelector((state) => state.blogs);
+  const { blog, error, message } = useSelector((state) => state.blogs);
   const { _id, author, slug, ...rest } = payload;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateBlogById({ id: id, blog: rest }));
-    navigate("/admin/blogs");
+    setTimeout(() => {
+      navigate("/admin/blogs");
+    }, 3000);
   };
 
   useEffect(() => {
@@ -91,12 +93,12 @@ export const BlogEdit = () => {
                         <img src={logoIcon} alt="" height="60px" width="60px" />
                       </a>
                       <h3>Update Blog</h3>
-                      {/* {sucessNotification && (
-                        <Notify
-                          variant="success"
-                          msg={sucessNotification}
-                        ></Notify>
-                      )} */}
+                      {(error || message) &&
+                        (error ? (
+                          <Notify variant="danger" msg={error}></Notify>
+                        ) : (
+                          <Notify variant="success" msg={message}></Notify>
+                        ))}
                     </div>
                     <form
                       action=""

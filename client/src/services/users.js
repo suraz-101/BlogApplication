@@ -36,7 +36,6 @@ const changePass = (payload) => {
   return instance.patch(URLS.USERS + `/changePassword`, payload, {
     headers: {
       access_token: localStorage.getItem("access_token"),
-      // "Content-Type": "multipart/form-data",
     },
   });
 };
