@@ -46,9 +46,8 @@ export const useBlogs = () => {
 
   const getBySlug = useCallback(async (slug) => {
     try {
-      console.log("slug:", slug);
       setLoading(true);
-      const response = await instance.get(`${URLS.GET_SINGLE_BLOG}/${slug}`);
+      const response = await instance.get(`${URLS.GET_BLOG_BY_SLUG}/${slug}`);
       return response?.data.data[0];
       // setSingleData(response?.data.data[0]);
     } catch (err) {

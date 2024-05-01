@@ -73,13 +73,23 @@ router.get("/singleBlog/:id", async (req, res, next) => {
   }
 });
 
+router.get("/getBySlug/:slug", async (req, res, next) => {
+  try {
+    const { slug } = req.params;
+
+    const result = await blogController.getBySlug(slug);
+    res.json({ data: result });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post(
   "/",
   uploadBlogImage.single("blogImage"),
   checkRole(["user", "admin"]),
   validate,
   async (req, res, next) => {
-    
     try {
       console.log("here qwe are");
       // uploadBlogImage.single("blogImage");

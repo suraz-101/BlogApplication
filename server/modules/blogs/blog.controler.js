@@ -252,6 +252,66 @@ const getById = (id) => {
   ]);
 };
 
+const getBySlug = (slug) => {
+  console.log(slug);
+  // const query = [];
+  // query.push();
+  return BlogModel.aggregate([
+    {
+      $lookup: {
+        from: "comments",
+        localField: "_id",
+        foreignField: "postedTo",
+        as: "blogsComment",
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "author",
+        foreignField: "_id",
+        as: "author",
+      },
+    },
+    {
+      $unwind: {
+        path: "$author",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $addFields: {
+        numberOfComments: {
+          $size: "$blogsComment",
+        },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        title: 1,
+        content: 1,
+        slug: 1,
+        comment: 0,
+        comment: "$blogsComment.comment",
+        numberOfComments: 1,
+        author: 1,
+        author_name: "$author.name",
+        createdAt: 1,
+        blogImage: 1,
+        authorProfile: "$author.profilePic",
+        publishedDate: 1,
+        status: 1,
+      },
+    },
+    {
+      $match: {
+        slug: slug,
+      },
+    },
+  ]);
+};
+
 const updateById = async (_id, payload) => {
   delete payload.slug;
   if (payload.title) payload.slug = generateSlug(payload.title);
@@ -342,4 +402,5 @@ module.exports = {
   deleteById,
   getAuthorBlog,
   updateTheStatusOnly,
+  getBySlug,
 };

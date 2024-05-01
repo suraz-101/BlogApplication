@@ -16,7 +16,6 @@ export const Blog = () => {
 
   const { getBySlug } = useBlogs();
   const [blogData, setBlogData] = useState({});
-  // console.log("Data is : ", singleData);
 
   const { data } = useContext(blogContext);
 
