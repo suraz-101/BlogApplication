@@ -23,11 +23,11 @@ export const useBlogs = () => {
   };
 
   const PublishedBlogsOnly = useCallback(
-    async ({ title, author, page, limit }) => {
+    async ({ title, author, page, limit, sort }) => {
       try {
         setLoading(true);
         const response = await instance.get(
-          `${URLS.PUBLISHED_BLOG_LIST}?title=${title}&author=${author}&page=${page}&limit=${limit}`
+          `${URLS.PUBLISHED_BLOG_LIST}?title=${title}&author=${author}&page=${page}&limit=${limit}&sort=${sort}`
         );
         setData(response?.data?.message);
         return response?.data;

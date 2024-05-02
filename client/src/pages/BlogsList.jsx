@@ -22,6 +22,7 @@ export const BlogsList = () => {
     error,
     setAuthor,
     setTitle,
+    setSort,
   } = useContext(blogContext);
   console.log("data", data);
 
@@ -84,10 +85,16 @@ export const BlogsList = () => {
             </div>
           </div>
           <div className="col-lg-2">
-            <select className="form-select" aria-label="Default select example">
-              <option selected>Sort</option>
-              <option value="recent">recent</option>
-              <option value="popular">popular</option>
+            <select
+              className="form-select"
+              aria-label="Default select example"
+              onChange={(e) => {
+                setSort(e.target.value);
+              }}
+            >
+              <option>Sort</option>
+              <option value="-1">recent</option>
+              <option value="1">older</option>
             </select>
           </div>
         </div>

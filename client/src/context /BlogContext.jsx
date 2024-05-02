@@ -10,10 +10,11 @@ export const BlogContextProvider = ({ children }) => {
   const [limit, setLimit] = useState(20);
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
+  const [sort, setSort] = useState(1);
 
   useEffect(() => {
-    PublishedBlogsOnly({ author, title, page, limit });
-  }, [author, title, page, limit]);
+    PublishedBlogsOnly({ author, title, page, limit, sort });
+  }, [author, title, page, limit, sort]);
 
   return (
     <blogContext.Provider
@@ -27,6 +28,7 @@ export const BlogContextProvider = ({ children }) => {
         error,
         setAuthor,
         setTitle,
+        setSort,
       }}
     >
       {children}

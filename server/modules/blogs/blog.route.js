@@ -34,10 +34,11 @@ router.get(
   // checkRole(["user", "admin"]),
   async (req, res, next) => {
     try {
-      const { title, author, page, limit } = req.query;
+      const { title, author, page, limit, sort } = req.query;
       const search = { author, title };
       const result = await blogController.getPublishedBlogs(
         search,
+        sort,
         page,
         limit
       );

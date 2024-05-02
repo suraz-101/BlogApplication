@@ -68,7 +68,8 @@ const create = (payload) => {
   return BlogModel.create(payload);
 };
 
-const getPublishedBlogs = async (search, page = 1, limit = 20) => {
+const getPublishedBlogs = async (search, sort = 1, page = 1, limit = 20) => {
+  console.log(sort);
   const query = [];
 
   query.push({
@@ -95,22 +96,30 @@ const getPublishedBlogs = async (search, page = 1, limit = 20) => {
       },
     });
   }
+
   // query to show the neccessary field
-  query.push({
-    $project: {
-      _id: 1,
-      title: 1,
-      content: 1,
-      author: 1,
-      author_name: 1,
-      slug: 1,
-      status: 1,
-      createdAt: 1,
-      blogImage: 1,
-      authorProfile: 1,
-      publishedDate: 1,
+  query.push(
+    {
+      $project: {
+        _id: 1,
+        title: 1,
+        content: 1,
+        author: 1,
+        author_name: 1,
+        slug: 1,
+        status: 1,
+        createdAt: 1,
+        blogImage: 1,
+        authorProfile: 1,
+        publishedDate: 1,
+      },
     },
-  });
+    {
+      $sort: {
+        publishedDate: Number(sort),
+      },
+    }
+  );
 
   //using commong pagination query that can be used in getAll product as well
   query.push.apply(query, facetQuerry(page, limit));
