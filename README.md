@@ -5,10 +5,15 @@ The MERN Blog Application is a full-stack web application designed to provide us
     # Key Features:
 
         1. User Authentication: Users can sign up, log in, and manage their accounts securely. Authentication is implemented using JSON Web Tokens (JWT) for enhanced security.
+
         2. Create and Publish Blogs: Registered users can create new blog posts, write content , and publish their posts to share their thoughts and ideas with the community.
+
         3. Browse and Read Blogs: Visitors can browse through the list of published blog posts, search for specific topics, and read full blog articles. The application offers a user-friendly interface for easy navigation.
+
         4. Commenting System: Users can engage with blog posts by leaving comments, fostering discussions, and interacting with other readers. Comments are displayed below each blog post for easy access.
+
         5. Responsive Design: The application is designed to be fully responsive, ensuring a seamless user experience across various devices and screen sizes, including desktops, tablets, and smartphones.
+
         6. Admin Panel: Administrators have access to an admin panel where they can view list of all the  users but their password is kept secure, and view all the blogs and can delete and edit the blog if necessary. But normal users can only post the blogs and view the blogs published by them. Beside this they can also view their profile and do the necessary update intheir profile if necessary.
 
 This Blog Application aims to provide an intuitive and feature-rich platform for both bloggers and readers alike. Whether you're a seasoned writer looking to share your expertise or a curious reader exploring new topics, this application offers a versatile and engaging blogging experience.
@@ -113,6 +118,8 @@ These are just for demo :
 ![BlogPage](./readmeSS/BlogPage.png)
 
 # React + Vite
+
+Vite is used to run the react project during developement
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
