@@ -10,17 +10,16 @@ export const AddBlog = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [preview, setPreview] = useState("");
   const [payload, setPayload] = useState({
     title: "",
     content: "",
     blogImage: null,
   });
-  // const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     dispatch(createBlog(payload));
     if (blog) {
       navigate("/admin/blogs");
@@ -28,7 +27,6 @@ export const AddBlog = () => {
   };
 
   const handleFile = (e) => {
-    console.log(e.target.files);
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -37,7 +35,6 @@ export const AddBlog = () => {
       };
       reader.readAsDataURL(file);
     }
-    // console.log("file", file.name);
     setPayload((prevVal) => {
       return { ...prevVal, blogImage: file };
     });

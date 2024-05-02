@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { BlogDetail } from "../pages/admin/BlogDetail";
 import {
   create,
   List,

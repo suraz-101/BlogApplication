@@ -1,21 +1,18 @@
 import { Link } from "react-router-dom";
-import { Paginate } from "../../conponenets/Pagination";
 import { useDispatch, useSelector } from "react-redux";
-
-import { listBlogs, removeBlog, setLimit } from "../../slices/blogSlice.js";
 import { useCallback } from "react";
 import { useEffect } from "react";
-import { dateFormatter } from "../../utils/dateFormatter";
 
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
+import { Paginate } from "../../conponenets/Pagination";
+import { listBlogs, removeBlog, setLimit } from "../../slices/blogSlice.js";
+import { dateFormatter } from "../../utils/dateFormatter";
 
 export const Blogs = () => {
   const dispatch = useDispatch();
   const { blogs, page, limit, total, blog } = useSelector(
     (state) => state.blogs
   );
-  // console.log(blog);
+
   const initFetch = useCallback(() => {
     dispatch(listBlogs({ limit, page }));
   }, [dispatch, limit, page]);
@@ -30,6 +27,7 @@ export const Blogs = () => {
     }
     initFetch();
   }, [initFetch, blog]);
+
   return (
     <div
       className="contentArea col-lg-10 col-sm-8 col-7 bg-light"
@@ -115,35 +113,6 @@ export const Blogs = () => {
                       </td>
                     </tr>
                   )}
-
-                  {/* <tr className="placeholder-glow">
-                    <th scope="row">1</th>
-                    <td>
-                      <span className="placeholder col-12"></span>
-                    </td>
-                    <td>
-                      <span className="placeholder col-12"></span>
-                    </td>
-                    <td>
-                      <span className="placeholder col-12"></span>
-                    </td>
-                    <td>
-                      <span className="placeholder col-12"></span>
-                    </td>
-                    <td>
-                      <button className="btn button">
-                        <i className="fa fa-eye"></i>
-                      </button>
-                    </td>
-                    <td>
-                      <button
-                        className="btn "
-                        style={{ backgroundColor: "red" }}
-                      >
-                        <i className="fa fa-trash"></i>
-                      </button>
-                    </td>
-                  </tr> */}
                 </tbody>
               </table>
             </div>

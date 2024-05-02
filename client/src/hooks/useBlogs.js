@@ -13,11 +13,9 @@ export const useBlogs = () => {
       const response = await instance.get(
         `${URLS.PUBLISHED_BLOG_LIST}?title=${title}&author=${author}&page=${page}&limit=${limit}`
       );
-
       setData(response.data.message);
       return data;
     } catch (er) {
-      // setError(er.response? er.response);
       throw er;
     } finally {
       setLoading(false);
@@ -31,7 +29,6 @@ export const useBlogs = () => {
         const response = await instance.get(
           `${URLS.PUBLISHED_BLOG_LIST}?title=${title}&author=${author}&page=${page}&limit=${limit}`
         );
-        // console.log(response?.data.message);
         setData(response?.data?.message);
         return response?.data;
       } catch (er) {
@@ -49,7 +46,6 @@ export const useBlogs = () => {
       setLoading(true);
       const response = await instance.get(`${URLS.GET_BLOG_BY_SLUG}/${slug}`);
       return response?.data.data[0];
-      // setSingleData(response?.data.data[0]);
     } catch (err) {
       console.log("error", err);
     }

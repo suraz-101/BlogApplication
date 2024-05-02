@@ -13,6 +13,3 @@ export const URLS = {
   USERS: API_VERSION + "/users",
   GET_BLOG_BY_SLUG: API_VERSION + "/blogs/getBySlug",
 };
-
-// This file is used to store all the information related to the url that we need to navigate
-// So, we can reuse all these urls dynamically  wherever we want

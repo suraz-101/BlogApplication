@@ -19,8 +19,6 @@ export const ChangePassword = () => {
     newPassword: "",
   });
 
-  const [err, setErr] = useState("");
-  const [success, setSuccess] = useState("");
   const [confirm, setConfirm] = useState({
     input: "",
     error: "",
@@ -64,12 +62,6 @@ export const ChangePassword = () => {
                         <img src={logoIcon} alt="" height="60px" width="60px" />
                       </a>
                       <h3>Change Password</h3>
-                      {/* {sucessNotification && (
-                        <Notify
-                          variant="success"
-                          msg={sucessNotification}
-                        ></Notify>
-                      )} */}
                     </div>
                     <form
                       action=""

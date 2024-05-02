@@ -17,11 +17,6 @@ export const Profile = () => {
   const email = data.email;
   const [disabled, setDisabled] = useState(true);
   const [preview, setPreview] = useState("");
-  // console.log("email", email);
-  // const token = getToken("access_token");
-
-  // const { data } = decodeJwt(token);
-  // console.log(token);
 
   const [payload, setPayload] = useState({});
   useEffect(() => {
@@ -31,8 +26,6 @@ export const Profile = () => {
   useEffect(() => {
     dispatch(getSingleUser({ email }));
   }, [dispatch, email]);
-
-  // console.log("payload", payload);
 
   const handleFile = (e) => {
     const file = e.target.files[0];

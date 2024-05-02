@@ -3,7 +3,6 @@ import { AdminLayout } from "./layouts/AdminLayout";
 import { AppLayout } from "./layouts/AppLayout";
 import { About } from "./pages/About";
 import { AddBlog } from "./pages/admin/AddBlog";
-import { BlogDetail } from "./pages/admin/BlogDetail";
 import { Blogs } from "./pages/admin/Blogs";
 import { Profile } from "./pages/admin/Profile";
 import { Users } from "./pages/admin/Users";
@@ -59,7 +58,6 @@ const App = () => {
                 </PrivateRoute>
               }
             />
-            <Route path=":id" element={<BlogDetail />} />
           </Route>
           <Route
             path="users"
