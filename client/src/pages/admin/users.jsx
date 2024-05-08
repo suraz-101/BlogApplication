@@ -3,6 +3,7 @@ import { useEffect, useCallback, useState } from "react";
 import { listUsers } from "../../slices/userSlice";
 import { Link } from "react-router-dom";
 import { Paginate } from "../../conponenets/Pagination";
+import { BASE_URL } from "../../constants";
 
 export const Users = () => {
   const dispatch = useDispatch();
@@ -49,7 +50,7 @@ export const Users = () => {
                 <thead>
                   <tr>
                     <th scope="col">S.N.</th>
-                    <th scope="col">Full Name</th>
+                    <th scope="col">Profile Pic</th>
                     <th scope="col">Email</th>
                     <th scope="col">Phone Number</th>
                     <th scope="col">Gender</th>
@@ -60,9 +61,18 @@ export const Users = () => {
                   {users?.length > 0 ? (
                     users.map((user, index) => {
                       return (
-                        <tr className="placeholder-glow" key={user._id}>
+                        <tr className="placeholder-glow " key={user._id}>
                           <th scope="row">{index + 1}</th>
-                          <td>{user.name}</td>
+                          <td className="d-flex flex-column">
+                            <img
+                              src={BASE_URL.concat(user.profilePic)}
+                              alt=""
+                              height="100px"
+                              width="100px"
+                              className="mb-2"
+                            />
+                            <h6 className="fw-bold">{user.name}</h6>
+                          </td>
                           <td>{user.email}</td>
                           <td>{user.phoneNumber}</td>
                           <td>{user.gender}</td>
