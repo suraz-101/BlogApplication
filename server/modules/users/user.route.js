@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const userController = require("./user.controller");
+const toUpperCase = require("proper-upper-case");
 const {
   validate,
   resetValidate,
@@ -68,7 +69,9 @@ router.post(
         const { path } = req.file;
         req.body.profilePic = path.replace("public", "");
       }
-
+      const { name } = req.body;
+      const modifiedName = toUpperCase(name);
+      req.body.name = modifiedName;
       const result = await userController.registerUser(req.body);
       res.status(200).json({ message: result });
     } catch (error) {
