@@ -24,7 +24,6 @@ export const BlogsList = () => {
     setTitle,
     setSort,
   } = useContext(blogContext);
-  console.log("data", data);
 
   // const { data } = PublishedBlogsOnly(title, author, page, limit);
   const [search, setSearch] = useState("blog");
