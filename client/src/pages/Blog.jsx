@@ -33,6 +33,8 @@ export const Blog = () => {
     return _.sample(filterRelatedData, number);
   };
 
+  console.log("data,", data);
+
   return (
     <>
       <div className="container mt-4">
