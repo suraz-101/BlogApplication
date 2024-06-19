@@ -213,13 +213,12 @@ export const Register = () => {
                       </div>
                     </div>
                     <div className="text-center">
-                      {success ||
-                        (error && (
-                          <Notify
-                            variant={error ? "danger" : "success"}
-                            msg={success || error}
-                          />
-                        ))}
+                      {(success || error) && (
+                        <Notify
+                          variant={error ? "danger" : "success"}
+                          msg={success || error}
+                        />
+                      )}
                     </div>
 
                     <button
